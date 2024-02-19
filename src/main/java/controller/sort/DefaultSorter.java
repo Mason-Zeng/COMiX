@@ -1,6 +1,8 @@
-package controller;
+package controller.sort;
 
 import java.util.Comparator;
+
+import controller.Comic;
 
 public class DefaultSorter implements Comparator<Comic> {
 
