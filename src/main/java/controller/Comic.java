@@ -5,18 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 public class Comic {
-    private Publisher publisher;
     private String title;
-    private int volumeNumber;
-    private int issueNumber;
-    private Date date;
+    private Volume volume;
+    private int issueNum;
+    private Date pub_date;
     private List<Creator> creators;
     private List<Character> characters;
     private String description;
     private BigDecimal value;
 
+    public Comic() {
+        
+    }    
+
     public Publisher getPublisher() {
-        return publisher;
+        return volume.getPublisher();
     }
 
     public String getTitle() {
@@ -24,15 +27,15 @@ public class Comic {
     }
 
     public int getVolumeNumber() {
-        return volumeNumber;
+        return volume.getNumber();
     }
 
     public int getIssueNumber() {
-        return issueNumber;
+        return issueNum;
     }
 
     public Date getDate() {
-        return date;
+        return pub_date;
     }
 
     public List<Creator> getCreators() {
