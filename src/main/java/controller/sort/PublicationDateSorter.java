@@ -15,4 +15,10 @@ public class PublicationDateSorter implements Comparator<Comic>{
         return date1.compareTo(date2);
     }
     
+
+    // Any Two instances of PublicationDateSorter are considered equal
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof PublicationDateSorter) ? true : false;
+    }
 }

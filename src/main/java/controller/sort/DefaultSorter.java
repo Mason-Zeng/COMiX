@@ -23,5 +23,11 @@ public class DefaultSorter implements Comparator<Comic> {
         }
         return seriesCompare;
     }
+
+    // Any two instances of Default Sorter are considered equal
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof DefaultSorter) ? true : false;
+    }
     
 }
