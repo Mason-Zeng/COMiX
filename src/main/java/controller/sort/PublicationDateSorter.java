@@ -1,7 +1,9 @@
-package controller;
+package controller.sort;
 
 import java.util.Comparator;
 import java.util.Date;
+
+import controller.Comic;
 
 public class PublicationDateSorter implements Comparator<Comic>{
 
