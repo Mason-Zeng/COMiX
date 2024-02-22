@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import controller.hierarchy.Publisher;
+import controller.hierarchy.Series;
+import controller.hierarchy.Volume;
+
 public class Comic {
     private String title;
     private Volume volume;

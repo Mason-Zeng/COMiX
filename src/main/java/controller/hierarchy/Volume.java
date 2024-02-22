@@ -1,7 +1,9 @@
-package controller;
+package controller.hierarchy;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import controller.Comic;
 
 public class Volume implements ComicHolder {
   private Series series;
