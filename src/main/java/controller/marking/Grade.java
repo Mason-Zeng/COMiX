@@ -1,0 +1,25 @@
+package controller.marking;
+
+import java.math.BigDecimal;
+
+public class Grade extends ComicDecorator{
+    private int grade;
+
+    public Grade(MarkImplement comic, int grade) {
+        super(comic);
+        this.grade = grade;
+    }
+
+    public BigDecimal getValue(){
+        if(grade == 1){
+            BigDecimal multiplier = new BigDecimal(0.1);
+            BigDecimal newVal = comic.getValue().multiply(multiplier);
+            return newVal;
+        }
+        
+    }
+
+
+       
+}
+

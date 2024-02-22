@@ -8,8 +8,9 @@ import java.util.List;
 import controller.hierarchy.Publisher;
 import controller.hierarchy.Series;
 import controller.hierarchy.Volume;
+import controller.marking.MarkImplement;
 
-public class Comic {
+public class Comic implements MarkImplement {
     private String title;
     private Volume volume;
     private int issueNum;
