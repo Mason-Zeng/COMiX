@@ -19,8 +19,13 @@ public class Comic {
     private String description;
     private BigDecimal value;
 
-    public Comic() {
+    public Comic(String title, int issueNum, String description, BigDecimal value, Date pubDate) {
+        this.title = title;
+        this.issueNum = issueNum;
+        this.description = description;
+        this.value = value;
         creators = new ArrayList<>();
+        characters = new ArrayList<>();
     }   
 
     public String getTitle() {
