@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import controller.sort.DefaultSorter;
 
 public class ComicSearcher {
 
-    //private ??? data;
+    private ArrayList<Comic> data;
     private Comparator<Comic> sorter;
     private Searcher searcher;
 
@@ -19,7 +20,7 @@ public class ComicSearcher {
     }
 
     public List<Comic> search(String query){
-        List<Comic> results = searcher.searchData(query);
+        List<Comic> results = searcher.searchData(query, data);
         results.sort(sorter);
         return results;
     }
