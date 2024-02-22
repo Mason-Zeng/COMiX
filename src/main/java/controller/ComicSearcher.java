@@ -10,17 +10,18 @@ import controller.sort.DefaultSorter;
 
 public class ComicSearcher {
 
-    private ArrayList<Comic> data;
+    private List<Comic> data;
     private Comparator<Comic> sorter;
     private Searcher searcher;
 
-    public ComicSearcher(){
+    public ComicSearcher(List<Comic> data){
         this.sorter = new DefaultSorter();
         this.searcher = new PartialSearch();
+        this.data = data;
     }
 
-    public List<Comic> search(String query){
-        List<Comic> results = searcher.searchData(query, data);
+    public List<Comic> search(String query, String input){
+        List<Comic> results = searcher.searchData(query, data, input);
         results.sort(sorter);
         return results;
     }

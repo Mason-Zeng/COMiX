@@ -1,14 +1,14 @@
 package controller;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Comic {
     private String title;
     private Volume volume;
     private int issueNum;
-    private Date pub_date;
+    private LocalDate pub_date;
     private List<Creator> creators;
     private List<Character> characters;
     private String description;
@@ -34,7 +34,7 @@ public class Comic {
         return issueNum;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return pub_date;
     }
 

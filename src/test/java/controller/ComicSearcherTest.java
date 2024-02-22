@@ -3,8 +3,11 @@ package controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import controller.search.ExactSearch;
@@ -14,12 +17,20 @@ import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
 
 public class ComicSearcherTest {
+
+    public static List<Comic> data;
+
+    @BeforeAll
+    public static void loadComicData(){
+        data = new ArrayList<>();
+    }
+
     @Test
     public void testSetSorterToPubDate(){
         //Setup
         Comparator<Comic> sorter = new PublicationDateSorter();
         Comparator<Comic> expected = sorter;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter);
@@ -34,7 +45,7 @@ public class ComicSearcherTest {
         //Setup
         Comparator<Comic> sorter = new DefaultSorter();
         Comparator<Comic> expected = sorter;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         Comparator<Comic> actual = comicSearcher.getSorter();
@@ -50,7 +61,7 @@ public class ComicSearcherTest {
         Comparator<Comic> sorter1 = new PublicationDateSorter();
         Comparator<Comic> sorter2 = new DefaultSorter();
         Comparator<Comic> expected = sorter2;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter1);
@@ -67,7 +78,7 @@ public class ComicSearcherTest {
         Comparator<Comic> sorter1 = new PublicationDateSorter();
         Comparator<Comic> sorter2 = new DefaultSorter();
         Comparator<Comic> unexpected = sorter2;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter1);
@@ -82,7 +93,7 @@ public class ComicSearcherTest {
         //Setup
         Searcher searcher = new PartialSearch();
         Searcher expected = searcher;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         Searcher actual = comicSearcher.getSearcher();
@@ -96,7 +107,7 @@ public class ComicSearcherTest {
         //Setup
         Searcher searcher = new ExactSearch();
         Searcher expected = searcher;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSearcher(searcher);
@@ -112,7 +123,7 @@ public class ComicSearcherTest {
         Searcher searcher1 = new ExactSearch();
         Searcher searcher2 = new PartialSearch();
         Searcher expected = searcher2;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSearcher(searcher1);
@@ -129,7 +140,7 @@ public class ComicSearcherTest {
         Searcher searcher1 = new ExactSearch();
         Searcher searcher2 = new PartialSearch();
         Searcher unexpected = searcher2;
-        ComicSearcher comicSearcher = new ComicSearcher();
+        ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSearcher(searcher1);
