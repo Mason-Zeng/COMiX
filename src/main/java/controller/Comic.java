@@ -1,8 +1,8 @@
 package controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import controller.hierarchy.Publisher;
@@ -13,13 +13,13 @@ public class Comic {
     private String title;
     private Volume volume;
     private int issueNum;
-    private Date pub_date;
+    private LocalDate pub_date;
     private List<Creator> creators;
     private List<Character> characters;
     private String description;
     private BigDecimal value;
 
-    public Comic(String title, int issueNum, String description, BigDecimal value, Date pubDate) {
+    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
         this.title = title;
         this.issueNum = issueNum;
         this.description = description;
@@ -56,7 +56,7 @@ public class Comic {
         return issueNum;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return pub_date;
     }
 
