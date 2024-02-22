@@ -1,6 +1,7 @@
 package controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,19 +16,31 @@ public class Comic {
     private BigDecimal value;
 
     public Comic() {
-        
-    }    
-
-    public Publisher getPublisher() {
-        return volume.getPublisher();
-    }
+        creators = new ArrayList<>();
+    }   
 
     public String getTitle() {
         return title;
     }
 
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public Series getSeries() {
+        return volume.getSeries();
+    }
+
+    public Publisher getPublisher() {
+        return volume.getPublisher();
+    }
+
+    public String getSeriesTitle() {
+        return getSeries().getSeriesTitle();
+    }
+
     public int getVolumeNumber() {
-        return volume.getNumber();
+        return volume.getVolumeNumber();
     }
 
     public int getIssueNumber() {
