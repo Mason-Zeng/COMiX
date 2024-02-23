@@ -111,4 +111,21 @@ public class PartialSearchTest {
             assertEquals(expected.get(i), actual.get(i));
         }
     }
+
+    @Test
+    public void testSearchCreator(){
+        //Setup
+        input = "creator";
+        query = "Stan Lee";
+        List<Comic> expected = new ArrayList<>();
+        
+        //Invoke
+        List<Comic> actual = partialSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
 }
