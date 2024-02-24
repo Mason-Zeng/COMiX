@@ -81,4 +81,8 @@ public class Comic {
     public BigDecimal getValue() {
         return value;
     }
+
+    public void setVolume(Volume vol) {
+        this.volume = vol;
+    }
 }
