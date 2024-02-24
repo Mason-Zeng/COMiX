@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 public class Creator {
     private String name;
