@@ -33,10 +33,19 @@ public class Publisher implements ComicHolder {
     
     public void addSeries(Series series) {
         this.series.put(series.getSeriesTitle(), series);
+        series.setPublisher(this);
     }
 
     public void delSeries(Series series) {
         this.series.remove(series.getSeriesTitle());
+    }
+
+    public Series getSeries(String name) {
+        return series.get(name);
+    }
+
+    public boolean seriesExists(String name) {
+        return series.containsKey(name);
     }
 
     @Override
@@ -63,5 +72,6 @@ public class Publisher implements ComicHolder {
     @Override
     public void delSelf() {
         collection.delPublisher(this);
+        collection = null;
     }
 }

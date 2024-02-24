@@ -23,10 +23,19 @@ public class Collection implements ComicHolder{
 
     public void addPublisher(Publisher publisher) {
         publishers.put(publisher.getName(), publisher);
+        publisher.setCollection(this);
     }
 
     public void delPublisher(Publisher publisher) {
         publishers.remove(publisher.getName());
+    }
+
+    public Publisher getPublisher(String name) {
+        return publishers.get(name);
+    }
+
+    public boolean publisherExists(String name) {
+        return publishers.containsKey(name);
     }
 
     @Override

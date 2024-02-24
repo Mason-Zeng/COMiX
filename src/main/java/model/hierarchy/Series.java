@@ -22,6 +22,10 @@ public class Series implements ComicHolder{
         new Series(name);
         setPublisher(publisher);
     }
+    
+    public String getSeriesTitle() {
+        return name;
+    }
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
@@ -33,14 +37,19 @@ public class Series implements ComicHolder{
 
     public void addVolume(Volume vol) {
         volumes.put(vol.getVolumeNumber(), vol);
+        vol.setSeries(this);
     }
 
     public void delVolume(Volume vol) {
         volumes.remove(vol.getVolumeNumber());
     }
+    
+    public Volume getVolume(Integer vol_num) {
+        return volumes.get(vol_num);
+    }
 
-    public String getSeriesTitle() {
-        return name;
+    public boolean volumeExists(Integer vol_num) {
+        return volumes.containsKey(vol_num);
     }
 
     public BigDecimal getValue() {
@@ -64,5 +73,6 @@ public class Series implements ComicHolder{
     @Override
     public void delSelf() {
         publisher.delSeries(this);
+        publisher = null;
     }
 }

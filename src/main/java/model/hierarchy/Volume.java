@@ -25,6 +25,12 @@ public class Volume implements ComicHolder {
 
   public void addIssue(Comic issue) {
     issues.put(issue.getTitle(), issue);
+    issue.setVolume(this);
+  }
+  
+  public void delIssue(Comic issue) {
+    issues.get(issue.getTitle()).setVolume(null);
+    issues.remove(issue.getTitle());
   }
 
   public void setSeries(Series series) {
@@ -42,6 +48,14 @@ public class Volume implements ComicHolder {
   public int getVolumeNumber() {
     return vol_num;
   }
+
+  public Comic getIssue(String name) {
+    return issues.get(name);
+}
+
+  public boolean issueExists(String name) {
+    return issues.containsKey(name);
+}
 
   @Override
   public BigDecimal getValue() {
@@ -63,6 +77,7 @@ public class Volume implements ComicHolder {
   @Override
   public void delSelf() {
     series.delVolume(this);
+    series = null;
   }
   
 }
