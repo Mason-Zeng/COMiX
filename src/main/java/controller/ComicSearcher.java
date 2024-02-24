@@ -6,6 +6,7 @@ import java.util.List;
 import controller.search.PartialSearch;
 import controller.search.Searcher;
 import controller.sort.DefaultSorter;
+import model.Comic;
 
 public class ComicSearcher {
 

@@ -1,4 +1,4 @@
-package controller.hierarchy;
+package model.hierarchy;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import controller.Comic;
+import model.Comic;
 
 public class Collection implements ComicHolder{
     private String user;

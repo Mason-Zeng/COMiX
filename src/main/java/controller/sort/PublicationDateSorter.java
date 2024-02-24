@@ -3,7 +3,7 @@ package controller.sort;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-import controller.Comic;
+import model.Comic;
 
 public class PublicationDateSorter implements Comparator<Comic>{
 
