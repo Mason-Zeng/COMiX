@@ -1,6 +1,7 @@
 package controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +24,14 @@ public class Comic implements MarkImplement {
     public Comic() {
         creators = new ArrayList<>();
     } 
-    /*This constructor is just for testing purposes. Can be deleted */
-    public Comic(BigDecimal value){
+   public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
+        this.title = title;
+        this.issueNum = issueNum;
+        this.description = description;
         this.value = value;
-    }
+        creators = new ArrayList<>();
+        characters = new ArrayList<>();
+    }   
 
     public String getTitle() {
         return title;

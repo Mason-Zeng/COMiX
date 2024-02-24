@@ -5,19 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
 import controller.Comic;
 
 public class MarkingTest{
+    LocalDate date = LocalDate.of(2020, 1, 8);
 
 
     @Test
     public void testMarkingGrade1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic(value);
+        MarkImplement comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 1);
         comic = new Slab(comic);
         
@@ -35,7 +37,7 @@ public class MarkingTest{
     public void testMarkingGradeGreaterThan1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic(value);
+        MarkImplement comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
         
@@ -52,7 +54,7 @@ public class MarkingTest{
     public void testMarkingInvalid(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic(value);
+        MarkImplement comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 0);
         comic = new Slab(comic);
         
