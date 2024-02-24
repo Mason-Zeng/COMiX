@@ -5,8 +5,9 @@ import java.util.List;
 
 import controller.Comic;
 
-interface ComicHolder {
+public interface ComicHolder {
 	public BigDecimal getValue();
   public int getIssueCount();
   public List<Comic> getIssues();
+  public void delSelf();
 }
