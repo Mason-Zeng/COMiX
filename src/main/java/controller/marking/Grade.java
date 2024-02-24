@@ -2,6 +2,9 @@ package controller.marking;
 
 import java.math.BigDecimal;
 
+/**
+ * 
+ */
 public class Grade extends ComicDecorator{
     private int grade;
 
@@ -16,7 +19,12 @@ public class Grade extends ComicDecorator{
             BigDecimal newVal = comic.getValue().multiply(multiplier);
             return newVal;
         }
-        
+        else if(grade >=2 && grade<= 10){
+            BigDecimal multiplier = new BigDecimal(Math.log10(grade));
+            BigDecimal newVal = comic.getValue().multiply(multiplier);
+            return newVal;
+        }
+        return null;
     }
 
 

@@ -22,7 +22,11 @@ public class Comic implements MarkImplement {
 
     public Comic() {
         creators = new ArrayList<>();
-    }   
+    } 
+    /*This constructor is just for testing purposes. Can be deleted */
+    public Comic(BigDecimal value){
+        this.value = value;
+    }
 
     public String getTitle() {
         return title;
