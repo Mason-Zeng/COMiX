@@ -26,7 +26,15 @@ public class Comic {
         this.value = value;
         creators = new ArrayList<>();
         characters = new ArrayList<>();
-    }   
+    }
+
+    public Comic(Comic other) {
+        new Comic( other.getTitle(), 
+            other.getIssueNumber(), 
+            other.getDescription(), 
+            other.getValue(), 
+            other.getDate());
+    }
 
     public String getTitle() {
         return title;
