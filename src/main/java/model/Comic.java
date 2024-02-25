@@ -22,10 +22,15 @@ public class Comic {
         this.issueNum = issueNum;
         this.description = description;
         this.value = value;
+        this.pub_date = pubDate;
         creators = new ArrayList<>();
         characters = new ArrayList<>();
     }
 
+    /**
+     * Copy constructor
+     * @param other The comic to copy
+     */
     public Comic(Comic other) {
         new Comic( other.getTitle(), 
             other.getIssueNumber(), 
