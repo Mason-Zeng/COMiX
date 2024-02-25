@@ -97,7 +97,7 @@ public class ComicOutput {
 
     @Override
     public String toString() {
-        return "Comic{" +
+        return "Comic {" +
                 "series='" + series + '\'' +
                 ", issue=" + issue +
                 ", fullTitle='" + fullTitle + '\'' +
@@ -157,10 +157,13 @@ public class ComicOutput {
         List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
 
         // Print the contents of the comics list
-        // for (Comic comic : comics) {
-        //     System.out.println(comic);
-        // }
-        System.out.println(comics);
+        for (ComicOutput comic : comics) 
+        {
+            System.out.println("\n");
+            System.out.println(comic);
+        }
+
+        // System.out.println(comics);
     }
 
 }
