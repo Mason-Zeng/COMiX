@@ -32,7 +32,7 @@ public class Comic {
      * @param other The comic to copy
      */
     public Comic(Comic other) {
-        new Comic( other.getTitle(), 
+        this( other.getTitle(), 
             other.getIssueNumber(), 
             other.getDescription(), 
             other.getValue(), 
