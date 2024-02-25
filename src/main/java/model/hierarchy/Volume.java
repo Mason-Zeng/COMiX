@@ -79,5 +79,9 @@ public class Volume implements ComicHolder {
     series.delVolume(this);
     series = null;
   }
-  
+
+  @Override
+  public List<ComicHolder> getChildren() {
+    return new ArrayList<>();
+  }
 }

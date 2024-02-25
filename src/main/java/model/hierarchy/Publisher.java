@@ -74,4 +74,9 @@ public class Publisher implements ComicHolder {
         collection.delPublisher(this);
         collection = null;
     }
+
+    @Override
+    public List<ComicHolder> getChildren() {
+        return new ArrayList<>(series.values());
+    }
 }

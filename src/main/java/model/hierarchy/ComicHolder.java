@@ -10,4 +10,5 @@ public interface ComicHolder {
   public int getIssueCount();
   public List<Comic> getIssues();
   public void delSelf();
+  public List<ComicHolder> getChildren();
 }

@@ -64,4 +64,9 @@ public class Collection implements ComicHolder{
         throw new UnsupportedOperationException("Cannot Delete Collection");
     }
     
+    @Override
+    public List<ComicHolder> getChildren() {
+        return new ArrayList<>(publishers.values());
+    }
+
 }
