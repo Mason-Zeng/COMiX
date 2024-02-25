@@ -194,9 +194,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Comic {
+public class ComicOutput {
     private String series;
     private String issue;
     private String fullTitle;
@@ -301,51 +302,189 @@ public class Comic {
                 '}';
     }
 
-    public Comic() {
+    public ComicOutput() {
     }
 
     // Getters and setters
     // Implement these according to your requirements
 
-    public static List<Comic> loadFromCSV(String csvFile) {
-        List<Comic> comics = new ArrayList<>();
+    // public static List<Comic> loadFromCSV(String csvFile) {
+    //     List<Comic> comics = new ArrayList<>();
+
+    //     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+    //         // Skip the header line
+    //         br.readLine();
+
+    //         String line;
+    //         while ((line = br.readLine()) != null) {
+    //             // Split the line into fields
+    //             String[] data = line.split("");
+
+    //             // Check if the split data has enough elements
+    //             if (data.length < 8) {
+    //                 // Log an error or handle the incomplete line appropriately
+    //                 continue; // Skip this line and proceed to the next one
+    //             }
+
+    //             // Create a Comic object and populate its attributes
+    //             Comic comic = new Comic();
+    //             comic.setSeries(data[0]);
+
+    //             // Parse and set the issue number without quotes
+    //             String issueNumber = data[1].replaceAll("\"", "").trim();
+    //             comic.setIssue(issueNumber);
+
+    //             comic.setFullTitle(data[2]);
+    //             comic.setVariantDescription(data[3]);
+    //             comic.setPublisher(data[4]);
+
+    //             // Concatenate releaseDate and format into a single releaseDate attribute
+    //             String releaseDate = data[5] + ", " + data[6].trim();
+    //             comic.setReleaseDate(releaseDate);
+
+    //             comic.setFormat(data[7]);
+
+    //             // Set the addedDate and creators with appropriate values
+    //             comic.setAddedDate(data[8]);  // Check if this index is correct
+    //             // comic.setCreators(data[8]);   // Check if this index is correct
+
+    //             // Add the Comic object to the ArrayList
+    //             comics.add(comic);
+    //         }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return comics;
+    // }
+
+    // // Main method for testing
+    // public static void main(String[] args) {
+    //     String csvFile = "data/comics.csv";
+    //     List<Comic> comics = Comic.loadFromCSV(csvFile);
+
+    //     // Print the contents of the comics list
+    //     for (Comic comic : comics) {
+    //         System.out.println(comic);
+    //     }
+
+    //     // Now comics list contains all the Comic objects from the CSV file
+    //     // You can use it as needed
+    // }
+
+
+    // public static List<Comic> loadFromCSV(String csvFile) {
+    //     List<Comic> comics = new ArrayList<>();
+    
+    //     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+    //         String line;
+    //         while ((line = br.readLine()) != null) {
+    //             // Split the line into fields using pipe as the delimiter
+    //             String[] data = line.split("\\|");
+    
+    //             // Check if the split data has enough elements
+    //             // if (data.length < 9) {
+    //             //     // Log an error or handle the incomplete line appropriately
+    //             //     System.out.println("Incomplete data: " + line);
+    //             //     continue; // Skip this line and proceed to the next one
+    //             // }
+    
+    //             // Create a Comic object and populate its attributes
+    //             Comic comic = new Comic();
+    //             comic.setSeries(data[0].trim());
+    //             comic.setIssue(data[1].trim());
+    //             comic.setFullTitle(data[2].trim());
+    //             comic.setVariantDescription(data[3].trim());
+    //             comic.setPublisher(data[4].trim());
+    //             comic.setReleaseDate(data[5].trim());
+    //             comic.setFormat(data[6].trim());
+    //             comic.setAddedDate(data[7].trim());
+    //             comic.setCreators(data[8].trim());
+    
+    //             // Add the Comic object to the ArrayList
+    //             comics.add(comic);
+    //         }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    
+    //     return comics;
+    // }
+
+    // public static List<Comic> loadFromCSV(String csvFile) {
+    //     List<Comic> comics = new ArrayList<>();
+    
+    //     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+    //         String line;
+    //         while ((line = br.readLine()) != null) {
+    //             // Split the line into fields using pipe as the delimiter
+    //             String[] data = line.split("\\|");
+
+    //             System.out.println("Data array: " + Arrays.toString(data));
+    
+    //             // Check if the split data has enough elements
+    //             if (data.length < 9) {
+    //                 // Create a Comic object for the error message
+    //                 Comic errorComic = new Comic();
+    //                 errorComic.setSeries("Incomplete data: " + line);
+    //                 // Add the error Comic object to the ArrayList
+    //                 comics.add(errorComic);
+    //                 continue; // Skip this line and proceed to the next one
+    //             }
+    
+    //             // Create a Comic object and populate its attributes
+    //             Comic comic = new Comic();
+    //             comic.setSeries(data[0].trim());
+    //             comic.setIssue(data[1].trim().isEmpty() ? "N/A" : data[1].trim());
+    //             comic.setFullTitle(data[2].trim().isEmpty() ? "N/A" : data[2].trim());
+    //             comic.setVariantDescription(data[3].trim().isEmpty() ? "N/A" : data[3].trim());
+    //             comic.setPublisher(data[4].trim().isEmpty() ? "N/A" : data[4].trim());
+    //             comic.setReleaseDate(data[5].trim().isEmpty() ? "N/A" : data[5].trim());
+    //             comic.setFormat(data[6].trim().isEmpty() ? "N/A" : data[6].trim());
+    //             comic.setAddedDate(data[7].trim().isEmpty() ? "N/A" : data[7].trim());
+    //             comic.setCreators(data[8].trim().isEmpty() ? "N/A" : data[8].trim());
+
+    //             // Add the Comic object to the ArrayList
+    //             comics.add(comic);
+    //         }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    
+    //     return comics;
+    // }
+
+    // public static void main(String[] args) {
+    //     String csvFile = "data/comics.csv";
+    //     List<Comic> comics = Comic.loadFromCSV(csvFile);
+
+    //     // Print the contents of the comics list
+    //     // for (Comic comic : comics) {
+    //     //     System.out.println(comic);
+    //     // }
+    //     System.out.println(comics);
+    // }
+
+    public static List<ComicOutput> loadFromCSV(String csvFile) {
+        List<ComicOutput> comics = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            // Skip the header line
-            br.readLine();
-
             String line;
             while ((line = br.readLine()) != null) {
-                // Split the line into fields
-                String[] data = line.split(",");
-
-                // Check if the split data has enough elements
-                if (data.length < 8) {
-                    // Log an error or handle the incomplete line appropriately
-                    continue; // Skip this line and proceed to the next one
-                }
+                // Split the line into fields using comma as the delimiter
+                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1); // Split by comma, ignoring commas within quotes
 
                 // Create a Comic object and populate its attributes
-                Comic comic = new Comic();
-                comic.setSeries(data[0]);
-
-                // Parse and set the issue number without quotes
-                String issueNumber = data[1].replaceAll("\"", "").trim();
-                comic.setIssue(issueNumber);
-
-                comic.setFullTitle(data[2]);
-                comic.setVariantDescription(data[3]);
-                comic.setPublisher(data[4]);
-
-                // Concatenate releaseDate and format into a single releaseDate attribute
-                String releaseDate = data[5] + ", " + data[6].trim();
-                comic.setReleaseDate(releaseDate);
-
-                comic.setFormat(data[7]);
-
-                // Set the addedDate and creators with appropriate values
-                comic.setAddedDate(data[8]);  // Check if this index is correct
-                // comic.setCreators(data[8]);   // Check if this index is correct
+                ComicOutput comic = new ComicOutput();
+                comic.setSeries(getValueOrDefault(data, 0));
+                comic.setIssue(getValueOrDefault(data, 1));
+                comic.setFullTitle(getValueOrDefault(data, 2));
+                comic.setVariantDescription(getValueOrDefault(data, 3));
+                comic.setPublisher(getValueOrDefault(data, 4));
+                comic.setReleaseDate(getValueOrDefault(data, 5));
+                comic.setFormat(getValueOrDefault(data, 6));
+                comic.setAddedDate(getValueOrDefault(data, 7));
+                comic.setCreators(getValueOrDefault(data, 8));
 
                 // Add the Comic object to the ArrayList
                 comics.add(comic);
@@ -357,18 +496,22 @@ public class Comic {
         return comics;
     }
 
+    // Helper method to get value from array with default if index is out of bounds
+    //this is just for in case there is an error getting values/attributes for the comic
+    private static String getValueOrDefault(String[] array, int index) {
+        return (index >= 0 && index < array.length) ? array[index].trim() : "N/A";
+    }
+
     // Main method for testing
     public static void main(String[] args) {
         String csvFile = "data/comics.csv";
-        List<Comic> comics = Comic.loadFromCSV(csvFile);
+        List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
 
         // Print the contents of the comics list
-        for (Comic comic : comics) {
-            System.out.println(comic);
-        }
-
-        // Now comics list contains all the Comic objects from the CSV file
-        // You can use it as needed
+        // for (Comic comic : comics) {
+        //     System.out.println(comic);
+        // }
+        System.out.println(comics);
     }
 
 }
