@@ -50,7 +50,8 @@ public class CollectionManager {
     /**
      * This removes a comic from
      * the personal collection,
-     * then prunes the collection.
+     * then prunes the publisher
+     * it belongs to.
      * 
      * This assumes the comic 
      * exists within the hierarchy
@@ -59,9 +60,9 @@ public class CollectionManager {
      * @param comic
      */
     public void delIssue(Comic comic) {
-        
+        Publisher pub = comic.getPublisher();
         comic.getVolume().delIssue(comic);
-        prune(collection);
+        prune(pub);
     }
 
     /**
