@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ComicOutput {
@@ -155,15 +156,28 @@ public class ComicOutput {
     public static void main(String[] args) {
         String csvFile = "data/comics.csv";
         List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
+        
+        // Print the contents of the comics item by item
+        // for (ComicOutput comic : comics) 
+        // {
+        //     System.out.println("\n");
+        //     System.out.println(comic);
+        // }
 
-        // Print the contents of the comics list
-        for (ComicOutput comic : comics) 
-        {
-            System.out.println("\n");
-            System.out.println(comic);
-        }
+        System.out.println(comics); //simple total printing 
+        
+        //this is an example for if we need to reach certain records
 
-        // System.out.println(comics);
+        // Iterator<ComicOutput> iterator = comics.iterator();
+        // while (iterator.hasNext()) {
+        //     ComicOutput comic = iterator.next();
+        //     // Access individual ComicOutput object
+        //     // Example: Access publisher of each comic
+        //     String publisher = comic.getPublisher();
+        //     System.out.println("Publisher: " + publisher);
+        // }
+
+        
     }
 
 }
