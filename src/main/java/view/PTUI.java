@@ -14,8 +14,9 @@ public class PTUI {
        System.out.println("Welcome to Team 7 COMiX Application!");
        
        System.out.println("Press \"P\" for personal collection. Press \"D\" to see the database of comics");
-       Scanner collection = new Scanner(System.in);
-       String collectionInput = collection.nextLine();
+       Scanner scan = new Scanner(System.in);
+       String collectionInput = scan.nextLine();
+       collectionInput = collectionInput.toUpperCase();
        if(collectionInput.equals("D")){
             /*
              * Choose search algorithm
@@ -41,38 +42,45 @@ public class PTUI {
         BigDecimal value = new BigDecimal(6);
         LocalDate date = LocalDate.of(2020, 1, 8);
         Marking comic = new Comic("title", 3, "description", value, date);
+        
+        try{
+            int flag = 0;
+            while(flag == 0){
+                System.out.println("Give the comment a grade. *Number from 1-10*");
+                Scanner gradeScan = new Scanner(System.in);
+                Integer gradeInput = gradeScan.nextInt();
 
-        int flag = 0;
-        while(flag == 0){
-            System.out.println("Give the comment a grade. *Number from 1-10*");
-            Scanner grade = new Scanner(System.in);
-            Integer gradeInput = grade.nextInt();
-
-            if(gradeInput == null){
-                System.out.println("Please choose a number from 1-10");
-            }
-            else{
-                comic = new Grade(comic, gradeInput);
-                Scanner slab = new Scanner(System.in);
-                String slabChoice = slab.nextLine();
-                slabChoice= slabChoice.toUpperCase();
-                
-                int flag1 = 0;
-                while(flag1 == 0){
-                    System.out.println("Would you like to slab this comic? Yes(Y) or No(N)");
-                    if(slabChoice.equals("N")){
-                        return comic.getValue();
-                    }
-                    else if(slabChoice.equals("Y")){
-                        comic = new Slab(comic);
-                        return comic.getValue();
-                    }
-                    else{
-                        System.out.println("Please either choose Yes(Y) or No(N)");
+                if(gradeInput == null){
+                    System.out.println("Please choose a number from 1-10");
+                }
+                else{
+                    comic = new Grade(comic, gradeInput);
+                    Scanner slabScan = new Scanner(System.in);
+                    String slabChoice = slabScan.nextLine();
+                    slabChoice= slabChoice.toUpperCase();
+                    
+                    int flag1 = 0;
+                    while(flag1 == 0){
+                        System.out.println("Would you like to slab this comic? Yes(Y) or No(N)");
+                        if(slabChoice.equals("N")){
+                            return comic.getValue();
+                        }
+                        else if(slabChoice.equals("Y")){
+                            comic = new Slab(comic);
+                            return comic.getValue();
+                        }
+                        else{
+                            System.out.println("Please either choose Yes(Y) or No(N)");
+                        }
                     }
                 }
             }
         }
+        
+        catch(InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a valid input");
+        }
+        
         return null;
     }
 }
