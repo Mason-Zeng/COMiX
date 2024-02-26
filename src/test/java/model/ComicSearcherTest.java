@@ -192,4 +192,20 @@ public class ComicSearcherTest {
         //Analyze
         assertNotEquals(unexpected, actual);
     }
+
+    @Test
+    public void testSearchPartial(){
+        //Setup
+        ComicSearcher comicSearcher = new ComicSearcher(data);
+        List<Comic> expected = new ArrayList<>();
+        
+        //Invoke
+        List<Comic> actual = comicSearcher.search("Spider-MAN", "series_title");
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
 }
