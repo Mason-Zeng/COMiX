@@ -10,6 +10,7 @@ import model.Comic;
 
 public class Publisher implements ComicHolder {
     private String name;
+
     private Map<String, Series> series;
     private Collection collection;
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Comic;
 
+
 public interface ComicHolder {
   /**
    * Get the value of all issues
