@@ -3,9 +3,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import model.Comic;
+import model.marking.Grade;
 import model.marking.Marking;
+import model.marking.Slab;
 
 public class PTUI {
+    @SuppressWarnings({ "resource" })
     public static void main(String[] args) 
     { 
        System.out.println("Welcome to Team 7 COMiX Application!");
@@ -30,7 +33,9 @@ public class PTUI {
        }
        
     }
+
     
+    @SuppressWarnings("unused")
     public BigDecimal markingSystem(){
         //DELETE THIS TEST DATA WHEN FULLY IMPLEMENTED
         BigDecimal value = new BigDecimal(6);
@@ -41,8 +46,32 @@ public class PTUI {
         while(flag == 0){
             System.out.println("Give the comment a grade. *Number from 1-10*");
             Scanner grade = new Scanner(System.in);
-            int gradeInput = grade.nextInt();
-            
+            Integer gradeInput = grade.nextInt();
+
+            if(gradeInput == null){
+                System.out.println("Please choose a number from 1-10");
+            }
+            else{
+                comic = new Grade(comic, gradeInput);
+                Scanner slab = new Scanner(System.in);
+                String slabChoice = slab.nextLine();
+                slabChoice= slabChoice.toUpperCase();
+                
+                int flag1 = 0;
+                while(flag1 == 0){
+                    System.out.println("Would you like to slab this comic? Yes(Y) or No(N)");
+                    if(slabChoice.equals("N")){
+                        return comic.getValue();
+                    }
+                    else if(slabChoice.equals("Y")){
+                        comic = new Slab(comic);
+                        return comic.getValue();
+                    }
+                    else{
+                        System.out.println("Please either choose Yes(Y) or No(N)");
+                    }
+                }
+            }
         }
         return null;
     }
