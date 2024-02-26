@@ -1,25 +1,26 @@
 package controller.sort;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
 import controller.Comic;
+import controller.hierarchy.Volume;
 
 public class DefaultSorterTest {
     
     @Test
     public void testCompareSeriesDifferent1(){
         //Setup
-        int expected = 1;
-
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Spider Man; 
-                                whatever for the rest */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk; 
-                                whatever for the rest */);
+        Comic comic1 = new Comic("Spider Man", 1, "Amazing and a Spider!", 
+                                new BigDecimal("2.00"), LocalDate.parse("2022-01-07"), new Volume(2));
+        Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2));
 
         Comparator<Comic> comparer = new DefaultSorter();
         
@@ -27,19 +28,16 @@ public class DefaultSorterTest {
         int actual = comparer.compare(comic1, comic2);
         
         //Analyze
-        assertEquals(expected, actual);
+        assertTrue(actual > 0);
     }
 
     @Test
     public void testCompareSeriesDifferent2(){
         //Setup
-        int expected = -1;
-
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Incredible Mulk; 
-                                whatever for the rest */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk; 
-                                whatever for the rest */);
+        Comic comic1 = new Comic("Incredible Bulk", 1, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2));
+        Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2));
 
         Comparator<Comic> comparer = new DefaultSorter();
 
@@ -47,19 +45,16 @@ public class DefaultSorterTest {
         int actual = comparer.compare(comic1, comic2);
 
         //Analyze
-        assertEquals(expected, actual);
+        assertTrue(actual < 0);
     }
 
     @Test
     public void testCompareSameSeriesDiffVolume1(){
         //Setup
-        int expected = 1;
-
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 1 */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 2 */);
+        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
+        Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2));
 
         Comparator<Comic> comparer = new DefaultSorter();
         
@@ -67,19 +62,16 @@ public class DefaultSorterTest {
         int actual = comparer.compare(comic1, comic2);
         
         //Analyze
-        assertEquals(expected, actual);
+        assertTrue(actual < 0);
     }
 
     @Test
     public void testCompareSameSeriesDiffVolume2(){
         //Setup
-        int expected = -1;
-
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 5 */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 3 */);
+        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                                    new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(5));
+        Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                            new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(3));
 
         Comparator<Comic> comparer = new DefaultSorter();
         
@@ -87,21 +79,16 @@ public class DefaultSorterTest {
         int actual = comparer.compare(comic1, comic2);
         
         //Analyze
-        assertEquals(expected, actual);
+        assertTrue(actual > 0);
     }
 
     @Test
     public void testCompareIssueNumberDiff1(){
         //Setup
-        int expected = 1;
-
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 1
-                                Issue Number: 5 */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 1
-                                Issue Number: 28 */);
+        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
+        Comic comic2 = new Comic("Incredible Hulk", 28, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
 
         Comparator<Comic> comparer = new DefaultSorter();
         
@@ -109,21 +96,16 @@ public class DefaultSorterTest {
         int actual = comparer.compare(comic1, comic2);
         
         //Analyze
-        assertEquals(expected, actual);
+        assertTrue(actual < 0);
     }
 
     @Test
     public void testCompareIssueNumberDiff2(){
             //Setup
-            int expected = -1;
-
-            //TODO fix the constructor when it is finished
-            Comic comic1 = new Comic(/*Series Title: Incredible Hulk
-                                    Volume Number: 1
-                                    Issue Number: 9013 */);
-            Comic comic2 = new Comic(/*Series Title: Incredible Hulk
-                                    Volume Number: 1
-                                    Issue Number: 2 */);
+            Comic comic1 = new Comic("Incredible Hulk", 9013, "Super strong, and green!", 
+                                    new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
+            Comic comic2 = new Comic("Incredible Hulk", 2, "Super strong, and green!", 
+                                    new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
     
             Comparator<Comic> comparer = new DefaultSorter();
             
@@ -131,7 +113,7 @@ public class DefaultSorterTest {
             int actual = comparer.compare(comic1, comic2);
             
             //Analyze
-            assertEquals(expected, actual);
+            assertTrue(actual > 0);
     }
 
     @Test
@@ -139,13 +121,10 @@ public class DefaultSorterTest {
         //Setup
         int expected = 0;
 
-        //TODO fix the constructor when it is finished
-        Comic comic1 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 1
-                                Issue Number: 1 */);
-        Comic comic2 = new Comic(/*Series Title: Incredible Hulk
-                                Volume Number: 1
-                                Issue Number: 1 */);
+        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
+        Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1));
 
         Comparator<Comic> comparer = new DefaultSorter();
         

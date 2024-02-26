@@ -2,7 +2,12 @@ package controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import controller.hierarchy.Publisher;
+import controller.hierarchy.Series;
+import controller.hierarchy.Volume;
 
 public class Comic {
     private String title;
@@ -14,20 +19,43 @@ public class Comic {
     private String description;
     private BigDecimal value;
 
-    public Comic() {
-        
-    }    
-
-    public Publisher getPublisher() {
-        return volume.getPublisher();
-    }
+    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
+        this.title = title;
+        this.issueNum = issueNum;
+        this.description = description;
+        this.value = value;
+        this.volume = volume;
+        this.pub_date = pubDate;
+        creators = new ArrayList<>();
+        characters = new ArrayList<>();
+    }   
 
     public String getTitle() {
         return title;
     }
 
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public Series getSeries() {
+        return volume.getSeries();
+    }
+
+    public Publisher getPublisher() {
+        return volume.getPublisher();
+    }
+
+    public String getPublisherName() {
+        return getPublisher().getName();
+    }
+
+    public String getSeriesTitle() {
+        return getSeries().getSeriesTitle();
+    }
+
     public int getVolumeNumber() {
-        return volume.getNumber();
+        return volume.getVolumeNumber();
     }
 
     public int getIssueNumber() {

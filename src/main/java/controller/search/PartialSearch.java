@@ -2,7 +2,6 @@ package controller.search;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import controller.Comic;
@@ -17,7 +16,12 @@ public class PartialSearch implements Searcher{
         switch(input){
 
             case "series_title":
-            throw new UnsupportedOperationException("Incomplete method, missing series title in Comic class");
+            for (Comic comic : data){
+                String series = comic.getSeriesTitle();
+                if (series.contains(query)){
+                    comics.add(comic);
+                }
+            }
 
             case "issue_number":
             for (Comic comic: data){
@@ -36,7 +40,12 @@ public class PartialSearch implements Searcher{
             }
 
             case "publisher":
-            throw new UnsupportedOperationException("Incomplete method, missing publisher in Comic class");
+            for (Comic comic : data){
+                String name = comic.getPublisherName();
+                if (name.contains(query)){
+                    comics.add(comic);
+                }
+            }
 
             case "date":
             for (Comic comic : data){
