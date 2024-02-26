@@ -1,4 +1,4 @@
-package controller.search;
+package model.search;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

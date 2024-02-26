@@ -1,7 +1,9 @@
-package controller.search;
+package model.search;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import controller.Comic;
+import controller.hierarchy.Volume;
 
 public class ExactSearchTest {
     
@@ -21,6 +24,12 @@ public class ExactSearchTest {
     public static void loadData(){
         data = new ArrayList<>();
         // TODO add comics into data once Comic class is done
+        data.add(new Comic("Amazing Spider-man", 5, "Amazing and a spider?!", 
+                BigDecimal.valueOf(32.59), LocalDate.of(2022, 2, 22), new Volume(2)));
+        data.add(new Comic("The Amazing Spider-man", 33, "Amazing and a spider?! Now with a THE!", 
+                BigDecimal.valueOf(32.59), LocalDate.of(2022, 5, 22), new Volume(2)));
+        data.add(new Comic("Incredible Shulk", 22, "Green, mean, and he's really feeling it!", 
+                BigDecimal.valueOf(32.59), LocalDate.of(2022, 2, 29), new Volume(5)));
         
         exactSearch = new ExactSearch();
     }

@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -10,11 +10,12 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controller.search.ExactSearch;
-import controller.search.PartialSearch;
-import controller.search.Searcher;
-import controller.sort.DefaultSorter;
-import controller.sort.PublicationDateSorter;
+import controller.Comic;
+import model.search.ExactSearch;
+import model.search.PartialSearch;
+import model.search.Searcher;
+import model.sort.DefaultSorter;
+import model.sort.PublicationDateSorter;
 
 public class ComicSearcherTest {
 

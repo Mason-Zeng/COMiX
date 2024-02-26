@@ -1,4 +1,4 @@
-package controller.search;
+package model.search;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,26 +7,27 @@ import java.util.List;
 import controller.Comic;
 import controller.Creator;
 
-public class PartialSearch implements Searcher{
+public class ExactSearch implements Searcher{
 
     @Override
     public List<Comic> searchData(String query, List<Comic> data, String input) {
         query = query.toLowerCase();
         List<Comic> comics = new ArrayList<>();
-        switch(input){
 
+        switch (input){
+            
             case "series_title":
             for (Comic comic : data){
                 String series = comic.getSeriesTitle();
-                if (series.contains(query)){
+                if (query.equals(series)){
                     comics.add(comic);
                 }
             }
 
             case "issue_number":
             for (Comic comic: data){
-                int issueNumber = comic.getIssueNumber();
-                if (query.contains(String.valueOf(issueNumber))){
+                int issue_number = comic.getIssueNumber();
+                if (query.equals(String.valueOf(issue_number))){
                     comics.add(comic);
                 }
             }
@@ -34,7 +35,7 @@ public class PartialSearch implements Searcher{
             case "story_title":
             for (Comic comic: data){
                 String title = comic.getTitle();
-                if (title.contains(query)){
+                if (query.equals(title)){
                     comics.add(comic);
                 }
             }
@@ -42,7 +43,7 @@ public class PartialSearch implements Searcher{
             case "publisher":
             for (Comic comic : data){
                 String name = comic.getPublisherName();
-                if (name.contains(query)){
+                if (query.equals(name)){
                     comics.add(comic);
                 }
             }
@@ -50,7 +51,7 @@ public class PartialSearch implements Searcher{
             case "date":
             for (Comic comic : data){
                 LocalDate date = comic.getDate();
-                if (query.contains(date.toString())){
+                if (query.equals(date.toString())){
                     comics.add(comic);
                 }
             }
@@ -58,8 +59,8 @@ public class PartialSearch implements Searcher{
             case "creator":
             for (Comic comic : data){
                 List<Creator> creators = comic.getCreators();
-                for (Creator creator : creators){
-                    if (query.contains(creator.getName())){
+                for (Creator creator: creators){
+                    if (query.equals(creator.getName())){
                         comics.add(comic);
                         break;
                     }
@@ -70,10 +71,10 @@ public class PartialSearch implements Searcher{
         return comics;
     }
     
-    // Any 2 instances of Partial Search are considered equal
+    // Any 2 instances of ExactSearch are considered equal
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof PartialSearch) ? true : false;
+        return (obj instanceof ExactSearch) ? true : false;
     }
 
 }

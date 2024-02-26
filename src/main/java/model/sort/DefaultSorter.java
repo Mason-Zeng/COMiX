@@ -1,4 +1,4 @@
-package controller.sort;
+package model.sort;
 
 import java.util.Comparator;
 

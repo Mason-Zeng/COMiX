@@ -1,4 +1,4 @@
-package controller.sort;
+package model.sort;
 
 import java.time.LocalDate;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package controller.sort;
+package model.sort;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
