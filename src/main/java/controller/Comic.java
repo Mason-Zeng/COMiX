@@ -81,4 +81,13 @@ public class Comic {
     public BigDecimal getValue() {
         return value;
     }
+
+    public void addCreator(Creator creator){
+        creators.add(creator);
+    }
+
+    @Override
+    public String toString() {
+        return title + ", " + issueNum;
+    }
 }

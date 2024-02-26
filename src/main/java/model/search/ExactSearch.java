@@ -19,10 +19,12 @@ public class ExactSearch implements Searcher{
             case "series_title":
             for (Comic comic : data){
                 String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
                 if (query.equals(series)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "issue_number":
             for (Comic comic: data){
@@ -31,22 +33,27 @@ public class ExactSearch implements Searcher{
                     comics.add(comic);
                 }
             }
+            break;
 
             case "story_title":
             for (Comic comic: data){
                 String title = comic.getTitle();
+                title = title.toLowerCase();
                 if (query.equals(title)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "publisher":
             for (Comic comic : data){
                 String name = comic.getPublisherName();
+                name = name.toLowerCase();
                 if (query.equals(name)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "date":
             for (Comic comic : data){
@@ -55,17 +62,19 @@ public class ExactSearch implements Searcher{
                     comics.add(comic);
                 }
             }
+            break;
 
             case "creator":
             for (Comic comic : data){
                 List<Creator> creators = comic.getCreators();
                 for (Creator creator: creators){
-                    if (query.equals(creator.getName())){
+                    if (query.equals(creator.getName().toLowerCase())){
                         comics.add(comic);
                         break;
                     }
                 }
             }
+            break;
         }
 
         return comics;

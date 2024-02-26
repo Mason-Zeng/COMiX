@@ -1,4 +1,4 @@
-package controller.search;
+package model.search;
 
 import java.util.List;
 

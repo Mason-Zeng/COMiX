@@ -10,8 +10,9 @@ public class Publisher implements ComicHolder {
     private String name;
     private List<Series> series;
 
-    public Publisher() {
+    public Publisher(String name) {
         series = new ArrayList<>();
+        this.name = name;
     }
 
     public String getName() {

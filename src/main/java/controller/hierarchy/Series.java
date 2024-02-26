@@ -11,6 +11,10 @@ public class Series implements ComicHolder{
     private Publisher publisher;
     private List<Volume> volumes;
 
+    public Series(String name){
+        this.name = name;
+    }
+
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }

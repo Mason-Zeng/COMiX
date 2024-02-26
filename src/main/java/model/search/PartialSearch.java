@@ -18,53 +18,64 @@ public class PartialSearch implements Searcher{
             case "series_title":
             for (Comic comic : data){
                 String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
                 if (series.contains(query)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "issue_number":
             for (Comic comic: data){
                 int issueNumber = comic.getIssueNumber();
-                if (query.contains(String.valueOf(issueNumber))){
+                if (String.valueOf(issueNumber).contains(query)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "story_title":
             for (Comic comic: data){
                 String title = comic.getTitle();
+                title = title.toLowerCase();
                 if (title.contains(query)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "publisher":
             for (Comic comic : data){
                 String name = comic.getPublisherName();
+                name = name.toLowerCase();
                 if (name.contains(query)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "date":
             for (Comic comic : data){
                 LocalDate date = comic.getDate();
-                if (query.contains(date.toString())){
+                if (date.toString().contains(query)){
                     comics.add(comic);
                 }
             }
+            break;
 
             case "creator":
             for (Comic comic : data){
                 List<Creator> creators = comic.getCreators();
                 for (Creator creator : creators){
-                    if (query.contains(creator.getName())){
+                    String name = creator.getName();
+                    name = name.toLowerCase();
+                    if (name.contains(query)){
                         comics.add(comic);
                         break;
                     }
                 }
             }
+            break;
         }
 
         return comics;
