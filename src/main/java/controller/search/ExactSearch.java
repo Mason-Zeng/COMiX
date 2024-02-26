@@ -2,7 +2,7 @@ package controller.search;
 
 import java.util.List;
 
-import controller.Comic;
+import model.Comic;
 
 public class ExactSearch implements Searcher{
 

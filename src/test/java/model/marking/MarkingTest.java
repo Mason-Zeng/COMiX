@@ -1,4 +1,4 @@
-package controller.marking;
+package model.marking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import controller.Comic;
+import model.Comic;
 
 public class MarkingTest{
     LocalDate date = LocalDate.of(2020, 1, 8);
@@ -19,7 +19,7 @@ public class MarkingTest{
     public void testMarkingGrade1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 1);
         comic = new Slab(comic);
         
@@ -37,7 +37,7 @@ public class MarkingTest{
     public void testMarkingGradeGreaterThan1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
         
@@ -54,7 +54,7 @@ public class MarkingTest{
     public void testMarkingInvalid(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        MarkImplement comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 0);
         comic = new Slab(comic);
         

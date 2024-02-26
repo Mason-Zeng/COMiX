@@ -1,10 +1,10 @@
-package controller.marking;
+package model.marking;
 
 import java.math.BigDecimal;
 
 public class Slab extends ComicDecorator{
     
-    public Slab(MarkImplement comic) {
+    public Slab(Marking comic) {
         super(comic);
     }
 

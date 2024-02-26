@@ -1,7 +1,7 @@
-package controller.marking;
+package model.marking;
 
 import java.math.BigDecimal;
 
-public interface MarkImplement {
+public interface Marking{
     public BigDecimal getValue();
 }

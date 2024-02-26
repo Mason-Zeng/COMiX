@@ -1,4 +1,4 @@
-package controller.marking;
+package model.marking;
 
 import java.math.BigDecimal;
 
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class Grade extends ComicDecorator{
     private int grade;
 
-    public Grade(MarkImplement comic, int grade) {
+    public Grade(Marking comic, int grade) {
         super(comic);
         this.grade = grade;
     }

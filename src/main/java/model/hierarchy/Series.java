@@ -1,10 +1,10 @@
-package controller.hierarchy;
+package model.hierarchy;
 
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.util.List;
 
-import controller.Comic;
+import model.Comic;
 
 public class Series implements ComicHolder{
     private String name;

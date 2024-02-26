@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import controller.hierarchy.Publisher;
-import controller.hierarchy.Series;
-import controller.hierarchy.Volume;
-import controller.marking.MarkImplement;
+import model.hierarchy.Publisher;
+import model.hierarchy.Series;
+import model.hierarchy.Volume;
+import model.marking.Marking;
 
-public class Comic implements MarkImplement {
+public class Comic implements Marking{
     private String title;
     private Volume volume;
     private int issueNum;
