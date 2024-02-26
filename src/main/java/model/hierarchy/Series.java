@@ -22,10 +22,6 @@ public class Series implements ComicHolder{
         this(name);
         setPublisher(publisher);
     }
-    
-    public String getSeriesTitle() {
-        return name;
-    }
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
