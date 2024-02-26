@@ -12,6 +12,7 @@ import controller.search.PartialSearch;
 import controller.search.Searcher;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
+import model.Comic;
 
 public class ComicSearcherTest {
     @Test

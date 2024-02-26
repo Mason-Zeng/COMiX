@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
-import controller.Comic;
+import model.Comic;
 
 public class DefaultSorterTest {
     
