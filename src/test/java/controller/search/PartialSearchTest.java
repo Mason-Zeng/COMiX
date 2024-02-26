@@ -1,4 +1,4 @@
-package model.search;
+package controller.search;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import controller.Comic;
-import controller.Creator;
-import controller.hierarchy.Publisher;
-import controller.hierarchy.Series;
-import controller.hierarchy.Volume;
+import model.hierarchy.Publisher;
+import model.hierarchy.Series;
+import model.hierarchy.Volume;
+import model.Comic;
+import model.Creator;
 
 public class PartialSearchTest {
 

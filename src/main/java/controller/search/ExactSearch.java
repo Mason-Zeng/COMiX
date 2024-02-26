@@ -1,11 +1,11 @@
-package model.search;
+package controller.search;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Comic;
-import controller.Creator;
+import model.Comic;
+import model.Creator;
 
 public class ExactSearch implements Searcher{
 

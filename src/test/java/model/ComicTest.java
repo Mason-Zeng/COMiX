@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 
 import java.math.BigDecimal;
@@ -6,7 +6,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import controller.hierarchy.Volume;
+import model.hierarchy.Volume;
+import model.Comic;
 
 public class ComicTest {
   @Test

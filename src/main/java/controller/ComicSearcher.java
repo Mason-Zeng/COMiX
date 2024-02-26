@@ -1,12 +1,12 @@
-package model;
+package controller;
 
 import java.util.Comparator;
 import java.util.List;
 
-import controller.Comic;
-import model.search.PartialSearch;
-import model.search.Searcher;
-import model.sort.DefaultSorter;
+import controller.search.PartialSearch;
+import controller.search.Searcher;
+import controller.sort.DefaultSorter;
+import model.Comic;
 
 public class ComicSearcher {
 

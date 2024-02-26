@@ -1,8 +1,8 @@
-package model.sort;
+package controller.sort;
 
 import java.util.Comparator;
 
-import controller.Comic;
+import model.Comic;
 
 public class DefaultSorter implements Comparator<Comic> {
 

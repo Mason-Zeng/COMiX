@@ -1,13 +1,13 @@
-package controller;
+package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.hierarchy.Publisher;
-import controller.hierarchy.Series;
-import controller.hierarchy.Volume;
+import model.hierarchy.Publisher;
+import model.hierarchy.Series;
+import model.hierarchy.Volume;
 
 public class Comic {
     private String title;
