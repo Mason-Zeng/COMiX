@@ -19,7 +19,7 @@ public class Publisher implements ComicHolder {
     }
 
     public Publisher(String name, Collection collection) {
-        new Publisher(name);
+        this(name);
         setCollection(collection);
     }
 

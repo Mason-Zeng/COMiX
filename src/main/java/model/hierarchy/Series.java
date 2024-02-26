@@ -19,7 +19,7 @@ public class Series implements ComicHolder{
     }
 
     public Series(String name, Publisher publisher) {
-        new Series(name);
+        this(name);
         setPublisher(publisher);
     }
     

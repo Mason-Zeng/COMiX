@@ -19,7 +19,7 @@ public class Volume implements ComicHolder {
   }
 
   public Volume(int vol_num, Series series) {
-    new Volume(vol_num);
+    this(vol_num);
     setSeries(series);
   }
 
