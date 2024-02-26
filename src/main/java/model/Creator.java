@@ -1,4 +1,5 @@
-package controller;
+package model;
+
 
 public class Creator {
     private String name;
@@ -6,7 +7,7 @@ public class Creator {
     public Creator(String name){
         this.name = name;
     }
-
+  
     public String getName() {
         return name;
     }

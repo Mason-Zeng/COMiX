@@ -5,11 +5,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.hierarchy.Publisher;
-import model.hierarchy.Series;
-import model.hierarchy.Volume;
+import model.hierarchy.*;
+import model.marking.Marking;
 
-public class Comic {
+public class Comic implements Marking{
     private String title;
     private Volume volume;
     private int issueNum;
@@ -20,15 +19,30 @@ public class Comic {
     private BigDecimal value;
 
     public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
+        this(title, issueNum, description, value, pubDate);
+        this.volume = volume;
+    }
+    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
         this.title = title;
         this.issueNum = issueNum;
         this.description = description;
         this.value = value;
-        this.volume = volume;
         this.pub_date = pubDate;
         creators = new ArrayList<>();
         characters = new ArrayList<>();
-    }   
+    }
+
+    /**
+     * Copy constructor
+     * @param other The comic to copy
+     */
+    public Comic(Comic other) {
+        this( other.getTitle(), 
+            other.getIssueNumber(), 
+            other.getDescription(), 
+            other.getValue(), 
+            other.getDate());
+    }
 
     public String getTitle() {
         return title;
@@ -86,8 +100,11 @@ public class Comic {
         creators.add(creator);
     }
 
-    @Override
-    public String toString() {
-        return title + ", " + issueNum;
+    public void setVolume(Volume vol) {
+        this.volume = vol;
+    }
+
+    public Comic getComic() {
+        return this;
     }
 }
