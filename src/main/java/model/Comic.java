@@ -3,35 +3,42 @@ package model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import model.hierarchy.Publisher;
-import model.hierarchy.Series;
-import model.hierarchy.Volume;
+import model.hierarchy.*;
 import model.marking.Marking;
 
 public class Comic implements Marking{
     private String title;
     private Volume volume;
     private int issueNum;
-    private Date pub_date;
+    private LocalDate pub_date;
     private List<Creator> creators;
     private List<Character> characters;
     private String description;
     private BigDecimal value;
 
-    public Comic() {
-        creators = new ArrayList<>();
-    } 
-   public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
+    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
         this.title = title;
         this.issueNum = issueNum;
         this.description = description;
         this.value = value;
+        this.pub_date = pubDate;
         creators = new ArrayList<>();
         characters = new ArrayList<>();
-    }   
+    }
+
+    /**
+     * Copy constructor
+     * @param other The comic to copy
+     */
+    public Comic(Comic other) {
+        this( other.getTitle(), 
+            other.getIssueNumber(), 
+            other.getDescription(), 
+            other.getValue(), 
+            other.getDate());
+    }
 
     public String getTitle() {
         return title;
@@ -61,7 +68,7 @@ public class Comic implements Marking{
         return issueNum;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return pub_date;
     }
 
@@ -79,5 +86,13 @@ public class Comic implements Marking{
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public void setVolume(Volume vol) {
+        this.volume = vol;
+    }
+
+    public Comic getComic() {
+        return this;
     }
 }
