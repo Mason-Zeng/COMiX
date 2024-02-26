@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import model.Comic;
+import model.marking.Marking;
 
 public class Series implements ComicHolder{
     private String name;
@@ -64,7 +64,7 @@ public class Series implements ComicHolder{
             .sum();
     }
 
-    public List<Comic> getIssues() {
+    public List<Marking> getIssues() {
         return volumes.values().stream()
             .map(Volume::getIssues)
             .collect(ArrayList::new, List::addAll, List::addAll);

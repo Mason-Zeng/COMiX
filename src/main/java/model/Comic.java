@@ -91,4 +91,8 @@ public class Comic implements Marking{
     public void setVolume(Volume vol) {
         this.volume = vol;
     }
+
+    public Comic getComic() {
+        return this;
+    }
 }

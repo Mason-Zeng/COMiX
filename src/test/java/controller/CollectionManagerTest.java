@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import model.hierarchy.*;
+import model.marking.Marking;
 import model.Comic;
 
 public class CollectionManagerTest {
@@ -51,7 +52,7 @@ public class CollectionManagerTest {
         Publisher publisher2 = assertDoesNotThrow(() -> collection.getPublisher("TestPublisher"));
         Series series2 = assertDoesNotThrow(() -> publisher2.getSeries("TestSeries"));
         Volume volume2 = assertDoesNotThrow(() -> series2.getVolume(1));
-        Comic comic2 = assertDoesNotThrow(() -> volume2.getIssue("TestComic"));
+        Marking comic2 = assertDoesNotThrow(() -> volume2.getIssue("TestComic"));
         
         collectionManager.delIssue(comic2);
         assertEquals(0, collection.getIssueCount());

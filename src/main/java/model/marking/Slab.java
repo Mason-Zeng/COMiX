@@ -2,6 +2,7 @@ package model.marking;
 
 import java.math.BigDecimal;
 
+
 public class Slab extends ComicDecorator{
     
     public Slab(Marking comic) {
@@ -13,4 +14,5 @@ public class Slab extends ComicDecorator{
         BigDecimal newVal = comic.getValue().multiply(multiplier);
         return newVal;
     }
+
 }

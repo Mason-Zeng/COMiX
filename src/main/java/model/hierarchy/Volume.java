@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.Comic;
+import model.marking.Marking;
 
 public class Volume implements ComicHolder {
   private Series series;
-  private Map<String, Comic> issues;
+  private Map<String, Marking> issues;
   private int vol_num;
 
   public Volume(int vol_num) {
@@ -23,14 +23,14 @@ public class Volume implements ComicHolder {
     setSeries(series);
   }
 
-  public void addIssue(Comic issue) {
-    issues.put(issue.getTitle(), issue);
-    issue.setVolume(this);
+  public void addIssue(Marking issue) {
+    issues.put(issue.getComic().getTitle(), issue);
+    issue.getComic().setVolume(this);
   }
   
-  public void delIssue(Comic issue) {
-    issues.get(issue.getTitle()).setVolume(null);
-    issues.remove(issue.getTitle());
+  public void delIssue(Marking issue) {
+    issues.get(issue.getComic().getTitle()).getComic().setVolume(null);
+    issues.remove(issue.getComic().getTitle());
   }
 
   public void setSeries(Series series) {
@@ -49,7 +49,7 @@ public class Volume implements ComicHolder {
     return vol_num;
   }
 
-  public Comic getIssue(String name) {
+  public Marking getIssue(String name) {
     return issues.get(name);
 }
 
@@ -60,7 +60,7 @@ public class Volume implements ComicHolder {
   @Override
   public BigDecimal getValue() {
     return issues.values().stream()
-      .map(comic -> comic.getValue())
+      .map(issue -> issue.getValue())
       .reduce(new BigDecimal(0), BigDecimal::add);
   }
   
@@ -70,7 +70,7 @@ public class Volume implements ComicHolder {
   }
   
   @Override
-  public List<Comic> getIssues() {
+  public List<Marking> getIssues() {
     return new ArrayList<>(issues.values());
   }
 

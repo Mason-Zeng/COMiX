@@ -3,7 +3,7 @@ package model.hierarchy;
 import java.math.BigDecimal;
 import java.util.List;
 
-import model.Comic;
+import model.marking.Marking;
 
 
 public interface ComicHolder {
@@ -29,7 +29,7 @@ public interface ComicHolder {
    * 
    * @return List of all Comics
    */
-  public List<Comic> getIssues();
+  public List<Marking> getIssues();
 
   /**
    * Remove this holder from the
