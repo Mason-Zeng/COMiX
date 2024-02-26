@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.Comic;
+import model.marking.Marking;
 
 public class Collection implements ComicHolder{
     private String user;
@@ -53,7 +53,7 @@ public class Collection implements ComicHolder{
     }
 
     @Override
-    public List<Comic> getIssues() {
+    public List<Marking> getIssues() {
         return publishers.values().stream()
             .map(Publisher::getIssues)
             .collect(ArrayList::new, List::addAll, List::addAll);

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.hierarchy.*;
+import model.marking.Marking;
 
-public class Comic {
+public class Comic implements Marking{
     private String title;
     private Volume volume;
     private int issueNum;
@@ -89,5 +90,9 @@ public class Comic {
 
     public void setVolume(Volume vol) {
         this.volume = vol;
+    }
+
+    public Comic getComic() {
+        return this;
     }
 }

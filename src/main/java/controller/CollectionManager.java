@@ -1,6 +1,7 @@
 package controller;
 
 import model.hierarchy.*;
+import model.marking.Marking;
 import model.Comic;
 
 public class CollectionManager {
@@ -20,12 +21,13 @@ public class CollectionManager {
      * @param comic
      * @return void
      */
-    public void addIssue(Comic comic) {
+    public void addIssue(Marking comic) {
         // get all meta objects from comic & create copy
-        Publisher pub = comic.getPublisher();
-        Series series = comic.getSeries();
-        Volume vol = comic.getVolume();
-        Comic comic_copy = new Comic(comic);
+        Comic comic_real = comic.getComic();
+        Publisher pub = comic_real.getPublisher();
+        Series series = comic_real.getSeries();
+        Volume vol = comic_real.getVolume();
+        Marking comic_copy = new Comic(comic_real);
 
         // see if meta objects exist within collection. if not, create copies of them
         Publisher pub_copy = collection.publisherExists(pub.getName()) ?
@@ -59,9 +61,9 @@ public class CollectionManager {
      * 
      * @param comic
      */
-    public void delIssue(Comic comic) {
-        Publisher pub = comic.getPublisher();
-        comic.getVolume().delIssue(comic);
+    public void delIssue(Marking comic) {
+        Publisher pub = comic.getComic().getPublisher();
+        comic.getComic().getVolume().delIssue(comic);
         prune(pub);
     }
 
