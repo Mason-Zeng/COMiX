@@ -194,13 +194,73 @@ public class ComicSearcherTest {
     }
 
     @Test
-    public void testSearchPartial(){
+    public void testSearchPartialDefaultSort(){
         //Setup
         ComicSearcher comicSearcher = new ComicSearcher(data);
         List<Comic> expected = new ArrayList<>();
+        expected.add(comic2);
+        expected.add(comic1);
         
         //Invoke
         List<Comic> actual = comicSearcher.search("Spider-MAN", "series_title");
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test 
+    public void testSearchPartialPubDateSort(){
+       //Setup
+       ComicSearcher comicSearcher = new ComicSearcher(data);
+       comicSearcher.setSorter(new PublicationDateSorter());
+       List<Comic> expected = new ArrayList<>();
+       expected.add(comic1);
+       expected.add(comic2);
+       
+       //Invoke
+       List<Comic> actual = comicSearcher.search("Spider-MAN", "series_title");
+       
+       //Analyze
+       assertEquals(expected.size(), actual.size());
+       for (int i = 0; i < expected.size(); i++) {
+           assertEquals(expected.get(i), actual.get(i));
+       }
+    }
+
+    @Test
+    public void testSearchExactDefaultSort(){
+        //Setup
+        ComicSearcher comicSearcher = new ComicSearcher(data);
+        comicSearcher.setSearcher(new ExactSearch());
+        List<Comic> expected = new ArrayList<>();
+        expected.add(comic2);
+        expected.add(comic1);
+        
+        //Invoke
+        List<Comic> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchExactPubDateSort(){
+        //Setup
+        ComicSearcher comicSearcher = new ComicSearcher(data);
+        comicSearcher.setSearcher(new ExactSearch());
+        comicSearcher.setSorter(new PublicationDateSorter());
+        List<Comic> expected = new ArrayList<>();
+        expected.add(comic1);
+        expected.add(comic2);
+        
+        //Invoke
+        List<Comic> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
         
         //Analyze
         assertEquals(expected.size(), actual.size());
