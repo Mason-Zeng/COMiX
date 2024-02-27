@@ -19,6 +19,7 @@ public class PTUI {
        collectionInput = collectionInput.toUpperCase();
        if(collectionInput.equals("D")){
             /*
+             * Someone Implement (Most likely Aydan?)
              * Choose search algorithm
              * Add logic to search comic
              * Be able Add comic to personal collection
@@ -27,17 +28,39 @@ public class PTUI {
 
        else if(collectionInput.equals("P")){
             /*
+             * Someone Implement (Most likely Swampnil)
              * Choose search algorithm to browse comics
              * Be able to add, remove comics
              * if want to grade, call markingSystem
              */
+
+            //Logic for a user wanting to grade a comic
+            Scanner wantGradeScan = new Scanner(System.in);
+            String wantGradeChoice = wantGradeScan.nextLine();
+            wantGradeChoice= wantGradeChoice.toUpperCase();
+            
+            boolean continueLoop = true;
+            while(continueLoop){
+                System.out.println("Would you like to grade this comic? Yes(Y) or No(N)");
+                if(wantGradeChoice.equals("N")){
+                    continueLoop = false;
+                }
+                else if(wantGradeChoice.equals("Y")){
+                    markingSystem();
+                    continueLoop = false;
+                }
+                else{
+                    System.out.println("Please either choose Yes(Y) or No(N)");
+                }
+            }
+
        }
        
     }
 
     
     @SuppressWarnings("unused")
-    public BigDecimal markingSystem(){
+    public static BigDecimal markingSystem(){
         //DELETE THIS TEST DATA WHEN FULLY IMPLEMENTED
         BigDecimal value = new BigDecimal(6);
         LocalDate date = LocalDate.of(2020, 1, 8);
@@ -46,7 +69,7 @@ public class PTUI {
         try{
             int flag = 0;
             while(flag == 0){
-                System.out.println("Give the comment a grade. *Number from 1-10*");
+                System.out.println("Give the comic a grade. *Number from 1-10*");
                 Scanner gradeScan = new Scanner(System.in);
                 Integer gradeInput = gradeScan.nextInt();
 
@@ -56,16 +79,16 @@ public class PTUI {
                 else{
                     comic = new Grade(comic, gradeInput);
                     Scanner slabScan = new Scanner(System.in);
-                    String slabChoice = slabScan.nextLine();
-                    slabChoice= slabChoice.toUpperCase();
+                    String wantGradeChoice = slabScan.nextLine();
+                    wantGradeChoice= wantGradeChoice.toUpperCase();
                     
                     int flag1 = 0;
                     while(flag1 == 0){
                         System.out.println("Would you like to slab this comic? Yes(Y) or No(N)");
-                        if(slabChoice.equals("N")){
+                        if(wantGradeChoice.equals("N")){
                             return comic.getValue();
                         }
-                        else if(slabChoice.equals("Y")){
+                        else if(wantGradeChoice.equals("Y")){
                             comic = new Slab(comic);
                             return comic.getValue();
                         }
@@ -76,7 +99,7 @@ public class PTUI {
                 }
             }
         }
-        
+
         catch(InputMismatchException e) {
             System.out.println("Invalid input! Please enter a valid input");
         }
