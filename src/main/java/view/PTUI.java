@@ -8,54 +8,65 @@ import model.marking.Marking;
 import model.marking.Slab;
 
 public class PTUI {
-    @SuppressWarnings({ "resource" })
-    public static void main(String[] args) 
-    { 
-       System.out.println("Welcome to Team 7 COMiX Application!");
-       
-       System.out.println("Press \"P\" for personal collection. Press \"D\" to see the database of comics");
-       Scanner scan = new Scanner(System.in);
-       String collectionInput = scan.nextLine();
-       collectionInput = collectionInput.toUpperCase();
-       if(collectionInput.equals("D")){
+
+    private static Scanner scan;
+    
+    public static void main(String[] args) {
+        scan = new Scanner(System.in);
+        System.out.println("Welcome to Team 7 COMiX Application!");
+        mainMenu();
+        scan.close();
+    }
+
+    public static void mainMenu() {
+        System.out.println("Press \"P\" for personal collection. Press \"D\" to see the database of comics");
+        
+        String collectionInput = scan.nextLine();
+        collectionInput = collectionInput.toUpperCase();
+        if(collectionInput.equals("D")){
             /*
              * Someone Implement (Most likely Aydan?)
              * Choose search algorithm
              * Add logic to search comic
              * Be able Add comic to personal collection
              */
-       }
-
-       else if(collectionInput.equals("P")){
+            database();
+        }
+        else if(collectionInput.equals("P")){
             /*
-             * Someone Implement (Most likely Swampnil)
-             * Choose search algorithm to browse comics
-             * Be able to add, remove comics
-             * if want to grade, call markingSystem
-             */
+            * Someone Implement (Most likely Swampnil)
+            * Choose search algorithm to browse comics
+            * Be able to add, remove comics
+            * if want to grade, call markingSystem
+            */
+            personalCollection();
+        }
+        mainMenu();
+    }
 
-            //Logic for a user wanting to grade a comic
-            Scanner wantGradeScan = new Scanner(System.in);
-            String wantGradeChoice = wantGradeScan.nextLine();
-            wantGradeChoice= wantGradeChoice.toUpperCase();
-            
-            boolean continueLoop = true;
-            while(continueLoop){
-                System.out.println("Would you like to grade this comic? Yes(Y) or No(N)");
-                if(wantGradeChoice.equals("N")){
-                    continueLoop = false;
-                }
-                else if(wantGradeChoice.equals("Y")){
-                    markingSystem();
-                    continueLoop = false;
-                }
-                else{
-                    System.out.println("Please either choose Yes(Y) or No(N)");
-                }
+    public static void database() {
+
+    }
+
+    public static void personalCollection() {
+        //Logic for a user wanting to grade a comic
+        String wantGradeChoice = scan.nextLine();
+        wantGradeChoice= wantGradeChoice.toUpperCase();
+        
+        boolean continueLoop = true;
+        while(continueLoop){
+            System.out.println("Would you like to grade this comic? Yes(Y) or No(N)");
+            if(wantGradeChoice.equals("N")){
+                continueLoop = false;
             }
-
-       }
-       
+            else if(wantGradeChoice.equals("Y")){
+                markingSystem();
+                continueLoop = false;
+            }
+            else{
+                System.out.println("Please either choose Yes(Y) or No(N)");
+            }
+        }
     }
 
     
@@ -70,16 +81,14 @@ public class PTUI {
             int flag = 0;
             while(flag == 0){
                 System.out.println("Give the comic a grade. *Number from 1-10*");
-                Scanner gradeScan = new Scanner(System.in);
-                Integer gradeInput = gradeScan.nextInt();
+                Integer gradeInput = scan.nextInt();
 
                 if(gradeInput == null){
                     System.out.println("Please choose a number from 1-10");
                 }
                 else{
                     comic = new Grade(comic, gradeInput);
-                    Scanner slabScan = new Scanner(System.in);
-                    String wantGradeChoice = slabScan.nextLine();
+                    String wantGradeChoice = scan.nextLine();
                     wantGradeChoice= wantGradeChoice.toUpperCase();
                     
                     int flag1 = 0;
