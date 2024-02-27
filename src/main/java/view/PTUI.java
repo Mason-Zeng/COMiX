@@ -2,15 +2,20 @@ package view;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+
+import controller.CollectionManager;
 import model.Comic;
-import model.marking.Grade;
-import model.marking.Marking;
-import model.marking.Slab;
+import model.marking.*;
+import model.hierarchy.Collection;
+import model.hierarchy.ComicHolder;
+
 
 public class PTUI {
 
     private static Scanner scan;
-    
+    private static Collection collection = new Collection("User");
+    private static CollectionManager collectionManager = new CollectionManager(collection);
+
     public static void main(String[] args) {
         scan = new Scanner(System.in);
         System.out.println("Welcome to Team 7 COMiX Application!");
@@ -19,7 +24,7 @@ public class PTUI {
     }
 
     public static void mainMenu() {
-        System.out.println("Press \"P\" for personal collection. Press \"D\" to see the database of comics");
+        System.out.println("Press \"P\" for personal collection.\nPress \"D\" to see the database of comics.\nPress \"Q\" to quit");
         
         String collectionInput = scan.nextLine();
         collectionInput = collectionInput.toUpperCase();
@@ -40,6 +45,9 @@ public class PTUI {
             * if want to grade, call markingSystem
             */
             personalCollection();
+        } else if (collectionInput.equals("Q")) {
+            System.out.println("Do ");
+            return;
         }
         mainMenu();
     }
@@ -49,25 +57,28 @@ public class PTUI {
     }
 
     public static void personalCollection() {
-        //Logic for a user wanting to grade a comic
-        String wantGradeChoice = scan.nextLine();
-        wantGradeChoice= wantGradeChoice.toUpperCase();
-        
-        boolean continueLoop = true;
-        while(continueLoop){
-            System.out.println("Would you like to grade this comic? Yes(Y) or No(N)");
-            if(wantGradeChoice.equals("N")){
-                continueLoop = false;
-            }
-            else if(wantGradeChoice.equals("Y")){
-                markingSystem();
-                continueLoop = false;
-            }
-            else{
-                System.out.println("Please either choose Yes(Y) or No(N)");
-            }
-        }
+        int comic_count = collection.getIssueCount();
+        System.out.println("You currently have x comics in your collection.");
     }
+
+    // //Logic for a user wanting to grade a comic
+    // String wantGradeChoice = scan.nextLine();
+    // wantGradeChoice= wantGradeChoice.toUpperCase();
+    
+    // boolean continueLoop = true;
+    // while(continueLoop){
+    //     System.out.println("Would you like to grade this comic? Yes(Y) or No(N)");
+    //     if(wantGradeChoice.equals("N")){
+    //         continueLoop = false;
+    //     }
+    //     else if(wantGradeChoice.equals("Y")){
+    //         markingSystem();
+    //         continueLoop = false;
+    //     }
+    //     else{
+    //         System.out.println("Please either choose Yes(Y) or No(N)");
+    //     }
+    // }
 
     
     @SuppressWarnings("unused")
