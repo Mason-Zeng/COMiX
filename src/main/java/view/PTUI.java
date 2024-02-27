@@ -5,13 +5,14 @@ import java.util.*;
 
 import controller.CollectionManager;
 import model.Comic;
+import model.ComicOutput;
 import model.marking.*;
 import model.hierarchy.Collection;
-import model.hierarchy.ComicHolder;
 
 
 public class PTUI {
 
+    private static final String csvFile = "data/comics.csv"; 
     private static Scanner scan;
     private static Collection collection = new Collection("User");
     private static CollectionManager collectionManager = new CollectionManager(collection);
@@ -25,7 +26,7 @@ public class PTUI {
 
     public static void mainMenu() {
         System.out.println("Press \"P\" for personal collection.\nPress \"D\" to see the database of comics.\nPress \"Q\" to quit");
-        
+        System.out.print(">> ");
         String collectionInput = scan.nextLine();
         collectionInput = collectionInput.toUpperCase();
         if(collectionInput.equals("D")){
@@ -53,7 +54,8 @@ public class PTUI {
     }
 
     public static void database() {
-
+        List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
+        System.out.print("");
     }
 
     public static void personalCollection() {
