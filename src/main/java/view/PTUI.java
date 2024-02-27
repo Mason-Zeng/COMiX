@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 import controller.CollectionManager;
+import controller.ComicSearcher;
+import controller.search.ExactSearch;
+import controller.search.PartialSearch;
+import controller.search.Searcher;
 import model.Comic;
 import model.ComicOutput;
 import model.marking.*;
@@ -16,6 +20,10 @@ public class PTUI {
     private static Scanner scan;
     private static Collection collection = new Collection("User");
     private static CollectionManager collectionManager = new CollectionManager(collection);
+    private static final List<Comic> COMICS = ComicOutput.loadFromCSV(csvFile)
+        .stream()
+        .map(Comic::new)
+        .toList();
 
     public static void main(String[] args) {
         scan = new Scanner(System.in);
@@ -47,15 +55,41 @@ public class PTUI {
             */
             personalCollection();
         } else if (collectionInput.equals("Q")) {
-            System.out.println("Do ");
-            return;
+            System.out.print("Do you want to quit? (y/N)\n>> ");
+            if (scan.nextLine().toUpperCase().equals("Y")){
+                return;
+            }
         }
         mainMenu();
     }
 
     public static void database() {
-        List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
-        System.out.print("");
+        ComicSearcher searcher = new ComicSearcher(COMICS);
+        System.out.print("Loaded " + COMICS.size() + " comics.\n\"P\" to search by partial match.\n\"E\" to search by exact match.\n\"Q\" to go back");
+        Searcher searchStrategy = null;
+        switch (scan.nextLine()) {
+            case ("Q"): {
+                return;
+            }
+            case ("P"): {
+                searchStrategy = new PartialSearch();
+            }
+            case ("E"): {
+                searchStrategy = new ExactSearch();
+            }
+            default: {
+                database();
+            }
+        }
+        searcher.setSearcher(searchStrategy);
+
+        String[] options = {"Series Title", "Issue Number", "Issue Title", "Publisher Name", "Creator", "Date"};
+        System.out.println("Pick a section to search for:");
+        for (int i = 1; i >= options.length; i++) {
+            System.out.println("(" + i + "): " + options[i-1]);
+        }
+        System.out.print(">> ");
+        // parse response and set input to option?
     }
 
     public static void personalCollection() {
