@@ -132,4 +132,13 @@ public class Comic implements Marking{
     public Comic getComic() {
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "\rSeries Title: " + getSeriesTitle() +
+                "\n\tVolume Number: " + getVolumeNumber() + 
+                "\n\tIssue Number: " + getIssueNumber() +
+                "\n\tStory Title: " + getTitle()
+        ;
+    }
 }

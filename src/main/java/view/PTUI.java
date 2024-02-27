@@ -8,6 +8,8 @@ import controller.ComicSearcher;
 import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.search.Searcher;
+import controller.sort.DefaultSorter;
+import controller.sort.PublicationDateSorter;
 import model.Comic;
 import model.ComicOutput;
 import model.marking.*;
@@ -65,31 +67,82 @@ public class PTUI {
 
     public static void database() {
         ComicSearcher searcher = new ComicSearcher(COMICS);
-        System.out.print("Loaded " + COMICS.size() + " comics.\n\"P\" to search by partial match.\n\"E\" to search by exact match.\n\"Q\" to go back");
+        System.out.println("Loaded " + COMICS.size() + " comics.\n\"P\" to search by partial match.\n\"E\" to search by exact match.\n\"Q\" to go back");
+        System.out.print(">>> ");
         Searcher searchStrategy = null;
-        switch (scan.nextLine()) {
+        switch (scan.nextLine().toUpperCase()) {
             case ("Q"): {
                 return;
             }
             case ("P"): {
                 searchStrategy = new PartialSearch();
+                break;
             }
             case ("E"): {
                 searchStrategy = new ExactSearch();
+                break;
             }
             default: {
                 database();
+                break;
             }
         }
         searcher.setSearcher(searchStrategy);
 
-        String[] options = {"Series Title", "Issue Number", "Issue Title", "Publisher Name", "Creator", "Date"};
-        System.out.println("Pick a section to search for:");
-        for (int i = 1; i >= options.length; i++) {
-            System.out.println("(" + i + "): " + options[i-1]);
+        Comparator<Comic> sorter = null;
+        String answer = "";
+        while (!answer.equals("Q") && !answer.equals("D") && !answer.equals("P")){
+                    System.out.println("\"D\" for Default Sorting (By Series Title->Volume Number->Issue Number)\n\"P\" for Sorting by Publication Date\n\"Q\" to go back to start");
+        System.out.print(">>>");
+            answer = scan.nextLine().toUpperCase();
+            switch (answer){
+                case "Q":
+                    return;
+                case "D":
+                    sorter = new DefaultSorter();
+                    break;
+                case "P":
+                    sorter = new PublicationDateSorter();
+                    break;
+            }
         }
-        System.out.print(">> ");
-        // parse response and set input to option?
+        searcher.setSorter(sorter);
+
+        String input = "";
+        String[] options = {"Series Title", "Issue Number", "Issue Title", "Publisher Name", "Creator", "Date"};
+        while (input.equals("")){
+            System.out.println("Pick the number of the section to search for:");
+            for (int i = 1; i <= options.length; i++) {
+                System.out.println("(" + i + "): " + options[i-1]);
+            }
+            System.out.print(">> ");
+
+            switch (scan.nextLine()){
+                case "1":
+                    input = "series_title";
+                    break;
+                case "2":
+                    input = "issue_number";
+                    break;
+                case "3":
+                    input = "story_title";
+                    break;
+                case "4":
+                    input = "publisher";
+                    break;
+                case "5":
+                    input = "creator";
+                    break;
+                case "6":
+                    input = "date";
+                    break;
+            }
+        }
+
+        System.out.println("Please type in the query for your search.");
+        String query = scan.nextLine();
+
+        System.out.println(searcher.search(query, input));
     }
 
     public static void personalCollection() {
