@@ -3,40 +3,14 @@ package controller;
 import model.hierarchy.*;
 import model.marking.Marking;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import model.Comic;
-import model.ComicOutput;
+
 
 public class CollectionManager {
     private Collection collection;
     
     public CollectionManager(Collection collection) {
         this.collection = collection;
-    }
-
-    public void addIssue(ComicOutput output) {
-        String full_title = output.getFullTitle();
-        String title = full_title.contains(", Vol. ") ? 
-            full_title.substring(0, full_title.length() - 9) :
-            full_title;
-        Publisher publisher = new Publisher(output.getPublisher());
-        Series series = new Series(output.getSeries());
-        Volume volume = full_title.contains(", Vol. ") ? 
-            new Volume(Integer.parseInt(full_title.substring(full_title.length() - 1))) :
-            new Volume(1);
-
-        publisher.addSeries(series);
-        series.addVolume(volume);
-        int issueNum = Integer.parseInt(output.getIssue());
-        String description = output.getVariantDescription();
-        BigDecimal value = new BigDecimal(0);
-        LocalDate pub_date = LocalDate.parse(output.getAddedDate(), 
-            DateTimeFormatter.ofPattern("LLL dd, uuuu"));
-
-        addIssue(new Comic(title, issueNum, description, value, pub_date, volume));
     }
 
     /**
