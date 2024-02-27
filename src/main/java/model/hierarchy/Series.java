@@ -22,10 +22,6 @@ public class Series implements ComicHolder{
         this(name);
         setPublisher(publisher);
     }
-    
-    public String getSeriesTitle() {
-        return name;
-    }
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
@@ -38,6 +34,10 @@ public class Series implements ComicHolder{
     public void addVolume(Volume vol) {
         volumes.put(vol.getVolumeNumber(), vol);
         vol.setSeries(this);
+    }
+  
+    public String getSeriesTitle() {
+        return name;
     }
 
     public void delVolume(Volume vol) {
