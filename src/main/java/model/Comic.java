@@ -18,6 +18,10 @@ public class Comic implements Marking{
     private String description;
     private BigDecimal value;
 
+    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
+        this(title, issueNum, description, value, pubDate);
+        this.volume = volume;
+    }
     public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
         this.title = title;
         this.issueNum = issueNum;
@@ -56,6 +60,10 @@ public class Comic implements Marking{
         return volume.getPublisher();
     }
 
+    public String getPublisherName() {
+        return getPublisher().getName();
+    }
+
     public String getSeriesTitle() {
         return getSeries().getSeriesTitle();
     }
@@ -86,6 +94,10 @@ public class Comic implements Marking{
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public void addCreator(Creator creator){
+        creators.add(creator);
     }
 
     public void setVolume(Volume vol) {
