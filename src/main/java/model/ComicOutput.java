@@ -119,21 +119,22 @@ public class ComicOutput {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 // Split the line into fields using comma as the delimiter
                 String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1); // Split by comma, ignoring commas within quotes
 
                 // Create a Comic object and populate its attributes
                 ComicOutput comic = new ComicOutput();
-                comic.setSeries(getValueOrDefault(data, 0));
-                comic.setIssue(getValueOrDefault(data, 1));
-                comic.setFullTitle(getValueOrDefault(data, 2));
-                comic.setVariantDescription(getValueOrDefault(data, 3));
-                comic.setPublisher(getValueOrDefault(data, 4));
-                comic.setReleaseDate(getValueOrDefault(data, 5));
-                comic.setFormat(getValueOrDefault(data, 6));
-                comic.setAddedDate(getValueOrDefault(data, 7));
-                comic.setCreators(getValueOrDefault(data, 8));
+                comic.setSeries(getValueOrDefault(data, 0).replaceAll("\"", ""));
+                comic.setIssue(getValueOrDefault(data, 1).replaceAll("\"", ""));
+                comic.setFullTitle(getValueOrDefault(data, 2).replaceAll("\"", ""));
+                comic.setVariantDescription(getValueOrDefault(data, 3).replaceAll("\"", ""));
+                comic.setPublisher(getValueOrDefault(data, 4).replaceAll("\"", ""));
+                comic.setReleaseDate(getValueOrDefault(data, 5).replaceAll("\"", ""));
+                comic.setFormat(getValueOrDefault(data, 6).replaceAll("\"", ""));
+                comic.setAddedDate(getValueOrDefault(data, 7).replaceAll("\"", ""));
+                comic.setCreators(getValueOrDefault(data, 8).replaceAll("\"", ""));
 
                 // Add the Comic object to the ArrayList
                 comics.add(comic);
