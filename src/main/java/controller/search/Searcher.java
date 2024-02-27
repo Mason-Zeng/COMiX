@@ -6,6 +6,7 @@ import model.Comic;
 
 /**
  * Searcher is an interface that allows for polymorphism.
+ * Searcher in the Strategy pattern is a Strategy.
  * Concrete implemenations of Searcher will contain algorithms for searching.
  * 
  * @author Ayden Dazo
@@ -17,7 +18,7 @@ public interface Searcher {
      * @param query What should be searched for
      * @param data The List of Comics
      * @param input The method of Searching
-     * @return List of Comics
+     * @return List of Comics that were found in the search
      */
     public List<Comic> searchData(String query, List<Comic> data, String input);
 }

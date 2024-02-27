@@ -7,8 +7,25 @@ import java.util.List;
 import model.Comic;
 import model.Creator;
 
+/**
+ * PartialSearch implements the Searcher class.
+ * PartialSearch in the Strategy pattern is a Concrete Strategy.
+ * The PartialSearch implements an algorithm that searches for results that contain or match the query.
+ * 
+ * @author Ayden Dazo
+ */
 public class PartialSearch implements Searcher{
 
+
+    /**
+     * The algorithm that will search through the data and return comics that contain or match the query.
+     * The algorithm returns different comics depending on the method of searching.
+     * 
+     * @param query What the user searches for
+     * @param data List of comics, either from database or from personal collection
+     * @param input The method of searching
+     * @return A list of comics that match exactly to the query
+     */
     @Override
     public List<Comic> searchData(String query, List<Comic> data, String input) {
         query = query.toLowerCase();
