@@ -2,7 +2,9 @@ package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.hierarchy.*;
@@ -29,6 +31,32 @@ public class Comic implements Marking{
         this.value = value;
         this.pub_date = pubDate;
         creators = new ArrayList<>();
+        characters = new ArrayList<>();
+    }
+
+    public Comic(ComicOutput output) {
+        String full_title = output.getFullTitle();
+        title = full_title.contains(", Vol. ") ? 
+            full_title.substring(0, full_title.length() - 9) :
+            full_title;
+        Publisher publisher = new Publisher(output.getPublisher());
+        Series series = new Series(output.getSeries());
+        volume = full_title.contains(", Vol. ") ? 
+            new Volume(Integer.parseInt(full_title.substring(full_title.length() - 1))) :
+            new Volume(1);
+
+        publisher.addSeries(series);
+        series.addVolume(volume);
+        try {
+            issueNum = Integer.parseInt(output.getIssue());
+        } catch (NumberFormatException e) {
+            issueNum = 1;
+        }
+        description = output.getVariantDescription();
+        value = new BigDecimal(0);
+        pub_date = LocalDate.parse(output.getAddedDate(), 
+            DateTimeFormatter.ofPattern("LLL dd, uuuu"));
+        creators = Arrays.stream(output.getCreators().split("\\s\\|\\s")).map(Creator::new).toList();
         characters = new ArrayList<>();
     }
 
@@ -106,5 +134,18 @@ public class Comic implements Marking{
 
     public Comic getComic() {
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "\rSeries Title: " + getSeriesTitle() +
+                "\n\tVolume Number: " + getVolumeNumber() + 
+                "\n\tIssue Number: " + getIssueNumber() +
+                "\n\tStory Title: " + getTitle() +
+                "\n\tPublication Date: " + getDate().toString() +
+                // gets creators and remaps to its name, then concatenates all of them
+                "\n\tCreators: " + getCreators().stream().map(Creator::getName).reduce("", (String total, String s) -> s + ", " + total) +
+                "\n"
+        ;
     }
 }

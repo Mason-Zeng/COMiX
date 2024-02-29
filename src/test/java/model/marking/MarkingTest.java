@@ -51,6 +51,7 @@ public class MarkingTest{
         assertEquals(expected, test);
     }
 
+    @Test
     public void testMarkingInvalid(){
         //Setup
         BigDecimal value = new BigDecimal(6);
