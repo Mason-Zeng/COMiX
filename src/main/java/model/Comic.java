@@ -138,7 +138,9 @@ public class Comic implements Marking{
         return "\rSeries Title: " + getSeriesTitle() +
                 "\n\tVolume Number: " + getVolumeNumber() + 
                 "\n\tIssue Number: " + getIssueNumber() +
-                "\n\tStory Title: " + getTitle()
+                "\n\tStory Title: " + getTitle() +
+                "\n\tPublication Date: " + getDate().toString() +
+                "\n"
         ;
     }
 }
