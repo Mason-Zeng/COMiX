@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.hierarchy.*;
@@ -55,6 +56,8 @@ public class Comic implements Marking{
         value = new BigDecimal(0);
         pub_date = LocalDate.parse(output.getAddedDate(), 
             DateTimeFormatter.ofPattern("LLL dd, uuuu"));
+        creators = Arrays.stream(output.getCreators().split("\\s\\|\\s")).map(Creator::new).toList();
+        characters = new ArrayList<>();
     }
 
     /**
@@ -140,6 +143,8 @@ public class Comic implements Marking{
                 "\n\tIssue Number: " + getIssueNumber() +
                 "\n\tStory Title: " + getTitle() +
                 "\n\tPublication Date: " + getDate().toString() +
+                // gets creators and remaps to its name, then concatenates all of them
+                "\n\tCreators: " + getCreators().stream().map(Creator::getName).reduce("", (String total, String s) -> s + ", " + total) +
                 "\n"
         ;
     }
