@@ -1,8 +1,8 @@
 package controller.search;
 
 import java.util.List;
-
-import model.Comic;
+ 
+import model.marking.Marking;
 
 /**
  * Searcher is an interface that allows for polymorphism.
@@ -20,5 +20,5 @@ public interface Searcher {
      * @param input The method of Searching
      * @return List of Comics that were found in the search
      */
-    public List<Comic> searchData(String query, List<Comic> data, String input);
+    public List<Marking> searchData(String query, List<Marking> data, String input);
 }

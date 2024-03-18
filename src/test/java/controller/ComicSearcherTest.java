@@ -17,6 +17,7 @@ import model.Creator;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Marking;
 import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.search.Searcher;
@@ -25,7 +26,7 @@ import controller.sort.PublicationDateSorter;
 
 public class ComicSearcherTest {
 
-    public static List<Comic> data;
+    public static List<Marking> data;
 
     private static Comic comic1;
     private static Comic comic2;
@@ -71,13 +72,13 @@ public class ComicSearcherTest {
     @Test
     public void testSetSorterToPubDate(){
         //Setup
-        Comparator<Comic> sorter = new PublicationDateSorter();
-        Comparator<Comic> expected = sorter;
+        Comparator<Marking> sorter = new PublicationDateSorter();
+        Comparator<Marking> expected = sorter;
         ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter);
-        Comparator<Comic> actual = comicSearcher.getSorter();
+        Comparator<Marking> actual = comicSearcher.getSorter();
         
         //Analyze
         assertEquals(expected, actual);
@@ -86,12 +87,12 @@ public class ComicSearcherTest {
     @Test
     public void testDefaultSorter(){
         //Setup
-        Comparator<Comic> sorter = new DefaultSorter();
-        Comparator<Comic> expected = sorter;
+        Comparator<Marking> sorter = new DefaultSorter();
+        Comparator<Marking> expected = sorter;
         ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
-        Comparator<Comic> actual = comicSearcher.getSorter();
+        Comparator<Marking> actual = comicSearcher.getSorter();
         
         //Analyze
         assertEquals(expected, actual);
@@ -101,15 +102,15 @@ public class ComicSearcherTest {
     @Test
     public void testSetSorterToDefault(){
         //Setup
-        Comparator<Comic> sorter1 = new PublicationDateSorter();
-        Comparator<Comic> sorter2 = new DefaultSorter();
-        Comparator<Comic> expected = sorter2;
+        Comparator<Marking> sorter1 = new PublicationDateSorter();
+        Comparator<Marking> sorter2 = new DefaultSorter();
+        Comparator<Marking> expected = sorter2;
         ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter1);
         comicSearcher.setSorter(sorter2);
-        Comparator<Comic> actual = comicSearcher.getSorter();
+        Comparator<Marking> actual = comicSearcher.getSorter();
         
         //Analyze
         assertEquals(expected, actual);
@@ -118,14 +119,14 @@ public class ComicSearcherTest {
     @Test
     public void testUnequalSorters(){
         //Setup
-        Comparator<Comic> sorter1 = new PublicationDateSorter();
-        Comparator<Comic> sorter2 = new DefaultSorter();
-        Comparator<Comic> unexpected = sorter2;
+        Comparator<Marking> sorter1 = new PublicationDateSorter();
+        Comparator<Marking> sorter2 = new DefaultSorter();
+        Comparator<Marking> unexpected = sorter2;
         ComicSearcher comicSearcher = new ComicSearcher(data);
         
         //Invoke
         comicSearcher.setSorter(sorter1);
-        Comparator<Comic> actual = comicSearcher.getSorter();
+        Comparator<Marking> actual = comicSearcher.getSorter();
         
         //Analyze
         assertNotEquals(unexpected, actual);
@@ -197,12 +198,12 @@ public class ComicSearcherTest {
     public void testSearchPartialDefaultSort(){
         //Setup
         ComicSearcher comicSearcher = new ComicSearcher(data);
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic1);
         
         //Invoke
-        List<Comic> actual = comicSearcher.search("Spider-MAN", "series_title");
+        List<Marking> actual = comicSearcher.search("Spider-MAN", "series_title");
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -216,12 +217,12 @@ public class ComicSearcherTest {
        //Setup
        ComicSearcher comicSearcher = new ComicSearcher(data);
        comicSearcher.setSorter(new PublicationDateSorter());
-       List<Comic> expected = new ArrayList<>();
+       List<Marking> expected = new ArrayList<>();
        expected.add(comic1);
        expected.add(comic2);
        
        //Invoke
-       List<Comic> actual = comicSearcher.search("Spider-MAN", "series_title");
+       List<Marking> actual = comicSearcher.search("Spider-MAN", "series_title");
        
        //Analyze
        assertEquals(expected.size(), actual.size());
@@ -235,12 +236,12 @@ public class ComicSearcherTest {
         //Setup
         ComicSearcher comicSearcher = new ComicSearcher(data);
         comicSearcher.setSearcher(new ExactSearch());
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic1);
         
         //Invoke
-        List<Comic> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
+        List<Marking> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -255,12 +256,12 @@ public class ComicSearcherTest {
         ComicSearcher comicSearcher = new ComicSearcher(data);
         comicSearcher.setSearcher(new ExactSearch());
         comicSearcher.setSorter(new PublicationDateSorter());
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         
         //Invoke
-        List<Comic> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
+        List<Marking> actual = comicSearcher.search("The amazing Spider-MAN", "series_title");
         
         //Analyze
         assertEquals(expected.size(), actual.size());

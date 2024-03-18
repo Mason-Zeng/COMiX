@@ -2,7 +2,7 @@ package controller.sort;
 
 import java.util.Comparator;
 
-import model.Comic;
+import model.marking.Marking;
 
 /**
  * DefaultSorter is an implementation of Comparator.
@@ -11,7 +11,7 @@ import model.Comic;
  * 
  * @author Ayden Dazo
  */
-public class DefaultSorter implements Comparator<Comic> {
+public class DefaultSorter implements Comparator<Marking> {
 
 
     /**
@@ -25,7 +25,7 @@ public class DefaultSorter implements Comparator<Comic> {
      * means comic 2 goes first, and 0 means they are equal.
      */
     @Override
-    public int compare(Comic comic1, Comic comic2) {
+    public int compare(Marking comic1, Marking comic2) {
         String title1 = comic1.getSeriesTitle();
         String title2 = comic2.getSeriesTitle();
 

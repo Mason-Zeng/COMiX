@@ -6,7 +6,7 @@ import java.util.List;
 import controller.search.PartialSearch;
 import controller.search.Searcher;
 import controller.sort.DefaultSorter;
-import model.Comic;
+import model.marking.Marking;
 
 /**
  * A class that searches and sorts through either a database or a personal collection.
@@ -19,13 +19,13 @@ public class ComicSearcher {
     /**
      * A list of comics from either a database or a personal collection.
      */
-    private List<Comic> data;
+    private List<Marking> data;
 
     /**
      * A Comprator that acts as a sorter. 
      * Comparator is a Strategy in the Strategy pattern
      */
-    private Comparator<Comic> sorter;
+    private Comparator<Marking> sorter;
 
     /**
      * Searcher is a Strategy in the Strategy pattern.
@@ -38,7 +38,7 @@ public class ComicSearcher {
      * Instantiates the searcher as the PartialSearch class, a Concrete Strategy.
      * @param data a list of comics from somewhere.
      */
-    public ComicSearcher(List<Comic> data){
+    public ComicSearcher(List<Marking> data){
         this.sorter = new DefaultSorter();
         this.searcher = new PartialSearch();
         this.data = data;
@@ -50,8 +50,8 @@ public class ComicSearcher {
      * @param input The method of searching
      * @return a list of sorted comics that contained/matched the query.
      */
-    public List<Comic> search(String query, String input){
-        List<Comic> results = searcher.searchData(query, data, input);
+    public List<Marking> search(String query, String input){
+        List<Marking> results = searcher.searchData(query, data, input);
         results.sort(sorter);
         return results;
     }
@@ -60,7 +60,7 @@ public class ComicSearcher {
      * Sets the sorter to a different Concrete Strategy.
      * @param sorter The new sorter that is being changed to
      */
-    public void setSorter(Comparator<Comic> sorter){
+    public void setSorter(Comparator<Marking> sorter){
         this.sorter = sorter;
     }
 
@@ -77,7 +77,7 @@ public class ComicSearcher {
      * Is protected since it is mainly used for testing.
      * @return The current sorter
      */
-    protected Comparator<Comic> getSorter(){
+    protected Comparator<Marking> getSorter(){
         return sorter;
     }
 
