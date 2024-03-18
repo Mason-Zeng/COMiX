@@ -22,9 +22,10 @@ public class PTUI {
     private static Scanner scan;
     private static Collection collection = new Collection("User");
     private static CollectionManager collectionManager = new CollectionManager(collection);
-    private static final List<Comic> COMICS = ComicOutput.loadFromCSV(csvFile)
+    private static final List<Marking> COMICS = ComicOutput.loadFromCSV(csvFile)
         .stream()
         .map(Comic::new)
+        .map(Marking.class::cast)
         .toList();
 
     public static void main(String[] args) {
@@ -89,7 +90,7 @@ public class PTUI {
         }
         searcher.setSearcher(searchStrategy);
 
-        Comparator<Comic> sorter = null;
+        Comparator<Marking> sorter = null;
         String answer = "";
         while (!answer.equals("Q") && !answer.equals("D") && !answer.equals("P")){
                     System.out.println("\"D\" for Default Sorting (By Series Title->Volume Number->Issue Number)\n\"P\" for Sorting by Publication Date\n\"Q\" to go back to start");
