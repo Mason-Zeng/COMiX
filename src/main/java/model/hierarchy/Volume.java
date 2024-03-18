@@ -24,13 +24,13 @@ public class Volume implements ComicHolder {
   }
 
   public void addIssue(Marking issue) {
-    issues.put(issue.getComic().getTitle(), issue);
-    issue.getComic().setVolume(this);
+    issues.put(issue.getTitle(), issue);
+    issue.setVolume(this);
   }
   
   public void delIssue(Marking issue) {
-    issues.get(issue.getComic().getTitle()).getComic().setVolume(null);
-    issues.remove(issue.getComic().getTitle());
+    issues.get(issue.getTitle()).setVolume(null);
+    issues.remove(issue.getTitle());
   }
 
   public void setSeries(Series series) {
