@@ -9,6 +9,7 @@ import java.util.Comparator;
 import org.junit.jupiter.api.Test;
 
 import model.hierarchy.Volume;
+import model.marking.Marking;
 import model.Comic;
 
 public class PublicationSorterTest {
@@ -21,7 +22,7 @@ public class PublicationSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume(1));
 
-        Comparator<Comic> comparer = new PublicationDateSorter();
+        Comparator<Marking> comparer = new PublicationDateSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -38,7 +39,7 @@ public class PublicationSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
         new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume(1));
 
-        Comparator<Comic> comparer = new PublicationDateSorter();
+        Comparator<Marking> comparer = new PublicationDateSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -55,7 +56,7 @@ public class PublicationSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("1994-04-23"), new Volume(1));
 
-        Comparator<Comic> comparer = new PublicationDateSorter();
+        Comparator<Marking> comparer = new PublicationDateSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);

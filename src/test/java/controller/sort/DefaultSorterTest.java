@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Marking;
 import model.Comic;
 
 public class DefaultSorterTest {
@@ -25,7 +26,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2, new Series("Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -42,7 +43,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2, new Series("The Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
 
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -59,7 +60,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 1, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(2, new Series("The Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -76,7 +77,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
                             new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(3, new Series("The Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -93,7 +94,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 28, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1, new Series("The Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
@@ -110,7 +111,7 @@ public class DefaultSorterTest {
             Comic comic2 = new Comic("Incredible Hulk", 2, "Super strong, and green!", 
                                     new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1, new Series("The Incredible Hulk")));
     
-            Comparator<Comic> comparer = new DefaultSorter();
+            Comparator<Marking> comparer = new DefaultSorter();
             
             //Invoke
             int actual = comparer.compare(comic1, comic2);
@@ -129,7 +130,7 @@ public class DefaultSorterTest {
         Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
                                 new BigDecimal("5.00"), LocalDate.parse("2022-01-07"), new Volume(1, new Series("The Incredible Hulk")));
 
-        Comparator<Comic> comparer = new DefaultSorter();
+        Comparator<Marking> comparer = new DefaultSorter();
         
         //Invoke
         int actual = comparer.compare(comic1, comic2);
