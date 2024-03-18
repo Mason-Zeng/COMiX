@@ -132,9 +132,6 @@ public class Comic implements Marking{
         this.volume = vol;
     }
 
-    public Comic getComic() {
-        return this;
-    }
 
     @Override
     public String toString() {
@@ -147,5 +144,9 @@ public class Comic implements Marking{
                 "\n\tCreators: " + getCreators().stream().map(Creator::getName).reduce("", (String total, String s) -> s + ", " + total) +
                 "\n"
         ;
+    }
+    @Override
+    public Marking getMarking() {
+        return null;
     }
 }
