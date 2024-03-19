@@ -3,8 +3,12 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.supercsv.io.CsvListReader;
+import org.supercsv.prefs.CsvPreference;
 
 public class ComicOutput {
     private String series;
@@ -114,70 +118,47 @@ public class ComicOutput {
     }
 
 
-    public static List<ComicOutput> loadFromCSV(String csvFile) {
+    public static List<ComicOutput> loadFromCSV(String csvFile){
         List<ComicOutput> comics = new ArrayList<>();
+        try (CsvListReader reader = new CsvListReader(new BufferedReader(new FileReader(csvFile, StandardCharsets.UTF_8)), CsvPreference.STANDARD_PREFERENCE)){
+            //Skips the header
+            reader.read();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                // Split the line into fields using comma as the delimiter
-                String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1); // Split by comma, ignoring commas within quotes
-
-                // Create a Comic object and populate its attributes
+            List<String> columns;
+            while ((columns = reader.read()) != null){
                 ComicOutput comic = new ComicOutput();
-                comic.setSeries(getValueOrDefault(data, 0).replaceAll("\"", ""));
-                comic.setIssue(getValueOrDefault(data, 1).replaceAll("\"", ""));
-                comic.setFullTitle(getValueOrDefault(data, 2).replaceAll("\"", ""));
-                comic.setVariantDescription(getValueOrDefault(data, 3).replaceAll("\"", ""));
-                comic.setPublisher(getValueOrDefault(data, 4).replaceAll("\"", ""));
-                comic.setReleaseDate(getValueOrDefault(data, 5).replaceAll("\"", ""));
-                comic.setFormat(getValueOrDefault(data, 6).replaceAll("\"", ""));
-                comic.setAddedDate(getValueOrDefault(data, 7).replaceAll("\"", ""));
-                comic.setCreators(getValueOrDefault(data, 8).replaceAll("\"", ""));
+                comic.setSeries(getValueOrDefault(columns.get(0)));
+                comic.setIssue(getValueOrDefault(columns.get(1)));
+                comic.setFullTitle(getValueOrDefault(columns.get(2)));
+                comic.setVariantDescription(getValueOrDefault(columns.get(3)));
+                comic.setPublisher(getValueOrDefault(columns.get(4)));
+                comic.setReleaseDate(getValueOrDefault(columns.get(5)));
+                comic.setFormat(getValueOrDefault(columns.get(6)));
+                comic.setAddedDate(getValueOrDefault(columns.get(7)));
+                comic.setCreators(getValueOrDefault(columns.get(8)));
 
                 // Add the Comic object to the ArrayList
                 comics.add(comic);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            
         }
-
+        catch (IOException ioe){
+            ioe.printStackTrace();
+        }
         return comics;
     }
 
+    
     // Helper method to get value from array with default if index is out of bounds
     //this is just for in case there is an error getting values/attributes for the comic
-    private static String getValueOrDefault(String[] array, int index) {
-        return (index >= 0 && index < array.length) ? array[index].trim() : "N/A";
+    private static String getValueOrDefault(String value) {
+        return (value != null) ? value.trim() : "N/A";
     }
+    
 
-    // Main method for testing
     public static void main(String[] args) {
-        String csvFile = "data/comics.csv";
-        List<ComicOutput> comics = ComicOutput.loadFromCSV(csvFile);
         
-        // Print the contents of the comics item by item
-        // for (ComicOutput comic : comics) 
-        // {
-        //     System.out.println("\n");
-        //     System.out.println(comic);
-        // }
-
-        System.out.println(comics); //simple total printing 
-        
-        //this is an example for if we need to reach certain records
-
-        // Iterator<ComicOutput> iterator = comics.iterator();
-        // while (iterator.hasNext()) {
-        //     ComicOutput comic = iterator.next();
-        //     // Access individual ComicOutput object
-        //     // Example: Access publisher of each comic
-        //     String publisher = comic.getPublisher();
-        //     System.out.println("Publisher: " + publisher);
-        // }
-
-        
-    }
+        System.out.println(ComicOutput.loadFromCSV("data/comics.csv"));
+        }
 
 }
