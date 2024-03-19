@@ -7,7 +7,7 @@ import model.Comic;
 
 public class MarkingFactory {
     /**
-     * Recursively copies marking 
+     * Iteratively copies marking 
      * as well as all the markings 
      * that are owned by it.
      * @param marking
