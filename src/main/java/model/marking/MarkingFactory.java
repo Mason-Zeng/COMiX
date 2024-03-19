@@ -20,6 +20,7 @@ public class MarkingFactory {
             oldMarks.add(point);
             point = point.getMarking();
         }
+        oldMarks.add(point);
         Collections.reverse(oldMarks);
         Marking result = null;
         for (Marking oldMark : oldMarks) {
