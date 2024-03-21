@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Comic;
 import model.Creator;
+import model.marking.Marking;
 
 /**
  * PartialSearch implements the Searcher class.
@@ -27,13 +27,13 @@ public class PartialSearch implements Searcher{
      * @return A list of comics that match exactly to the query
      */
     @Override
-    public List<Comic> searchData(String query, List<Comic> data, String input) {
+    public List<Marking> searchData(String query, List<Marking> data, String input) {
         query = query.toLowerCase();
-        List<Comic> comics = new ArrayList<>();
+        List<Marking> comics = new ArrayList<>();
         switch(input){
 
             case "series_title":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
                 if (series.contains(query)){
@@ -43,7 +43,7 @@ public class PartialSearch implements Searcher{
             break;
 
             case "issue_number":
-            for (Comic comic: data){
+            for (Marking comic: data){
                 int issueNumber = comic.getIssueNumber();
                 if (String.valueOf(issueNumber).contains(query)){
                     comics.add(comic);
@@ -52,7 +52,7 @@ public class PartialSearch implements Searcher{
             break;
 
             case "story_title":
-            for (Comic comic: data){
+            for (Marking comic: data){
                 String title = comic.getTitle();
                 title = title.toLowerCase();
                 if (title.contains(query)){
@@ -62,7 +62,7 @@ public class PartialSearch implements Searcher{
             break;
 
             case "publisher":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 String name = comic.getPublisherName();
                 name = name.toLowerCase();
                 if (name.contains(query)){
@@ -72,7 +72,7 @@ public class PartialSearch implements Searcher{
             break;
 
             case "date":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 LocalDate date = comic.getDate();
                 if (date.toString().contains(query)){
                     comics.add(comic);
@@ -81,7 +81,7 @@ public class PartialSearch implements Searcher{
             break;
 
             case "creator":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 List<Creator> creators = comic.getCreators();
                 for (Creator creator : creators){
                     String name = creator.getName();

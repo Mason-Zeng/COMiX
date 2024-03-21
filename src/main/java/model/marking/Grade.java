@@ -32,8 +32,9 @@ public class Grade extends ComicDecorator{
         }
         return null;
     }
-
-
-       
+    
+    public int getGrade() {
+        return grade;
+    }
 }
 

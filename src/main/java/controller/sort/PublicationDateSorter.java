@@ -3,7 +3,7 @@ package controller.sort;
 import java.time.LocalDate;
 import java.util.Comparator;
 
-import model.Comic;
+import model.marking.Marking;
 
 /**
  * PublicationDateSorter is an implementation of Comparator.
@@ -12,7 +12,7 @@ import model.Comic;
  * 
  * @author Ayden Dazo
  */
-public class PublicationDateSorter implements Comparator<Comic>{
+public class PublicationDateSorter implements Comparator<Marking>{
 
     /**
      * The method that compares two comics, and returns an int based on which comes first.
@@ -24,7 +24,7 @@ public class PublicationDateSorter implements Comparator<Comic>{
      * means comic 2 goes first, and 0 means they are equal.
      */
     @Override
-    public int compare(Comic comic1, Comic comic2) {
+    public int compare(Marking comic1, Marking comic2) {
         LocalDate date1 = comic1.getDate();
         LocalDate date2 = comic2.getDate();
 

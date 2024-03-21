@@ -13,12 +13,13 @@ import org.junit.jupiter.api.Test;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Marking;
 import model.Comic;
 import model.Creator;
 
 public class PartialSearchTest {
 
-    private static List<Comic> data;
+    private static List<Marking> data;
     private static Searcher partialSearch;
     private String input;
     private String query;
@@ -71,12 +72,12 @@ public class PartialSearchTest {
         //Setup
         input = "series_title";
         query = "Spider-MAN";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         
         //Invoke
-        List<Comic> actual = new ArrayList<>();
+        List<Marking> actual = new ArrayList<>();
         actual = partialSearch.searchData(query, data, input);
 
         //Analyze
@@ -91,13 +92,13 @@ public class PartialSearchTest {
         //Setup
         input = "issue_number";
         query = "3";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic3);
         expected.add(comic4);
         
         //Invoke
-        List<Comic> actual = partialSearch.searchData(query, data, input);
+        List<Marking> actual = partialSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -111,13 +112,13 @@ public class PartialSearchTest {
         //Setup
         input = "story_title";
         query = "spIDER-mAN";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         expected.add(comic4);
         
         //Invoke
-        List<Comic> actual = partialSearch.searchData(query, data, input);
+        List<Marking> actual = partialSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -131,13 +132,13 @@ public class PartialSearchTest {
         //Setup
         input = "publisher";
         query = "MAr";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         expected.add(comic3);
         
         //Invoke
-        List<Comic> actual = partialSearch.searchData(query, data, input);
+        List<Marking> actual = partialSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -151,12 +152,12 @@ public class PartialSearchTest {
         //Setup
         input = "date";
         query = "22";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         
         //Invoke
-        List<Comic> actual = partialSearch.searchData(query, data, input);
+        List<Marking> actual = partialSearch.searchData(query, data, input);
 
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -170,13 +171,13 @@ public class PartialSearchTest {
         //Setup
         input = "creator";
         query = "Stan Lee";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic3);
         expected.add(comic4);
         
         //Invoke
-        List<Comic> actual = partialSearch.searchData(query, data, input);
+        List<Marking> actual = partialSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());

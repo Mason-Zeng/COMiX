@@ -12,12 +12,13 @@ import org.junit.jupiter.api.Test;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Marking;
 import model.Comic;
 import model.Creator;
 
 public class ExactSearchTest {
     
-    private static List<Comic> data;
+    private static List<Marking> data;
     private static Searcher exactSearch;
     private String input;
     private String query;
@@ -69,12 +70,12 @@ public class ExactSearchTest {
         //Setup
         input = "series_title";
         query = "The Amazing Spider-MAN";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
 
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -88,12 +89,12 @@ public class ExactSearchTest {
         //Setup
         input = "issue_number";
         query = "33";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic4);
         
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -107,11 +108,11 @@ public class ExactSearchTest {
         //Setup
         input = "story_title";
         query = "spIDER-mAN vs batMAN";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic4);
         
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -125,13 +126,13 @@ public class ExactSearchTest {
         //Setup
         input = "publisher";
         query = "Marvel";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic2);
         expected.add(comic3);
         
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -145,11 +146,11 @@ public class ExactSearchTest {
         //Setup
         input = "date";
         query = "2022-02-22";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());
@@ -163,12 +164,12 @@ public class ExactSearchTest {
         //Setup
         input = "creator";
         query = "Stan Lee";
-        List<Comic> expected = new ArrayList<>();
+        List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic3);
         
         //Invoke
-        List<Comic> actual = exactSearch.searchData(query, data, input);
+        List<Marking> actual = exactSearch.searchData(query, data, input);
         
         //Analyze
         assertEquals(expected.size(), actual.size());

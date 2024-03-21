@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Comic;
 import model.Creator;
+import model.marking.Marking;
 
 /**
  * ExactSearch implements the Searcher class.
@@ -27,14 +27,14 @@ public class ExactSearch implements Searcher{
      * @return A list of comics that match exactly to the query
      */
     @Override
-    public List<Comic> searchData(String query, List<Comic> data, String input) {
+    public List<Marking> searchData(String query, List<Marking> data, String input) {
         query = query.toLowerCase();
-        List<Comic> comics = new ArrayList<>();
+        List<Marking> comics = new ArrayList<>();
 
         switch (input){
             
             case "series_title":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
                 if (query.equals(series)){
@@ -44,7 +44,7 @@ public class ExactSearch implements Searcher{
             break;
 
             case "issue_number":
-            for (Comic comic: data){
+            for (Marking comic: data){
                 int issue_number = comic.getIssueNumber();
                 if (query.equals(String.valueOf(issue_number))){
                     comics.add(comic);
@@ -53,7 +53,7 @@ public class ExactSearch implements Searcher{
             break;
 
             case "story_title":
-            for (Comic comic: data){
+            for (Marking comic: data){
                 String title = comic.getTitle();
                 title = title.toLowerCase();
                 if (query.equals(title)){
@@ -63,7 +63,7 @@ public class ExactSearch implements Searcher{
             break;
 
             case "publisher":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 String name = comic.getPublisherName();
                 name = name.toLowerCase();
                 if (query.equals(name)){
@@ -73,7 +73,7 @@ public class ExactSearch implements Searcher{
             break;
 
             case "date":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 LocalDate date = comic.getDate();
                 if (query.equals(date.toString())){
                     comics.add(comic);
@@ -82,7 +82,7 @@ public class ExactSearch implements Searcher{
             break;
 
             case "creator":
-            for (Comic comic : data){
+            for (Marking comic : data){
                 List<Creator> creators = comic.getCreators();
                 for (Creator creator: creators){
                     if (query.equals(creator.getName().toLowerCase())){
