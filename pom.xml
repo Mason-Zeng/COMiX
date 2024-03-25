@@ -5,6 +5,7 @@
     <artifactId>COMiX-R1</artifactId>
     <version>1</version>
     <properties>
+        <java.version>19</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
