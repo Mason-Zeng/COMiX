@@ -21,6 +21,7 @@ public class Grade extends ComicDecorator{
      * If the grade is 2-10, we multiply the value by log(grade)
      */
     public BigDecimal getValue(){
+        if(comic.getValue()==null){return null;}
         if(grade == 1){
             BigDecimal multiplier = new BigDecimal(0.1);
             BigDecimal newVal = comic.getValue().multiply(multiplier);

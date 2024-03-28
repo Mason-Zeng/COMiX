@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
@@ -18,15 +17,54 @@ public class GradeTest {
         BigDecimal value = new BigDecimal(6);
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 1);
-        comic = new Slab(comic);
+
+        BigDecimal test = comic.getValue();
+        BigDecimal expected = new BigDecimal("0.60"); // Adjusted to use string for precise BigDecimal creation
+    
+        //Analyze
+        assertEquals(expected, test);
+    }
+
+    @Test
+    public void testGradeGreaterThan1(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Grade(comic, 4);
+
+        //Invoke
+        BigDecimal test = comic.getValue();
+        BigDecimal expected = new BigDecimal("3.61");
+        
+        //Analyze
+        assertEquals(test, expected);
+    }
+
+    @Test
+    public void testInvalid(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Grade(comic, 0);
         
         //Invoke
         BigDecimal test = comic.getValue();
-        test = test.setScale(2, RoundingMode.HALF_EVEN);
-        BigDecimal expected = new BigDecimal(1.20);
-        expected = expected.setScale(2, RoundingMode.HALF_EVEN);
         
         //Analyze
-        assertEquals(expected, test);
+        assertNull(test);
+    }
+
+    @Test
+    public void testNullValue(){
+        //Setup
+        BigDecimal value = null;
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Grade(comic, 25);
+        
+        //Invoke
+        BigDecimal test = comic.getValue();
+        
+        //Analyze
+        assertNull(test);
     }
 }
