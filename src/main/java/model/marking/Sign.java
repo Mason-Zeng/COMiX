@@ -15,10 +15,11 @@ public class Sign extends ComicDecorator{
      */
     public BigDecimal getValue(){
         //Can comic be signed after graded ?
-        if(comic.getValue() == null || comic instanceof Slab){return null;}
+        if(comic.getValue() == null || comic instanceof Slab || comic instanceof Authenticate){return null;}
         BigDecimal multiplier = new BigDecimal(1.05);
         BigDecimal newVal = comic.getValue().multiply(multiplier);
         newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
+        signCount++;
         return newVal;
     }
 }

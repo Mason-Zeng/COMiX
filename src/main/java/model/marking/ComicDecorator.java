@@ -13,6 +13,7 @@ import model.hierarchy.Volume;
 
 public abstract class ComicDecorator implements Marking {
     protected Marking comic;
+    protected int signCount = 0;
 
     public ComicDecorator(Marking comic) {
         this.comic = comic;
@@ -89,5 +90,9 @@ public abstract class ComicDecorator implements Marking {
     @Override
     public Marking getMarking() {
         return comic;
+    }
+
+    public int getSignCount(){
+        return signCount;
     }
 }
