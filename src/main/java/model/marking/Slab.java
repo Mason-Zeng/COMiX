@@ -1,6 +1,7 @@
 package model.marking;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import model.Comic;
 
@@ -22,6 +23,7 @@ public class Slab extends ComicDecorator{
         if(comic instanceof Grade){
             BigDecimal multiplier = new BigDecimal(2);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
+            newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
         }
         return null;

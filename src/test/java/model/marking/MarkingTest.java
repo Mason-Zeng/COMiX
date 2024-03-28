@@ -22,15 +22,12 @@ public class MarkingTest{
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 1);
         comic = new Slab(comic);
-        
-        //Invoke
+
         BigDecimal test = comic.getValue();
-        test = test.setScale(2, RoundingMode.HALF_EVEN);
-        BigDecimal expected = new BigDecimal(1.20);
-        expected = expected.setScale(2, RoundingMode.HALF_EVEN);
-        
+        BigDecimal expected = new BigDecimal("1.20"); // Adjusted to use string for precise BigDecimal creation
+    
         //Analyze
-        assertEquals(expected, test);
+        assertEquals(0, test.compareTo(expected));
     }
 
     @Test
@@ -40,15 +37,13 @@ public class MarkingTest{
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
-        
+
         //Invoke
         BigDecimal test = comic.getValue();
-        test = test.setScale(2, RoundingMode.HALF_EVEN);
-        BigDecimal expected = new BigDecimal(7.22);
-        expected = expected.setScale(2, RoundingMode.HALF_EVEN);
+        BigDecimal expected = new BigDecimal("7.22");
         
         //Analyze
-        assertEquals(expected, test);
+        assertEquals(0, test.compareTo(expected));
     }
 
     @Test
@@ -57,6 +52,22 @@ public class MarkingTest{
         BigDecimal value = new BigDecimal(6);
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 0);
+        comic = new Slab(comic);
+        
+        //Invoke
+        BigDecimal test = comic.getValue();
+        
+        //Analyze
+        assertNull(test);
+    }
+
+    @Test
+    public void testMarkingInvalidTypeSlab(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Grade(comic, 5);
+        comic = new Slab(comic);
         comic = new Slab(comic);
         
         //Invoke
