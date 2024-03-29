@@ -17,8 +17,6 @@ public class Authenticate extends ComicDecorator{
      */
     public BigDecimal getValue(){
         if(comic.getValue() == null || comic instanceof Authenticate || comic instanceof Slab || comic instanceof Comic){return null;}
-        //Can comic be authenticated after graded and slabbed ?
-        //If so, how to check if Signed. Put isSigned boolean field ?
         if(signCount > 0){
             BigDecimal multiplier = new BigDecimal(1.20);
             BigDecimal newVal = comic.getValue().multiply(multiplier);

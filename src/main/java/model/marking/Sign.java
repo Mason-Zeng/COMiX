@@ -14,7 +14,6 @@ public class Sign extends ComicDecorator{
      * Adds 5% to the value.
      */
     public BigDecimal getValue(){
-        //Can comic be signed after graded ?
         if(comic.getValue() == null || comic instanceof Slab || comic instanceof Authenticate){return null;}
         BigDecimal multiplier = new BigDecimal(1.05);
         BigDecimal newVal = comic.getValue().multiply(multiplier);
