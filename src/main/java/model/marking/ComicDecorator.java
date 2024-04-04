@@ -13,7 +13,7 @@ import model.hierarchy.Volume;
 
 public abstract class ComicDecorator implements Marking {
     protected Marking comic;
-    protected int signCount = 0;
+    protected int signCount;
 
     public ComicDecorator(Marking comic) {
         this.comic = comic;

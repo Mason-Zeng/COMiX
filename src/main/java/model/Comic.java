@@ -19,6 +19,7 @@ public class Comic implements Marking{
     private List<Character> characters;
     private String description;
     private BigDecimal value;
+    private int signCount = 0;
 
     public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
         this(title, issueNum, description, value, pubDate);
@@ -130,6 +131,10 @@ public class Comic implements Marking{
 
     public void setVolume(Volume vol) {
         this.volume = vol;
+    }
+
+    public int getSignCount(){
+        return signCount;
     }
 
 

@@ -22,6 +22,7 @@ public class SlabTest{
         comic = new Grade(comic, 1);
         comic = new Slab(comic);
 
+        //Invoke
         BigDecimal test = comic.getValue();
         BigDecimal expected = new BigDecimal("1.20"); // Adjusted to use string for precise BigDecimal creation
     
