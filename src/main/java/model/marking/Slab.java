@@ -23,6 +23,7 @@ public class Slab extends ComicDecorator{
         if(comic instanceof Grade){
             BigDecimal multiplier = new BigDecimal(2);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
+            signCount = comic.getSignCount();
             newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
         }

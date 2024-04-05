@@ -17,6 +17,7 @@ public class Authenticate extends ComicDecorator{
      */
     public BigDecimal getValue(){
         if(comic.getValue() == null || comic instanceof Authenticate || comic instanceof Slab || comic instanceof Comic){return null;}
+        //signCount not working for some reason.
         if(signCount > 0){
             BigDecimal multiplier = new BigDecimal(1.20);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
