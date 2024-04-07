@@ -18,8 +18,8 @@ public abstract class ComicDecorator implements Marking {
         this.comic = comic;
     }
 
-    public BigDecimal getValue(){
-        return comic.getValue();
+    public BigDecimal getTrueValue() {
+        return comic.getTrueValue();
     }
 
     public Comic getComic() {
@@ -84,6 +84,16 @@ public abstract class ComicDecorator implements Marking {
     @Override
     public Publisher getPublisher() {
         return comic.getPublisher();
+    }
+
+    @Override
+    public String getDescription() {
+        return comic.getDescription();
+    }
+
+    @Override
+    public void addCreator(Creator creator) {
+        comic.addCreator(creator);
     }
 
     @Override
