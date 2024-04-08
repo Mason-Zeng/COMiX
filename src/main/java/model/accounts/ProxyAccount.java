@@ -58,5 +58,12 @@ public class ProxyAccount implements Account{
         }
         userAccount.removeComicFromCollection(comic);
     }
+
+    public String getUsername(){
+        if (this.userAccount == null){
+            return "Guest";
+        }
+        return userAccount.getUsername();
+    }
     
 }
