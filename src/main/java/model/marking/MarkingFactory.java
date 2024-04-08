@@ -2,6 +2,7 @@ package model.marking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import model.Comic;
 
@@ -14,14 +15,7 @@ public class MarkingFactory {
      * @return
      */
     public Marking copyMarking(Marking marking) {
-        ArrayList<Marking> oldMarks = new ArrayList<>();
-        Marking point = marking;
-        while (!(point instanceof Comic)) {
-            oldMarks.add(point);
-            point = point.getMarking();
-        }
-        oldMarks.add(point);
-        Collections.reverse(oldMarks);
+        List<Marking> oldMarks = getMarkingOrder(marking);
         Marking result = null;
         for (Marking oldMark : oldMarks) {
             if (oldMark instanceof Comic) {
@@ -34,6 +28,18 @@ public class MarkingFactory {
                 result = new Grade(result, ((Grade)oldMark).getGrade());
             }
         }
+        return result;
+    }
+
+    public List<Marking> getMarkingOrder(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
         return result;
     }
 }
