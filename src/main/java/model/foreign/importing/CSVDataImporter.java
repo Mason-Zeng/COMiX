@@ -17,9 +17,8 @@ import model.Comic;
 import model.Creator;
 import model.foreign.DataImporter;
 import model.hierarchy.*;
-import model.marking.Grade;
 import model.marking.Marking;
-import model.marking.Slab;
+import model.marking.MarkingFactory;
 
 public class CSVDataImporter implements DataImporter {
 
@@ -66,25 +65,8 @@ public class CSVDataImporter implements DataImporter {
                     comic.addCreator(new Creator(creator));
                 }
                 
-                String[] format = ((String)comicList.get(8)).split(" ");
-
-                for (String marking : format) {
-                    switch (marking.charAt(0)) {
-                        case 'G':
-                            Integer grade = Integer.parseInt(marking.substring(2, marking.length()-1));
-                            comic = new Grade(comic, grade);
-                            break;
-                        case 'S':
-                            comic = new Slab(comic);
-                            break;
-                        case 's':
-                            // TODO: Add Signed comics
-                            break;
-                        case 'A': 
-                            // TODO: Add Auth comics
-                            break;
-                    }
-                }
+                String format = ((String)comicList.get(8));
+                comic = MarkingFactory.formatComic(comic, format);
                 result.add(comic);
             }
             listReader.close();

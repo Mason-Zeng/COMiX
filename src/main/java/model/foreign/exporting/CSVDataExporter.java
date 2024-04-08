@@ -2,7 +2,6 @@ package model.foreign.exporting;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import org.supercsv.prefs.CsvPreference;
 
 import model.Creator;
 import model.foreign.DataExporter;
-import model.marking.Grade;
 import model.marking.Marking;
 import model.marking.MarkingFactory;
 
@@ -69,30 +67,8 @@ public class CSVDataExporter implements DataExporter {
                                     .stream()
                                     .map(Creator::getName)
                                     .collect(Collectors.joining(" | "));
-                
-                List<String> format = new ArrayList<>();
-                List<Marking> marks = MarkingFactory.getMarkingOrder(comic);
-                for (Marking mark : marks) {
-                    switch (mark.getClass().getName()) {
-                        case "Grade":
-                            format.add("G(" + ((Grade)mark).getGrade() + ")");
-                            break;
-                        case "Slab":
-                            format.add("S");
-                            break;
-                        case "Auth": // TODO: Change on integration
-                            // TODO: Add Auth Comics
-                            format.add("A");
-                            break;
-                        case "Signed": // TODO: Change on Intergration
-                            // TODO: Add Signed comics
-                            break;
-                        default:
-                            break;
-                    }
-                }
-    
-                comicArr[8] = String.join(" ", format);
+               
+                comicArr[8] = MarkingFactory.getFormat(comic);
     
                 writer.write(comicArr, processors);
             }
