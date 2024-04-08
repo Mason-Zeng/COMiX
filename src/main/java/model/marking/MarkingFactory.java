@@ -14,7 +14,7 @@ public class MarkingFactory {
      * @param marking
      * @return
      */
-    public Marking copyMarking(Marking marking) {
+    public static Marking copyMarking(Marking marking) {
         List<Marking> oldMarks = getMarkingOrder(marking);
         Marking result = null;
         for (Marking oldMark : oldMarks) {
@@ -31,7 +31,7 @@ public class MarkingFactory {
         return result;
     }
 
-    public List<Marking> getMarkingOrder(Marking marking) {
+    public static List<Marking> getMarkingOrder(Marking marking) {
         ArrayList<Marking> result = new ArrayList<>();
         Marking point = marking;
         while (!(point instanceof Comic)) {

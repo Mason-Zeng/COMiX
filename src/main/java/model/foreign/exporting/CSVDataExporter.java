@@ -40,6 +40,7 @@ public class CSVDataExporter implements DataExporter {
         "volume",
         "series",
         "publisher",
+        "date",
         "creators",
         "format",
         "value"
@@ -70,7 +71,7 @@ public class CSVDataExporter implements DataExporter {
                                     .collect(Collectors.joining(" | "));
                 
                 List<String> format = new ArrayList<>();
-                List<Marking> marks = new MarkingFactory().getMarkingOrder(comic);
+                List<Marking> marks = MarkingFactory.getMarkingOrder(comic);
                 for (Marking mark : marks) {
                     switch (mark.getClass().getName()) {
                         case "Grade":
