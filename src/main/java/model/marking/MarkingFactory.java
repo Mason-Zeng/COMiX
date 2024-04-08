@@ -42,4 +42,49 @@ public class MarkingFactory {
         Collections.reverse(result);
         return result;
     }
+
+    public static Marking formatComic(Marking comic, String format) {
+        for (String marking : format.split(" ")) {
+            switch (marking.charAt(0)) {
+                case 'G':
+                    Integer grade = Integer.parseInt(marking.substring(2, marking.length()-1));
+                    comic = new Grade(comic, grade);
+                    break;
+                case 'S':
+                    comic = new Slab(comic);
+                    break;
+                case 's':
+                    // TODO: Add Signed comics
+                    break;
+                case 'A': 
+                    // TODO: Add Auth comics
+                    break;
+            }
+        }
+        return comic;
+    } 
+
+    public static String getFormat(Marking comic) {
+        List<String> format = new ArrayList<>();
+            for (Marking mark : getMarkingOrder(comic)) {
+                switch (mark.getClass().getName()) {
+                    case "Grade":
+                        format.add("G(" + ((Grade)mark).getGrade() + ")");
+                        break;
+                    case "Slab":
+                         format.add("S");
+                        break;
+                    case "Auth": // TODO: Change on integration
+                        // TODO: Add Auth Comics
+                        format.add("A");
+                        break;
+                    case "Signed": // TODO: Change on Intergration
+                        // TODO: Add Signed comics
+                        break;
+                    default:
+                        break;
+                }
+            }
+        return String.join(" ", format);
+    }
 }
