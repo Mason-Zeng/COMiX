@@ -36,11 +36,11 @@ public class ProxyAccount implements Account{
     }
 
     @Override
-    public void searchCollection() {
+    public List<Marking> searchCollection(String searchStrategy, String sortStrategy, String query, String input) {
         if (this.userAccount == null){
-            return;
+            return null;
         }
-        userAccount.searchCollection();
+        return userAccount.searchCollection(searchStrategy, sortStrategy, query, input);
     }
 
     @Override
