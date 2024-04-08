@@ -12,7 +12,6 @@ import controller.sort.PublicationDateSorter;
 import model.Comic;
 import model.ComicOutput;
 import model.marking.Marking;
-import view.PTUI;
 
 public class ProxyAccount implements Account{
 

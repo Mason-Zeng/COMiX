@@ -1,10 +1,13 @@
 package model.accounts;
 
+import java.util.ArrayList;
+
 import model.Comic;
 
 public class UserAccount implements Account{
 
     private String username;
+    private final ArrayList<Comic> comicCollection = new ArrayList<>();
 
     public UserAccount(String username){
         this.username = username;
@@ -18,18 +21,20 @@ public class UserAccount implements Account{
 
     @Override
     public void addComicToCollection(Comic comic) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addComicToCollection'");
+        comicCollection.add(comic);
     }
 
     @Override
     public void removeComicFromCollection(Comic comic) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeComicFromCollection'");
+        comicCollection.remove(comic);
     }
     
     public String getUsername() {
         return username;
+    }
+
+    public ArrayList<Comic> getComics() {
+        return comicCollection;
     }
 
 }
