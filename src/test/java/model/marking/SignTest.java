@@ -14,6 +14,7 @@ import model.Comic;
 public class SignTest {
     LocalDate date = LocalDate.of(2020, 1, 8);
 
+    
     @Test
     public void checkSignCounter(){
         //Setup
@@ -23,58 +24,59 @@ public class SignTest {
 
         //Invoke
         comic.getValue();
-        int count = comic.getSignCount();
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        int test = authenticatedComic.signCount(comic);
         int expected = 1;
 
         //Analyze
-        assertEquals(expected, count);
+        assertEquals(expected, test);
     }
-
+    
+    
     @Test
     public void checkSignCounterMultiple(){
         //Setup
         BigDecimal value = new BigDecimal(6);
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
-        
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+
         //Invoke
-        int count = comic.getSignCount();
+        comic.getValue();
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        int test = authenticatedComic.signCount(comic);
         int expected = 5;
 
         //Analyze
-        assertEquals(expected, count);
+        assertEquals(expected, test);
     }
 
-    /* 
+    
     @Test
     public void checkSignCounterMultipleMarkings(){
         //Setup
         BigDecimal value = new BigDecimal(6);
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
-        comic.getValue();
         comic = new Grade(comic, 1);
+        comic = new Sign(comic);
         comic = new Authenticate(comic);
         comic = new Slab(comic);
-        BigDecimal test = comic.getValue();
+        
         
         //Invoke
-        int count = comic.getSignCount();
-        int expected = 5;
+        comic.getValue();
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        int test = authenticatedComic.signCount(comic);
+        int expected = 2;
 
         //Analyze
-        assertEquals(expected, count);
+        assertEquals(expected, test);
     }
-    */
+    
     @Test
     public void testOneSign(){
         //Setup
@@ -182,13 +184,39 @@ public class SignTest {
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
         comic = new Authenticate(comic);
-        //comic = new Sign(comic);
+        comic = new Sign(comic);
 
         //Invoke
         BigDecimal test = comic.getValue();
 
         //Analyze
         assertNull(test);
+    }
+
+    @Test
+    public void testValueSigns(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic = new Sign(comic);
+        comic= new Grade(comic, 3);
+        comic = new Sign(comic);
+        comic= new Slab(comic);
+
+        //Invoke
+        BigDecimal testValue = comic.getValue();
+        BigDecimal expectedValue = new BigDecimal("7.68");
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        int testSigns = authenticatedComic.signCount(comic);
+        int expectedSigns = 6;
+
+        //Analyze
+        assertEquals(expectedValue, testValue);
+        assertEquals(expectedSigns, testSigns); 
     }
 }
 

@@ -3,6 +3,8 @@ package model.marking;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
+
 /**
  * Concrete decorator class for grading a comic.
  */
@@ -25,23 +27,21 @@ public class Grade extends ComicDecorator{
         if(grade == 1){
             BigDecimal multiplier = new BigDecimal(0.1);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
-            signCount = comic.getSignCount();
             newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
         }
         else if(grade >=2 && grade<= 10){
             BigDecimal multiplier = new BigDecimal(Math.log10(grade));
             BigDecimal newVal = comic.getValue().multiply(multiplier);
-            signCount = comic.getSignCount();
             newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
         }
-        signCount = comic.getSignCount();
         return null;
     }
     
     public int getGrade() {
         return grade;
     }
+
 }
 

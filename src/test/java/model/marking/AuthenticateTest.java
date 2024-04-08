@@ -14,6 +14,39 @@ public class AuthenticateTest {
     LocalDate date = LocalDate.of(2020, 1, 8);
 
     @Test
+    public void testCheckSignedTrue(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Sign(comic);
+        comic = new Authenticate(comic);
+
+        //Invoke
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        boolean test = authenticatedComic.checkSigned(comic);
+        boolean expected = true;
+        
+        //Analyze
+        assertEquals(expected, test);
+    }
+
+    @Test
+    public void testCheckSignedFalse(){
+        //Setup
+        BigDecimal value = new BigDecimal(6);
+        Marking comic = new Comic("title", 3, "description", value, date);
+        comic = new Grade(comic, 4);
+        comic = new Slab(comic);
+
+        //Invoke
+        ComicDecorator authenticatedComic = (ComicDecorator) comic;
+        boolean test = authenticatedComic.checkSigned(comic);
+        boolean expected = false;
+        
+        //Analyze
+        assertEquals(expected, test);
+    }
+    @Test
     public void testOneSign(){
         //Setup
         BigDecimal value = new BigDecimal(6);
@@ -41,7 +74,7 @@ public class AuthenticateTest {
 
         //Invoke
         BigDecimal test = comic.getValue();
-        BigDecimal expected = new BigDecimal("8.33");
+        BigDecimal expected = new BigDecimal("8.34");
         
         //Analyze
         assertEquals(expected, test);

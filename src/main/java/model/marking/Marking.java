@@ -27,5 +27,4 @@ public interface Marking{
     public Series getSeries();
     public Publisher getPublisher();
     public Marking getMarking();
-    public int getSignCount();
 }

@@ -2,6 +2,8 @@ package model.marking;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Comic;
@@ -13,7 +15,6 @@ import model.hierarchy.Volume;
 
 public abstract class ComicDecorator implements Marking {
     protected Marking comic;
-    protected int signCount;
 
     public ComicDecorator(Marking comic) {
         this.comic = comic;
@@ -92,7 +93,39 @@ public abstract class ComicDecorator implements Marking {
         return comic;
     }
 
-    public int getSignCount(){
-        return signCount;
+    public boolean checkSigned(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Sign){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int signCount(Marking marking){
+        int count = 0;
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Sign){
+                count++;
+            }
+        }
+        return count;
+        
     }
 }

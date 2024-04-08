@@ -18,7 +18,8 @@ public class Sign extends ComicDecorator{
         BigDecimal multiplier = new BigDecimal(1.05);
         BigDecimal newVal = comic.getValue().multiply(multiplier);
         newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
-        signCount++;
         return newVal;
     }
+
+    
 }
