@@ -93,6 +93,9 @@ public abstract class ComicDecorator implements Marking {
         return comic;
     }
 
+    /*
+     * Returns if marking object has had a Sign decorator
+     */
     public boolean checkSigned(Marking marking) {
         ArrayList<Marking> result = new ArrayList<>();
         Marking point = marking;
@@ -110,6 +113,10 @@ public abstract class ComicDecorator implements Marking {
         return false;
     }
 
+    /*
+     * Returns the number of times the object
+     * was wrapped in Sign
+     */
     public int signCount(Marking marking){
         int count = 0;
         ArrayList<Marking> result = new ArrayList<>();

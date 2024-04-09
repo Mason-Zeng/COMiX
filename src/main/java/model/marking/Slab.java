@@ -31,6 +31,10 @@ public class Slab extends ComicDecorator{
         return null;
     }
 
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Grade
+     */
     public boolean isGrade(Marking marking) {
         ArrayList<Marking> result = new ArrayList<>();
         Marking point = marking;
