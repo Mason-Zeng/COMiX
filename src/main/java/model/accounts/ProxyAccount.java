@@ -1,5 +1,8 @@
 package model.accounts;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
 import model.Comic;
 import model.ComicOutput;
+import model.hierarchy.Volume;
 import model.marking.Marking;
 
 public class ProxyAccount implements Account{
@@ -23,12 +27,18 @@ public class ProxyAccount implements Account{
     //     .map(Marking.class::cast)
     //     .toList();
 
-    public void searchDatabase(String searchStrategy, String sortStrategy, String query, String input){
+    public List<Marking> searchDatabase(String searchStrategy, String sortStrategy, String query, String input){
         // ComicSearcher searcher = new ComicSearcher(COMICS);
         // searcher.setSearcher((searchStrategy == "Partial Search") ? new PartialSearch() : new ExactSearch());
         // searcher.setSorter((sortStrategy == "Sort By Default") ? new DefaultSorter() : new PublicationDateSorter());
         // input = input.toLowerCase().replace(" ", "_");
         // System.out.println(searcher.search(query, input));
+
+        //Temp code so the JavaFX Can run, remove later once CSV works.
+        ArrayList<Marking> list = new ArrayList<>();
+        Marking comic = new Comic("Spider Man", 1, "The Amazing Spider-Man!", BigDecimal.valueOf(12.00), LocalDate.of(1994, 2, 22), new Volume(1));
+        list.add(comic);
+        return list;
     }
 
     public void login(String username){

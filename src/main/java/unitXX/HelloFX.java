@@ -1,9 +1,12 @@
 package unitXX;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,15 +24,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.accounts.ProxyAccount;
+import model.marking.Marking;
 
 public class HelloFX extends Application {
     private final ProxyAccount proxyAccount = new ProxyAccount();
     private final String searchers[] = {"Partial Search", "Exact Search"};
     private final String sorters[] = {"Sort By Default", "Sort By Date"};
     private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date"};
+    private List<Marking> COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");;
+    private int comicCounter = 1; 
+    private Collection<Label> prevLabels;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         VBox root = new VBox();
         HBox hbox = new HBox();
         Group group = new Group();
@@ -98,12 +107,11 @@ public class HelloFX extends Application {
         hbox.getChildren().add(loginButton);
 
         hbox.setSpacing(1000/21);
+        hbox.setPadding(new Insets(0, 0, 0, 5));
 
         group.getChildren().add(rect);
         group.getChildren().add(hbox);
         root.getChildren().add(group);
-
-        Label test = new Label("No results.");
 
         hbox = new HBox();
         TextField field = new TextField();
@@ -122,25 +130,111 @@ public class HelloFX extends Application {
         sorter.setValue("Sort By Default");
         hbox.getChildren().add(sorter);
 
-        Label buttonLabel = new Label("➔");
-        buttonLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
+        Label buttonLabel = new Label("  ➔");
+        // buttonLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
+        buttonLabel.setMinWidth(25);
         Button button = new Button("", buttonLabel);
         hbox.getChildren().add(button);
         button.setOnAction((event) -> {
-                proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
+                COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
 
         } );
 
         hbox.setSpacing(1000/17);
+        hbox.setPadding(new Insets(0, 0, 0, 10));
         hbox.setMinWidth(1000);
         root.getChildren().add(hbox);
-        root.getChildren().add(test);
+
+        VBox vBox = new VBox();
+
+        Label comicListLabel = new Label("Comic List");
+        comicListLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
+        vBox.getChildren().add(comicListLabel);
+
+        vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(50))));
+        vBox.setPadding(new Insets(50));
+
+        VBox comicListVBox = new VBox();
+        prevLabels = comicListUpdater(comicCounter);
+        comicListVBox.getChildren().addAll(prevLabels);
+
+        comicListVBox.setPadding(new Insets(0, 0, 0, 20));
+        vBox.getChildren().add(comicListVBox);
+
+        root.getChildren().add(vBox);
+
+        HBox pages = new HBox();
+        Button leftButton = new Button("←");
+        leftButton.setTextFill(Color.GRAY);
+        leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        pages.getChildren().add(leftButton);
+
+        //HardCoded to the amount of Comics in Database
+        Label pageNumber = new Label("1/" + (int)Math.ceil(14303/15));
+        pageNumber.setFont(new Font(18));
+        pages.getChildren().add(pageNumber);
+
+        Button rightButton = new Button("→");
+        rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        rightButton.setOnAction(event -> {
+            if (comicCounter < (int)Math.ceil(14303/15)-1){
+                leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+                comicCounter++;
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(14303/15));
+                comicListVBox.getChildren().removeAll(prevLabels);
+                prevLabels = comicListUpdater(comicCounter);
+                comicListVBox.getChildren().addAll(prevLabels);
+                if (comicCounter+1 >= (int)Math.ceil(14303/15)){
+                    rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+        });
+        
+        leftButton.setOnAction(event -> {
+            if (comicCounter > 1){
+                rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+                comicCounter--;
+                comicListVBox.getChildren().removeAll(prevLabels);
+                prevLabels = comicListUpdater(comicCounter);
+                comicListVBox.getChildren().addAll(prevLabels);
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(14303/15));
+                if (comicCounter-1 <= 1){
+                    leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+            }
+        });
+
+        pages.getChildren().add(rightButton);
+
+        pages.setSpacing(15);
+        pages.setPadding(new Insets(0, 0, 0, 850));
+
+        root.getChildren().add(pages);
         
         Scene scene = new Scene(root, 1000, 600);
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Hello, World!");
         primaryStage.show();
+    }
+
+    private Collection<Label> comicListUpdater(int comicCount){
+        List<Label> list = new ArrayList<>();
+        for (int i = (comicCounter-1)*10; i < 15 + ((comicCounter-1)*10); i++) {
+            Label tempLabel;
+            try {
+                Marking comic = COMICS.get(i);
+                tempLabel = new Label("• " + comic.getTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #:" + comic.getIssueNumber());
+
+            }
+            catch (IndexOutOfBoundsException iobe){
+                //Empty Label for spacing purposes
+                tempLabel = new Label();
+            }
+            tempLabel.setFont(new Font(15));
+            list.add(tempLabel);
+        }
+        return list;
     }
 
     public static void main(String[] args) {
