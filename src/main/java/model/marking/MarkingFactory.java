@@ -44,6 +44,9 @@ public class MarkingFactory {
     }
 
     public static Marking formatComic(Marking comic, String format) {
+        if (format.length() == 0) {
+            return comic;
+        }
         for (String marking : format.split(" ")) {
             switch (marking.charAt(0)) {
                 case 'G':
