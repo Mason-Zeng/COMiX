@@ -1,12 +1,9 @@
-package controller.persistence;
+package controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import controller.CollectionManager;
-import controller.foreign.ForeignDataHandler;
 import model.hierarchy.Collection;
 import model.marking.Marking;
 
@@ -32,7 +29,7 @@ public class PersistenceHandler {
         fdhandler.exportData(file, collection.getIssues());
     }
 
-    public Collection loadUser(String name) throws FileNotFoundException {
+    public Collection loadUser(String name) throws IOException {
         String destination = savePath + name + ".json";
         File file = new File(destination);
         ForeignDataHandler fdhandler = ForeignDataHandler.getHandler();
