@@ -45,6 +45,10 @@ public class ProxyAccount implements Account{
         this.userAccount = new UserAccount(username);
     }
 
+    public void logout(){
+        this.userAccount = null;
+    }
+
     @Override
     public List<Marking> searchCollection(String searchStrategy, String sortStrategy, String query, String input) {
         if (this.userAccount == null){

@@ -1,8 +1,8 @@
-module unitXX {
+module view {
     requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens unitXX to javafx.fxml;
-    exports unitXX;
+    opens view to javafx.fxml;
+    exports view;
 }

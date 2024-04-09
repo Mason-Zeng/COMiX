@@ -1,4 +1,4 @@
-package unitXX;
+package view;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,60 +28,84 @@ import javafx.stage.Stage;
 import model.accounts.ProxyAccount;
 import model.marking.Marking;
 
-public class HelloFX extends Application {
-    private final ProxyAccount proxyAccount = new ProxyAccount();
+public class DatabasePage extends Application {
+    private ProxyAccount proxyAccount;
     private final String searchers[] = {"Partial Search", "Exact Search"};
     private final String sorters[] = {"Sort By Default", "Sort By Date"};
     private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date"};
-    private List<Marking> COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");;
+    private List<Marking> COMICS;
     private int comicCounter = 1; 
     private Collection<Label> prevLabels;
+    private final Collection<Node> nodes = new ArrayList<>();
+
+    public DatabasePage(){
+        proxyAccount = new ProxyAccount();
+        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
+    }
+
+    public DatabasePage(ProxyAccount proxyAccount){
+        this.proxyAccount = proxyAccount;
+        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        if (proxyAccount == null){
+            proxyAccount = new ProxyAccount();
+        }
+
         VBox root = new VBox();
-        HBox hbox = new HBox();
+        GridPane gridPane = new GridPane();
         Group group = new Group();
+
+        nodes.add(gridPane);
+        nodes.add(group);
 
         Rectangle rect = new Rectangle(1000, 70, Color.LIGHTGRAY);
 
         Label username = new Label("Hello, " + proxyAccount.getUsername());
-        username.setFont(Font.font(null, FontWeight.BOLD, 25));
+        username.setFont(Font.font(null, FontWeight.BOLD, (proxyAccount.getUsername().length() > 14) ? 20 : 25));
         username.setMinHeight(70);
-        hbox.getChildren().add(username);
+        gridPane.add(username, 0, 0);
 
         Label undo = new Label("↺");
         undo.setFont(Font.font(null, FontWeight.BOLD, 25));
         undo.setMinHeight(70);
         undo.setTextFill(Color.GRAY);
 
-        hbox.getChildren().add(undo);
+        gridPane.add(undo, 1, 0);
 
         Label redo = new Label("↻");
         redo.setFont(Font.font(null, FontWeight.BOLD, 25));
         redo.setMinHeight(70);
         redo.setTextFill(Color.GRAY);
 
-        hbox.getChildren().add(redo);
+        gridPane.add(redo, 2, 0);
 
         Label importLabel = new Label("Import ↓");
         importLabel.setFont(Font.font(20));
         importLabel.setMinHeight(70);
         importLabel.setTextFill(Color.GRAY);
-        hbox.getChildren().add(importLabel);
+        gridPane.add(importLabel, 3, 0);
 
         Label exportLabel = new Label("Export ↑");
         exportLabel.setFont(Font.font(20));
-        exportLabel.setMinHeight(70);
-        exportLabel.setTextFill(Color.GRAY);
-        hbox.getChildren().add(exportLabel);
+
+        Button exportButton = new Button("", exportLabel);
+        exportButton.setBackground(null);
+        exportButton.setMinHeight(70);
+        exportButton.setOnAction(event -> {
+            //Exports Database File
+        });
+
+        gridPane.add(exportButton, 4, 0);
 
         Label database = new Label("Database");
         database.setFont(Font.font(20));
         database.setMinHeight(70);
         database.setTextFill(Color.GRAY);
-        hbox.getChildren().add(database);
+        gridPane.add(database, 5, 0);
 
         Label pcLabel = new Label("Personal Collection");
         pcLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
@@ -88,12 +114,26 @@ public class HelloFX extends Application {
         Button pcButton = new Button("", pcLabel);
         pcButton.setBackground(null);
         pcButton.setOnAction((event) -> {
-            //Redirects to login page
+            if (proxyAccount.getUsername() == "Guest"){
+                LoginPage loginPage = new LoginPage(proxyAccount);
+                try {
+                    loginPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
+            else{
+                //Redirects to PC page
+            }
         });
 
-        hbox.getChildren().add(pcButton);
+        gridPane.add(pcButton, 6, 0);
 
         Label loginLabel = new Label("Login");
+        if (proxyAccount.getUsername() != "Guest"){
+            loginLabel.setText("Logout");
+        }
         loginLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
         loginLabel.setMinHeight(70);
         loginLabel.setTextFill(Color.BLUE);
@@ -101,19 +141,41 @@ public class HelloFX extends Application {
         Button loginButton = new Button("", loginLabel);
         loginButton.setBackground(null);
         loginButton.setOnAction((event) -> {
-            //Redirects to login page
+            if (proxyAccount.getUsername() != "Guest"){
+                proxyAccount.logout();
+                DatabasePage databasePage = new DatabasePage();
+                try {
+                    databasePage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
+            else{
+                LoginPage loginPage = new LoginPage(proxyAccount);
+                try {
+                    loginPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
         });
 
-        hbox.getChildren().add(loginButton);
+        gridPane.add(loginButton, 7, 0);
 
-        hbox.setSpacing(1000/21);
-        hbox.setPadding(new Insets(0, 0, 0, 5));
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.72) : (int)((45 + proxyAccount.getUsername().length()*3)/2.4);
+        spacing = (proxyAccount.getUsername().equals("Guest")) ? 22 : spacing;
+        gridPane.setHgap(1000/spacing);
+        gridPane.setMaxWidth(1000);
+        gridPane.setPadding(new Insets(0, 0, 0, 5));
 
         group.getChildren().add(rect);
-        group.getChildren().add(hbox);
+        group.getChildren().add(gridPane);
         root.getChildren().add(group);
 
-        hbox = new HBox();
+        HBox hbox = new HBox();
+        nodes.add(hbox);
         TextField field = new TextField();
         field.setPrefSize(350, 25);
         hbox.getChildren().add(field);
@@ -147,14 +209,18 @@ public class HelloFX extends Application {
 
         VBox vBox = new VBox();
 
+        nodes.add(vBox);
+
         Label comicListLabel = new Label("Comic List");
         comicListLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
+        comicListLabel.setPadding(new Insets(0, 0, 0, 5));
         vBox.getChildren().add(comicListLabel);
 
         vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(50))));
         vBox.setPadding(new Insets(50));
 
         VBox comicListVBox = new VBox();
+        nodes.add(comicListVBox);
         prevLabels = comicListUpdater(comicCounter);
         comicListVBox.getChildren().addAll(prevLabels);
 
@@ -164,6 +230,7 @@ public class HelloFX extends Application {
         root.getChildren().add(vBox);
 
         HBox pages = new HBox();
+        nodes.add(pages);
         Button leftButton = new Button("←");
         leftButton.setTextFill(Color.GRAY);
         leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -214,8 +281,9 @@ public class HelloFX extends Application {
         Scene scene = new Scene(root, 1000, 600);
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("Hello, World!");
+        primaryStage.setTitle("Database");
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
     private Collection<Label> comicListUpdater(int comicCount){
