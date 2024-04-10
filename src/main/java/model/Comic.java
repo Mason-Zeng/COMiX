@@ -153,4 +153,17 @@ public class Comic implements Marking{
     public Marking getMarking() {
         return null;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Marking) {
+            Marking other = (Marking)obj;
+            return getSeriesTitle().equals(other.getSeriesTitle()) 
+            && getVolumeNumber() == other.getVolumeNumber() 
+            && getTitle().equals(other.getTitle())
+            && getDate().equals(other.getDate())
+            && getCreators().equals(other.getCreators());
+        }
+        return false;
+    }
 }
