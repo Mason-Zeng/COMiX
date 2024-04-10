@@ -6,8 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import model.Comic;
-import model.ComicOutput;
 import model.foreign.*;
 import model.marking.Marking;
 
@@ -46,23 +44,5 @@ public class ForeignDataHandler {
         List<Marking> result = importer.importFile(reader);
         reader.close();
         return result;
-    }
-
-    public static void main(String[] args) throws IOException {
-        List<Marking> comics = ComicOutput.loadFromCSV("data/comics.csv")
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList();
-        ForeignDataHandler handler = getHandler();
-        try {
-            handler.exportData(new File("data/comics.json"), comics);
-            
-        } catch (Exception e) {
-            System.err.println("huh");
-        }
-
-        List<Marking> newComics = handler.importData(new File("data/comics.json"));
-        assert comics.equals(newComics);
     }
 }
