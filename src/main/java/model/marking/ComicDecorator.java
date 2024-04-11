@@ -95,7 +95,7 @@ public abstract class ComicDecorator implements Marking {
 
     /*
      * Returns if marking object has had a Sign decorator
-     */
+     
     public boolean checkSigned(Marking marking) {
         ArrayList<Marking> result = new ArrayList<>();
         Marking point = marking;
@@ -112,6 +112,7 @@ public abstract class ComicDecorator implements Marking {
         }
         return false;
     }
+    */
 
     /*
      * Returns the number of times the object
@@ -133,6 +134,49 @@ public abstract class ComicDecorator implements Marking {
             }
         }
         return count;
-        
     }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Grade
+     */
+    public boolean isGrade(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Grade){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Authenticate
+     */
+    public boolean isAuthenticated(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Authenticate){
+                return true;
+            }
+        }
+        return false;
+    }
+
+  
 }

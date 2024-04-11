@@ -1,6 +1,7 @@
 package model.marking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
@@ -19,15 +20,17 @@ public class AuthenticateTest {
         BigDecimal value = new BigDecimal(6);
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
-        comic = new Authenticate(comic);
+        Exception thrownException = null;
+        try{      
+            comic = new Authenticate(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
 
-        //Invoke
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        boolean test = authenticatedComic.checkSigned(comic);
-        boolean expected = true;
-        
         //Analyze
-        assertEquals(expected, test);
+        assertNull(thrownException);
     }
 
     @Test
@@ -37,14 +40,19 @@ public class AuthenticateTest {
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
+        Exception thrownException = null;
 
         //Invoke
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        boolean test = authenticatedComic.checkSigned(comic);
-        boolean expected = false;
-        
+        try{      
+            comic = new Authenticate(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
+
         //Analyze
-        assertEquals(expected, test);
+        assertNotNull(thrownException);
     }
     @Test
     public void testOneSign(){
@@ -100,13 +108,18 @@ public class AuthenticateTest {
         //Setup
         BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
-        comic = new Authenticate(comic);
-
-        //Invoke
-        BigDecimal test = comic.getValue();
+        
+        Exception thrownException = null;
+        try{      
+            comic = new Authenticate(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
 
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test
@@ -114,15 +127,22 @@ public class AuthenticateTest {
         //Setup
         BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
-        comic = new Slab(comic);
-        comic = new Authenticate(comic);
-        comic = new Authenticate(comic);
+        Exception thrownException = null;
 
         //Invoke
-        BigDecimal test = comic.getValue();
+        try{
+            comic = new Sign(comic);
+            comic = new Authenticate(comic);
+            comic = new Authenticate(comic);
+            comic = new Grade(comic, 4);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
 
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test
@@ -130,14 +150,23 @@ public class AuthenticateTest {
         //Setup
         BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
-        comic = new Sign(comic);
-        comic = new Grade(comic, 3);
-        comic = new Slab(comic);
-
+        Exception thrownException = null;
+        
         //Invoke
-        BigDecimal test = comic.getValue();
+        try{
+            comic = new Sign(comic);
+            comic = new Grade(comic, 5);
+            comic = new Slab(comic);
+            comic = new Authenticate(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
 
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
+
+    
 }

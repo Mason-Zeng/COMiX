@@ -94,7 +94,6 @@ public class PartialSearch implements Searcher{
             }
             break;
         }
-
         return comics;
     }
     

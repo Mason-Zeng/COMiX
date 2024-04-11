@@ -1,6 +1,7 @@
 package model.marking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
@@ -64,31 +65,40 @@ public class SlabTest{
     @Test
     public void testMarkingInvalidTypeSlab(){
         //Setup
-        BigDecimal value = new BigDecimal(6);
+        BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
-        comic = new Grade(comic, 5);
-        comic = new Slab(comic);
-        comic = new Slab(comic);
         
-        //Invoke
-        BigDecimal test = comic.getValue();
-        
+        Exception thrownException = null;
+        try{      
+            comic = new Grade(comic, 5);
+            comic = new Slab(comic);
+            comic = new Slab(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
+
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test
     public void testMarkingInvalidTypeComic(){
         //Setup
-        BigDecimal value = new BigDecimal(6);
+        BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
-        comic = new Slab(comic);
-        
-        //Invoke
-        BigDecimal test = comic.getValue();
-        
+        Exception thrownException = null;
+        try{      
+            comic = new Slab(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
+
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test

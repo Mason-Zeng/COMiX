@@ -2,6 +2,7 @@
 package model.marking;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
@@ -153,6 +154,7 @@ public class SignTest {
         BigDecimal value = null;
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
+        
 
         //Invoke
         BigDecimal test = comic.getValue();
@@ -168,13 +170,19 @@ public class SignTest {
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Grade(comic, 2);
         comic = new Slab(comic);
-        comic = new Sign(comic);
+        Exception thrownException = null;
 
         //Invoke
-        BigDecimal test = comic.getValue();
+        try{
+            comic = new Sign(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+        }
 
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test
@@ -184,13 +192,19 @@ public class SignTest {
         Marking comic = new Comic("title", 3, "description", value, date);
         comic = new Sign(comic);
         comic = new Authenticate(comic);
-        comic = new Sign(comic);
-
+        Exception thrownException = null;
+        
         //Invoke
-        BigDecimal test = comic.getValue();
+        try{
+            comic = new Sign(comic);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+        }
 
         //Analyze
-        assertNull(test);
+        assertNotNull(thrownException);
     }
 
     @Test

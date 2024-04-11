@@ -8,10 +8,20 @@ import java.util.List;
 
 import model.Comic;
 
-
+/**
+ * Concrete decorator class for slabbing a comic.
+ */
 public class Authenticate extends ComicDecorator{
+    /**
+     * Adds the Authenticate decorator onto a Marking.
+     * Cannot be applied if comic is not signed, already authneticated, already slabbed, or no markings
+     * @param comic The comic that we are applying authenticate to
+     */
     public Authenticate(Marking comic) {
         super(comic);
+        if (signCount(comic) == 0 || isAuthenticated(comic) || comic instanceof Slab || comic instanceof Comic) {
+            throw new IllegalArgumentException("Invalid marking type passed to Authenticate constructor");
+        }
     }
 
     /**
@@ -19,14 +29,11 @@ public class Authenticate extends ComicDecorator{
      * Adds 20% to the value.
      */
     public BigDecimal getValue(){
-        if(comic.getValue() == null || comic instanceof Authenticate || comic instanceof Slab || comic instanceof Comic){return null;}
-        if(checkSigned(comic)){
+        if(comic.getValue() == null){return null;}
             BigDecimal multiplier = new BigDecimal(1.20);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
             newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
-        }
-        return null;
     }
 
 }

@@ -1,5 +1,6 @@
 package model.marking;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
@@ -66,5 +67,48 @@ public class GradeTest {
         
         //Analyze
         assertNull(test);
+    }
+
+    @Test
+    public void testGradeAgain(){
+        //Setup
+        BigDecimal value = null;
+        Marking comic = new Comic("title", 3, "description", value, date);
+        Exception thrownException = null;
+        
+        //Invoke
+        try{      
+            comic = new Grade(comic, 4);
+            comic = new Grade(comic, 1);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
+
+        //Analyze
+        assertNotNull(thrownException);
+    }
+
+    @Test
+    public void testGradeAfterSlab(){
+        //Setup
+        BigDecimal value = null;
+        Marking comic = new Comic("title", 3, "description", value, date);
+        Exception thrownException = null;
+        
+        //Invoke
+        try{      
+            comic = new Grade(comic, 4);
+            comic = new Slab(comic);
+            comic = new Grade(comic, 1);
+        }
+        catch
+            (IllegalArgumentException e) {
+                thrownException = e;
+            }
+
+        //Analyze
+        assertNotNull(thrownException);
     }
 }

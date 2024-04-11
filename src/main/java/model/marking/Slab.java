@@ -8,12 +8,19 @@ import java.util.Collections;
 import model.Comic;
 
 /**
- * Concrete decorator class for marking a comic.
+ * Concrete decorator class for slabbing a comic.
  */
 public class Slab extends ComicDecorator{
-    
+    /**
+     * Adds the Slab decorator onto a Marking
+     * Cannot be applied if comic is not graded, or already slabbed, or if no markings applied
+     * @param comic The comic that we are applying slab to
+     */
     public Slab(Marking comic) {
         super(comic);
+        if(isGrade(comic) == false || comic instanceof Slab || comic instanceof Comic){
+            throw new IllegalArgumentException("Invalid comic type passed to Authenticate constructor");
+        }
     }
 
     /**
@@ -21,34 +28,11 @@ public class Slab extends ComicDecorator{
      * Multiplies the value of the comic by 2.
      */
     public BigDecimal getValue(){
-        if(comic.getValue() == null || comic instanceof Slab || comic instanceof Comic){return null;}
-        if(isGrade(comic)){
+        if(comic.getValue() == null){return null;}
             BigDecimal multiplier = new BigDecimal(2);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
             newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
             return newVal;
-        }
-        return null;
     }
-
-    /*
-     * Checks the marking to see if the object has 
-     * been marked with Grade
-     */
-    public boolean isGrade(Marking marking) {
-        ArrayList<Marking> result = new ArrayList<>();
-        Marking point = marking;
-        while (!(point instanceof Comic)) {
-            result.add(point);
-            point = point.getMarking();
-        }
-        result.add(point);
-        Collections.reverse(result);
-        for(int i=0; i<result.size(); i++){
-            if(result.get(i) instanceof Grade){
-                return true;
-            }
-        }
-        return false;
-    }
+    
 }

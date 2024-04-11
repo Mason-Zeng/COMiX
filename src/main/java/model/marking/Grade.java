@@ -12,9 +12,17 @@ public class Grade extends ComicDecorator{
     //An integer from 1-10 that represents the grade of the comic
     private int grade;
 
+    /**
+     * Adds the Grade decorator onto a Marking.
+     * Cannot be applied if comic is slabbed, or already graded
+     * @param comic The comic that we are applying grading to
+     */
     public Grade(Marking comic, int grade) {
         super(comic);
         this.grade = grade;
+        if(isGrade(comic) || comic instanceof Slab){
+            throw new IllegalArgumentException("Invalid marking type passed to Authenticate constructor");
+        }
     }
 
     /*
@@ -23,7 +31,7 @@ public class Grade extends ComicDecorator{
      * If the grade is 2-10, we multiply the value by log(grade)
      */
     public BigDecimal getValue(){
-        if(comic.getValue()==null || comic instanceof Grade || comic instanceof Slab){return null;}
+        if(comic.getValue()==null){return null;}
         if(grade == 1){
             BigDecimal multiplier = new BigDecimal(0.1);
             BigDecimal newVal = comic.getValue().multiply(multiplier);
