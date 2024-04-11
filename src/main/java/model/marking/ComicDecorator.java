@@ -94,27 +94,6 @@ public abstract class ComicDecorator implements Marking {
     }
 
     /*
-     * Returns if marking object has had a Sign decorator
-     
-    public boolean checkSigned(Marking marking) {
-        ArrayList<Marking> result = new ArrayList<>();
-        Marking point = marking;
-        while (!(point instanceof Comic)) {
-            result.add(point);
-            point = point.getMarking();
-        }
-        result.add(point);
-        Collections.reverse(result);
-        for(int i=0; i<result.size(); i++){
-            if(result.get(i) instanceof Sign){
-                return true;
-            }
-        }
-        return false;
-    }
-    */
-
-    /*
      * Returns the number of times the object
      * was wrapped in Sign
      */
