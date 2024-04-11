@@ -48,4 +48,8 @@ public class UserAccount implements Account{
         return COMICS;
     }
 
+    public int getComicCount(){
+        return COMICS.size();
+    }
+
 }

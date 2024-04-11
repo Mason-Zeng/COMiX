@@ -26,6 +26,7 @@ public class ProxyAccount implements Account{
     //     .map(Comic::new)
     //     .map(Marking.class::cast)
     //     .toList();
+    private static List<Marking> COMICS;
 
     public List<Marking> searchDatabase(String searchStrategy, String sortStrategy, String query, String input){
         // ComicSearcher searcher = new ComicSearcher(COMICS);
@@ -78,6 +79,14 @@ public class ProxyAccount implements Account{
             return "Guest";
         }
         return userAccount.getUsername();
+    }
+
+    @Override
+    public int getComicCount() {
+        if (this.userAccount == null){
+            return COMICS.size();
+        }
+        return userAccount.getComicCount();
     }
     
 }
