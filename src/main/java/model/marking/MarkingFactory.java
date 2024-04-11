@@ -33,6 +33,12 @@ public class MarkingFactory {
             else if (oldMark instanceof Grade) {
                 result = new Grade(result, ((Grade)oldMark).getGrade());
             }
+            else if (oldMark instanceof Sign){
+                result = new Sign(result);
+            }
+            else if (oldMark instanceof Authenticate){
+                result = new Authenticate(result);
+            }
         }
         return result;
     }

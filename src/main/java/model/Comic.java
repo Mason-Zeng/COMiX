@@ -132,7 +132,6 @@ public class Comic implements Marking{
         this.volume = vol;
     }
 
-
     @Override
     public String toString() {
         return "\rSeries Title: " + getSeriesTitle() +

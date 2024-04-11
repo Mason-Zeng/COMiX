@@ -2,6 +2,8 @@ package model.marking;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Comic;
@@ -90,4 +92,70 @@ public abstract class ComicDecorator implements Marking {
     public Marking getMarking() {
         return comic;
     }
+
+    /*
+     * Returns the number of times the object
+     * was wrapped in Sign
+     */
+    public int signCount(Marking marking){
+        int count = 0;
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Sign){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Grade
+     */
+    public boolean isGrade(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Grade){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Authenticate
+     */
+    public boolean isAuthenticated(Marking marking) {
+        ArrayList<Marking> result = new ArrayList<>();
+        Marking point = marking;
+        while (!(point instanceof Comic)) {
+            result.add(point);
+            point = point.getMarking();
+        }
+        result.add(point);
+        Collections.reverse(result);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Authenticate){
+                return true;
+            }
+        }
+        return false;
+    }
+
+  
 }
