@@ -15,7 +15,7 @@ public class Sign extends ComicDecorator{
     public Sign(Marking comic) {
         super(comic);
         if(comic instanceof Slab || isAuthenticated(comic)){
-            throw new IllegalArgumentException("Invalid comic type passed to Authenticate constructor");
+            throw new IllegalArgumentException("Invalid comic type passed to Sign constructor");
         }
     }
 

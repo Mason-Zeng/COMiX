@@ -21,7 +21,7 @@ public class Grade extends ComicDecorator{
         super(comic);
         this.grade = grade;
         if(isGrade(comic) || comic instanceof Slab){
-            throw new IllegalArgumentException("Invalid marking type passed to Authenticate constructor");
+            throw new IllegalArgumentException("Invalid marking type passed to Grade constructor");
         }
     }
 
