@@ -4,8 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Comic;
 import model.Creator;
+import model.marking.Authenticate;
+import model.marking.Grade;
 import model.marking.Marking;
+import model.marking.Sign;
+import model.marking.Slab;
 
 /**
  * PartialSearch implements the Searcher class.
@@ -30,6 +35,8 @@ public class PartialSearch implements Searcher{
     public List<Marking> searchData(String query, List<Marking> data, String input) {
         query = query.toLowerCase();
         List<Marking> comics = new ArrayList<>();
+        List<Marking> tempList = new ArrayList<>();
+        ArrayList<Marking> oldMarks = new ArrayList<>();
         switch(input){
 
             case "series_title":
@@ -93,6 +100,77 @@ public class PartialSearch implements Searcher{
                 }
             }
             break;
+
+            case "sign":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.contains(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Sign){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "authenticate":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.contains(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Authenticate){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "grade":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.contains(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Grade){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "slab":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.contains(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Slab){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
         }
         return comics;
     }
@@ -101,6 +179,17 @@ public class PartialSearch implements Searcher{
     @Override
     public boolean equals(Object obj) {
         return (obj instanceof PartialSearch) ? true : false;
+    }
+
+    //Gets all the markings applied to a comic
+    public ArrayList<Marking> getMarkings(Marking marking){
+        ArrayList<Marking> oldMarks = new ArrayList<>();
+        Marking point = marking;
+        while (!(marking instanceof Comic)) {
+            oldMarks.add(point);
+            point = point.getMarking();
+        }
+        return oldMarks;
     }
 
 }

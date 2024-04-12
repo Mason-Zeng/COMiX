@@ -181,6 +181,7 @@ public class ExactSearch implements Searcher{
         return (obj instanceof ExactSearch) ? true : false;
     }
 
+    //Gets all the markings applied to a comic
     public ArrayList<Marking> getMarkings(Marking marking){
         ArrayList<Marking> oldMarks = new ArrayList<>();
         Marking point = marking;
