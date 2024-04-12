@@ -181,14 +181,9 @@ public class PCPage extends Application {
         hbox.getChildren().add(sorter);
 
         Label buttonLabel = new Label("  ➔");
-        // buttonLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
         buttonLabel.setMinWidth(25);
         Button button = new Button("", buttonLabel);
         hbox.getChildren().add(button);
-        button.setOnAction((event) -> {
-                COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
-
-        } );
 
         hbox.setSpacing(1000/17);
         hbox.setPadding(new Insets(0, 0, 0, 10));
@@ -237,14 +232,14 @@ public class PCPage extends Application {
             rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         }
         rightButton.setOnAction(event -> {
-            if (COMICS.size() != 0 && comicCounter < (int)Math.ceil(COMICS.size()/12)-1){
+            if ((int)Math.ceil(COMICS.size()/12) > 1 && comicCounter < (int)Math.ceil(COMICS.size()/12)){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
                 pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
                 comicListVBox.getChildren().removeAll(prevButtons);
                 prevButtons = comicListUpdater(comicCounter);
                 comicListVBox.getChildren().addAll(prevButtons);
-                if (proxyAccount.getComicCount() != 0 && comicCounter+1 > (int)Math.ceil(proxyAccount.getComicCount()/12)){
+                if ((int)Math.ceil(COMICS.size()/12) > 1 && comicCounter+1 > (int)Math.ceil(COMICS.size()/12)){
                     rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -257,7 +252,7 @@ public class PCPage extends Application {
                 comicListVBox.getChildren().removeAll(prevButtons);
                 prevButtons = comicListUpdater(comicCounter);
                 comicListVBox.getChildren().addAll(prevButtons);
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(proxyAccount.getComicCount()/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
                 if (comicCounter-1 <= 1){
                     leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
@@ -265,6 +260,24 @@ public class PCPage extends Application {
         });
 
         pages.getChildren().add(rightButton);
+
+        button.setOnAction((event) -> {
+            comicListVBox.getChildren().removeAll(prevButtons);
+            comicCounter = 1;
+
+            COMICS = proxyAccount.searchCollection(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
+            prevButtons = comicListUpdater(comicCounter);
+            comicListVBox.getChildren().addAll(prevButtons);
+
+            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
+            if ((int)Math.ceil(COMICS.size()/12) > 1){
+                rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else{
+                rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        } );
 
         pages.setSpacing(15);
         pages.setPadding(new Insets(0, 0, 0, 825));

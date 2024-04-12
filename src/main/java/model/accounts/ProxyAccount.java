@@ -1,11 +1,11 @@
 package model.accounts;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import controller.ComicSearcher;
-import controller.foreign.ForeignDataHandler;
+import controller.ForeignDataHandler;
 import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.sort.DefaultSorter;
@@ -24,7 +24,8 @@ public class ProxyAccount implements Account{
         dataHandler = ForeignDataHandler.getHandler();
         try {
             COMICS = dataHandler.importData(new File(FILE));
-        } catch (FileNotFoundException e) {
+        }
+            catch (IOException e) {
             e.printStackTrace();
         }
     }

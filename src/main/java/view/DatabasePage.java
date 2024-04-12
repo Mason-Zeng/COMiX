@@ -40,12 +40,10 @@ public class DatabasePage extends Application {
 
     public DatabasePage(){
         proxyAccount = new ProxyAccount();
-        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
     }
 
     public DatabasePage(ProxyAccount proxyAccount){
         this.proxyAccount = proxyAccount;
-        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
     }
 
     @Override
@@ -54,6 +52,8 @@ public class DatabasePage extends Application {
         if (proxyAccount == null){
             proxyAccount = new ProxyAccount();
         }
+
+        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
 
         VBox root = new VBox();
         GridPane gridPane = new GridPane();
@@ -199,7 +199,6 @@ public class DatabasePage extends Application {
         hbox.getChildren().add(sorter);
 
         Label buttonLabel = new Label("  ➔");
-        // buttonLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
         buttonLabel.setMinWidth(25);
         Button button = new Button("", buttonLabel);
         hbox.getChildren().add(button);
@@ -238,14 +237,14 @@ public class DatabasePage extends Application {
         leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         pages.getChildren().add(leftButton);
 
-        Label pageNumber = new Label("1/" + (int)Math.ceil(proxyAccount.getComicCount()/12));
+        Label pageNumber = new Label("1/" + (int)Math.ceil(COMICS.size()/12));
         pageNumber.setFont(new Font(18));
         pages.getChildren().add(pageNumber);
 
         Button rightButton = new Button("→");
         rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         rightButton.setOnAction(event -> {
-            if (comicCounter < (int)Math.ceil(COMICS.size()/12)-1){
+            if (comicCounter < (int)Math.ceil(COMICS.size()/12)){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
                 pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
@@ -283,7 +282,7 @@ public class DatabasePage extends Application {
             comicListVBox.getChildren().addAll(prevButtons);
 
             pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
-            if (COMICS.size() != 0){
+            if ((int)Math.ceil(COMICS.size()/12) > 1){
                 rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
             }
             else{
@@ -319,7 +318,7 @@ public class DatabasePage extends Application {
             Label tempLabel;
             try {
                 Marking comic = COMICS.get(i);
-                tempLabel = new Label("• " + comic.getTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #:" + comic.getIssueNumber());
+                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){
