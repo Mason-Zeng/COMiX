@@ -14,6 +14,7 @@ import model.Character;
  */
 public interface Marking{
     public BigDecimal getValue();
+    public BigDecimal getTrueValue();
     public String getTitle();
     public String getPublisherName();
     public String getSeriesTitle();
@@ -26,5 +27,7 @@ public interface Marking{
     public Volume getVolume();
     public Series getSeries();
     public Publisher getPublisher();
+    public String getDescription();
+    public void addCreator(Creator creator);
     public Marking getMarking();
 }

@@ -124,6 +124,10 @@ public class Comic implements Marking{
         return value;
     }
 
+    public BigDecimal getTrueValue() {
+        return value;
+    }
+
     public void addCreator(Creator creator){
         creators.add(creator);
     }
