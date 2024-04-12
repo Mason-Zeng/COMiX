@@ -34,11 +34,10 @@ public class MarkingFactory {
     public static List<Marking> getMarkingOrder(Marking marking) {
         ArrayList<Marking> result = new ArrayList<>();
         Marking point = marking;
-        while (!(point instanceof Comic)) {
+        while (point != null) {
             result.add(point);
             point = point.getMarking();
         }
-        result.add(point);
         Collections.reverse(result);
         return result;
     }
