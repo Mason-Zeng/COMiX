@@ -9,7 +9,7 @@ import model.marking.Marking;
 
 public class PersistenceHandler {
 
-    public static final String savePath = ".data/users/";
+    public static final String savePath = "./data/users/";
     
     private static PersistenceHandler handler;
 
