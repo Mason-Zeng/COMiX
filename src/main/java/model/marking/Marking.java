@@ -18,8 +18,8 @@ public interface Marking{
     public String getTitle();
     public String getPublisherName();
     public String getSeriesTitle();
-    public int getVolumeNumber();
-    public int getIssueNumber();
+    public String getVolumeNumber();
+    public String getIssueNumber();
     public List<Creator> getCreators();
     public List<Character> getCharacters();
     public LocalDate getDate();

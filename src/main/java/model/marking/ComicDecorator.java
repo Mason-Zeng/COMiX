@@ -42,12 +42,12 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
-    public int getVolumeNumber() {
+    public String getVolumeNumber() {
         return comic.getVolumeNumber();
     }
 
     @Override
-    public int getIssueNumber() {
+    public String getIssueNumber() {
         return comic.getIssueNumber();
     }
 

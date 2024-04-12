@@ -11,15 +11,15 @@ import model.marking.Marking;
 public class Volume implements ComicHolder {
   private Series series;
   private Map<String, Marking> issues;
-  private int vol_num;
+  private String volString;
 
-  public Volume(int vol_num) {
-    this.vol_num = vol_num;
+  public Volume(String volString) {
+    this.volString = volString;
     this.issues = new HashMap<>();
   }
 
-  public Volume(int vol_num, Series series) {
-    this(vol_num);
+  public Volume(String volString, Series series) {
+    this(volString);
     setSeries(series);
   }
 
@@ -45,8 +45,8 @@ public class Volume implements ComicHolder {
     return series;
   }
 
-  public int getVolumeNumber() {
-    return vol_num;
+  public String getVolumeNumber() {
+    return volString;
   }
 
   public Marking getIssue(String name) {

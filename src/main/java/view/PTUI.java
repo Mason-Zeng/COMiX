@@ -176,7 +176,7 @@ public class PTUI {
         //DELETE THIS TEST DATA WHEN FULLY IMPLEMENTED
         BigDecimal value = new BigDecimal(6);
         LocalDate date = LocalDate.of(2020, 1, 8);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         
         try{
             int flag = 0;

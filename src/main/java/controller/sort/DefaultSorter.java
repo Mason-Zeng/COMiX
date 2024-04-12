@@ -1,6 +1,10 @@
 package controller.sort;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import model.marking.Marking;
 
@@ -13,6 +17,37 @@ import model.marking.Marking;
  */
 public class DefaultSorter implements Comparator<Marking> {
 
+
+    /**
+     * This comparator is created to due to the 
+     * fact that String comparison does not sort
+     * in an intuitive manner. This exists to 
+     * perform comparisons in a manner that makes
+     * sense. 
+     */
+    private Comparator<String> alphNumComp = new Comparator<String>() {
+
+        /**
+         * Reverses the string and returns an 
+         * integer to use for comparison.
+         * @param str
+         * @return Integer to sort with
+         */
+        private int getAsciiBounded(String str) {
+            char[] chars = new StringBuilder().append(str).reverse().toString().toCharArray();
+            int result = 0;
+            for (int i = 0; i < chars.length; i++) {
+                result += (int)chars[i] * Math.pow(2, i);
+            }
+            return result;
+        }
+
+        @Override
+        public int compare(String arg0, String arg1) {
+            return getAsciiBounded(arg0) - getAsciiBounded(arg1);
+        }
+        
+    };
 
     /**
      * The method that compares two comics, and returns an int based on which comes first.
@@ -30,8 +65,8 @@ public class DefaultSorter implements Comparator<Marking> {
         String title2 = comic2.getSeriesTitle();
 
         int seriesCompare = title1.compareTo(title2);
-        int volumeCompare = comic1.getVolumeNumber() - comic2.getVolumeNumber();
-        int issueCompare = comic1.getIssueNumber() -  comic2.getIssueNumber();
+        int volumeCompare = comic1.getVolumeNumber().compareTo(comic2.getVolumeNumber());
+        int issueCompare = alphNumComp.compare(comic1.getIssueNumber(), comic2.getIssueNumber());
         
         if (seriesCompare == 0) {
             if (volumeCompare == 0) {
