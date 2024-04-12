@@ -4,13 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Comic;
 import model.Creator;
+import model.marking.Authenticate;
+import model.marking.Grade;
 import model.marking.Marking;
+import model.marking.Sign;
+import model.marking.Slab;
 
 /**
  * ExactSearch implements the Searcher class.
  * ExactSearch in the Strategy pattern is a Concrete Strategy.
- * The ExactSearch implements an algorithm that searches for results that exactly equal the query.
+ * The ExactSearch implements an algorithm that searches for oldMarkss that exactly equal the query.
  * 
  * @author Ayden Dazo
  */
@@ -30,6 +35,8 @@ public class ExactSearch implements Searcher{
     public List<Marking> searchData(String query, List<Marking> data, String input) {
         query = query.toLowerCase();
         List<Marking> comics = new ArrayList<>();
+        List<Marking> tempList = new ArrayList<>();
+        ArrayList<Marking> oldMarks = new ArrayList<>();
 
         switch (input){
             
@@ -92,8 +99,79 @@ public class ExactSearch implements Searcher{
                 }
             }
             break;
-        }
 
+            case "sign":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Sign){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "authenticate":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Authenticate){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "grade":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Grade){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+
+            case "slab":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    tempList.add(comic);
+                }
+            }
+            for(int i=0; i<tempList.size();i++){
+                oldMarks = getMarkings(tempList.get(i));
+                for(int j=0; j<oldMarks.size(); j++){
+                    if(oldMarks.get(j) instanceof Slab){
+                        comics.add(tempList.get(i));
+                    }
+                }
+            }
+            break;
+        }
         return comics;
     }
     
@@ -101,6 +179,16 @@ public class ExactSearch implements Searcher{
     @Override
     public boolean equals(Object obj) {
         return (obj instanceof ExactSearch) ? true : false;
+    }
+
+    public ArrayList<Marking> getMarkings(Marking marking){
+        ArrayList<Marking> oldMarks = new ArrayList<>();
+        Marking point = marking;
+        while (!(marking instanceof Comic)) {
+            oldMarks.add(point);
+            point = point.getMarking();
+        }
+        return oldMarks;
     }
 
 }
