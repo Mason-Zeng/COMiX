@@ -1,45 +1,40 @@
 package model.accounts;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import controller.ComicSearcher;
+import controller.foreign.ForeignDataHandler;
 import controller.search.ExactSearch;
 import controller.search.PartialSearch;
-import controller.search.Searcher;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
 import model.Comic;
-import model.ComicOutput;
-import model.hierarchy.Volume;
 import model.marking.Marking;
 
 public class ProxyAccount implements Account{
 
     private UserAccount userAccount;
-    private static final String csvFile = "data/comics.csv"; 
-    // private static final List<Marking> COMICS = ComicOutput.loadFromCSV(csvFile)
-    //     .stream()
-    //     .map(Comic::new)
-    //     .map(Marking.class::cast)
-    //     .toList();
+    private static final String FILE = "data/comics.json"; 
     private static List<Marking> COMICS;
+    private ForeignDataHandler dataHandler;
+
+    public ProxyAccount(){
+        dataHandler = ForeignDataHandler.getHandler();
+        try {
+            COMICS = dataHandler.importData(new File(FILE));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<Marking> searchDatabase(String searchStrategy, String sortStrategy, String query, String input){
-        // ComicSearcher searcher = new ComicSearcher(COMICS);
-        // searcher.setSearcher((searchStrategy == "Partial Search") ? new PartialSearch() : new ExactSearch());
-        // searcher.setSorter((sortStrategy == "Sort By Default") ? new DefaultSorter() : new PublicationDateSorter());
-        // input = input.toLowerCase().replace(" ", "_");
-        // System.out.println(searcher.search(query, input));
-
-        //Temp code so the JavaFX Can run, remove later once CSV works.
-        ArrayList<Marking> list = new ArrayList<>();
-        Marking comic = new Comic("Spider Man", 1, "The Amazing Spider-Man!", BigDecimal.valueOf(12.00), LocalDate.of(1994, 2, 22), new Volume(1));
-        list.add(comic);
-        return list;
+        ComicSearcher searcher = new ComicSearcher(COMICS);
+        searcher.setSearcher((searchStrategy == "Partial Search") ? new PartialSearch() : new ExactSearch());
+        searcher.setSorter((sortStrategy == "Sort By Default") ? new DefaultSorter() : new PublicationDateSorter());
+        input = input.toLowerCase().replace(" ", "_");
+        return searcher.search(query, input);
     }
 
     public void login(String username){

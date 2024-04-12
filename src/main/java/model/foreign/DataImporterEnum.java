@@ -3,7 +3,7 @@ package model.foreign;
 import model.foreign.importing.*;
 
 public enum DataImporterEnum {
-    CSV(new CSVDataImporter()),
+    // CSV(new CSVDataImporter()),
     XML(new XMLDataImporter()),
     JSON(new JSONDataImporter());
 

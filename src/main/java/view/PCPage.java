@@ -225,22 +225,22 @@ public class PCPage extends Application {
         pages.getChildren().add(leftButton);
 
         Label pageNumber = new Label();
-        pageNumber.setText(proxyAccount.getComicCount() != 0 ? ("1/" + (int)Math.ceil(proxyAccount.getComicCount()/12)) : "0/0");
+        pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
         pageNumber.setFont(new Font(18));
         pages.getChildren().add(pageNumber);
 
         Button rightButton = new Button("→");
-        if (proxyAccount.getComicCount() != 0){
+        if (COMICS.size() != 0){
             rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         }
         else{
             rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         }
         rightButton.setOnAction(event -> {
-            if (proxyAccount.getComicCount() != 0 && comicCounter < (int)Math.ceil(proxyAccount.getComicCount()/15)-1){
+            if (COMICS.size() != 0 && comicCounter < (int)Math.ceil(COMICS.size()/12)-1){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(proxyAccount.getComicCount()/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
                 comicListVBox.getChildren().removeAll(prevButtons);
                 prevButtons = comicListUpdater(comicCounter);
                 comicListVBox.getChildren().addAll(prevButtons);
@@ -274,7 +274,7 @@ public class PCPage extends Application {
         Scene scene = new Scene(root, 1000, 650);
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("Database");
+        primaryStage.setTitle("Personal Collection");
         primaryStage.show();
         primaryStage.setResizable(false);
     }

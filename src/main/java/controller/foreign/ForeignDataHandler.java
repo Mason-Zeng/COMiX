@@ -24,14 +24,14 @@ public class ForeignDataHandler {
     private ForeignDataHandler() {};
 
     public void exportData(File file, List<Marking> comics) throws IOException {
-        String fileType = file.getAbsolutePath().split(".")[-1];
+        String fileType = file.getAbsolutePath().split("\\.")[file.getAbsolutePath().split("\\.").length -1].toUpperCase();
         DataExporter exporter = Enum.valueOf(DataExporterEnum.class, fileType).getExporter();
         FileWriter writer = new FileWriter(file);
         exporter.exportFile(comics, writer);
     }
 
     public List<Marking> importData(File file) throws FileNotFoundException {
-        String fileType = file.getAbsolutePath().split(".")[-1];
+        String fileType = file.getAbsolutePath().split("\\.")[file.getAbsolutePath().split("\\.").length -1].toUpperCase();
         DataImporter importer = Enum.valueOf(DataImporterEnum.class, fileType).getImporter();
         FileReader reader = new FileReader(file);
         return importer.importFile(reader);

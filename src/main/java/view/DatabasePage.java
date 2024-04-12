@@ -203,10 +203,6 @@ public class DatabasePage extends Application {
         buttonLabel.setMinWidth(25);
         Button button = new Button("", buttonLabel);
         hbox.getChildren().add(button);
-        button.setOnAction((event) -> {
-                COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
-
-        } );
 
         hbox.setSpacing(1000/17);
         hbox.setPadding(new Insets(0, 0, 0, 10));
@@ -242,23 +238,21 @@ public class DatabasePage extends Application {
         leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         pages.getChildren().add(leftButton);
 
-        //HardCoded to the amount of Comics in Database until csv is fixed
-        //Label pageNumber = new Label("1/" + (int)Math.ceil(proxyAccount.getComicCount()/15))
-        Label pageNumber = new Label("1/" + (int)Math.ceil(14303/12));
+        Label pageNumber = new Label("1/" + (int)Math.ceil(proxyAccount.getComicCount()/12));
         pageNumber.setFont(new Font(18));
         pages.getChildren().add(pageNumber);
 
         Button rightButton = new Button("→");
         rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         rightButton.setOnAction(event -> {
-            if (comicCounter < (int)Math.ceil(14303/12)-1){
+            if (comicCounter < (int)Math.ceil(COMICS.size()/12)-1){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(14303/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
                 comicListVBox.getChildren().removeAll(prevButtons);
                 prevButtons = comicListUpdater(comicCounter);
                 comicListVBox.getChildren().addAll(prevButtons);
-                if (comicCounter+1 > (int)Math.ceil(14303/12)){
+                if (comicCounter+1 > (int)Math.ceil(COMICS.size()/12)){
                     rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -271,7 +265,7 @@ public class DatabasePage extends Application {
                 comicListVBox.getChildren().removeAll(prevButtons);
                 prevButtons = comicListUpdater(comicCounter);
                 comicListVBox.getChildren().addAll(prevButtons);
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(14303/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
                 if (comicCounter-1 <= 1){
                     leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
@@ -279,6 +273,24 @@ public class DatabasePage extends Application {
         });
 
         pages.getChildren().add(rightButton);
+
+        button.setOnAction((event) -> {
+            comicListVBox.getChildren().removeAll(prevButtons);
+            comicCounter = 1;
+
+            COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
+            prevButtons = comicListUpdater(comicCounter);
+            comicListVBox.getChildren().addAll(prevButtons);
+
+            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
+            if (COMICS.size() != 0){
+                rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else{
+                rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        } );
 
         pages.setSpacing(15);
         pages.setPadding(new Insets(0, 0, 0, 825));
@@ -295,6 +307,14 @@ public class DatabasePage extends Application {
 
     private Collection<Button> comicListUpdater(int comicCount){
         List<Button> list = new ArrayList<>();
+        if (COMICS.size() == 0){
+            Label label = new Label("No Comics found.");
+            label.setFont(new Font(15));
+            Button button = new Button("", label);
+            button.setBackground(null);
+            list.add(button);
+            return list;
+        } 
         for (int i = (comicCounter-1)*10; i < 12 + ((comicCounter-1)*10); i++) {
             Label tempLabel;
             try {
