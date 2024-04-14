@@ -30,17 +30,17 @@ public abstract class ComicDecorator implements Marking {
 
     @Override
     public String getTitle() {
-        return getTitle();
+        return getTitle(); //none
     }
 
     @Override
     public String getPublisherName() {
-        return getPublisherName();
+        return getPublisherName(); //none
     }
 
     @Override
     public String getSeriesTitle() {
-        return getSeriesTitle();
+        return comic.getSeriesTitle();
     }
 
     @Override
@@ -91,6 +91,11 @@ public abstract class ComicDecorator implements Marking {
     @Override
     public Marking getMarking() {
         return comic;
+    }
+
+    @Override
+    public void addCreator(Creator creator){
+        comic.addCreator(creator);
     }
 
     /*

@@ -1,5 +1,6 @@
 package controller.search;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ import model.hierarchy.Volume;
 import model.marking.Marking;
 import model.Comic;
 import model.Creator;
+import model.marking.Sign;
+
 
 public class ExactSearchTest {
     
@@ -23,10 +26,10 @@ public class ExactSearchTest {
     private String input;
     private String query;
 
-    private static Comic comic1;
-    private static Comic comic2;
-    private static Comic comic3;
-    private static Comic comic4;
+    private static Marking comic1;
+    private static Marking comic2;
+    private static Marking comic3;
+    private static Marking comic4;
 
     @BeforeAll
     public static void loadData(){
@@ -95,7 +98,10 @@ public class ExactSearchTest {
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
-        
+        //I dont know why its picking up the 2 extra comics
+        for(Marking comics: data){
+            System.out.println(comics);
+        }
         //Analyze
         assertEquals(expected.size(), actual.size());
         for (int i = 0; i < expected.size(); i++){
@@ -177,4 +183,34 @@ public class ExactSearchTest {
             assertEquals(expected.get(i), actual.get(i));
         }
     }
+
+    
+    @Test
+    public void testSearchSign(){
+        //Setup
+        Series batSeries = new Series("Batman");
+        Marking comicTest = new Comic("Spider-Man Vs Batman", 33, "The spider vs the man!", 
+                    BigDecimal.valueOf(5.50), LocalDate.parse("2021-05-12"), new Volume(7, batSeries));
+        input = "sign";
+        query = "The Amazing Spider-MAN";
+        List<Marking> expected = new ArrayList<>();
+        Marking comicSign1 = new Sign(comic1);
+        Marking comicSign2 = new Sign(comic2);
+        
+        data.add(comicSign1);
+        data.add(comicTest);
+        data.add(comicSign2);
+        expected.add(comicSign1);
+        expected.add(comicSign2);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+    
 }

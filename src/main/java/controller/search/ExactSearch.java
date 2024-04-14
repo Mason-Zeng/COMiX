@@ -185,7 +185,7 @@ public class ExactSearch implements Searcher{
     public ArrayList<Marking> getMarkings(Marking marking){
         ArrayList<Marking> oldMarks = new ArrayList<>();
         Marking point = marking;
-        while (!(marking instanceof Comic)) {
+        while (!(point instanceof Comic)) {
             oldMarks.add(point);
             point = point.getMarking();
         }
