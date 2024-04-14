@@ -76,13 +76,5 @@ public class ProxyAccount implements Account{
         }
         return userAccount.getUsername();
     }
-
-    @Override
-    public int getComicCount() {
-        if (this.userAccount == null){
-            return COMICS.size();
-        }
-        return userAccount.getComicCount();
-    }
     
 }

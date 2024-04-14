@@ -19,7 +19,6 @@ import model.marking.Marking;
 public class UserAccount implements Account{
 
     private String username;
-    //File once added will be "data/users/%s", username
     private static File file;
     private List<Marking> COMICS = new ArrayList<>();
     private ForeignDataHandler dataHandler;
@@ -90,10 +89,6 @@ public class UserAccount implements Account{
 
     public List<Marking> getComics() {
         return COMICS;
-    }
-
-    public int getComicCount(){
-        return COMICS.size();
     }
 
 }
