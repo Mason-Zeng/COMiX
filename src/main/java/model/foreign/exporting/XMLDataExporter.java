@@ -32,7 +32,7 @@ public class XMLDataExporter implements DataExporter {
         title.setTextContent(mark.getTitle());
         comicElement.appendChild(title);
         
-        Element description = doc.createElement("desccription");
+        Element description = doc.createElement("description");
         description.setTextContent(mark.getDescription());
         comicElement.appendChild(description);
         

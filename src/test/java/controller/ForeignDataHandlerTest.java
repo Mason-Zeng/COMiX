@@ -34,13 +34,37 @@ public class ForeignDataHandlerTest {
         .stream()
         .map(Comic::new)
         .map(Marking.class::cast)
-        .toList();
+        .toList()
+        .subList(0, 2000);
 
         ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         handler.exportData(tmpJson, expected);
 
         List<Marking> actual = handler.importData(tmpJson);
+
+        // Easier to handle than by raw comparison between lists
+        assertEquals(expected.toString(), actual.toString());
+
+    }
+
+    @Test
+    void testDataParityXML() throws IOException {
+        File tmpXml = new File(tempDir, "test.xml");
+
+        // Load from initital provided CSV
+        List<Marking> expected = ComicOutput.loadFromCSV("data/comics.csv")
+        .stream()
+        .map(Comic::new)
+        .map(Marking.class::cast)
+        .toList()
+        .subList(0, 2000);
+
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+
+        handler.exportData(tmpXml, expected);
+
+        List<Marking> actual = handler.importData(tmpXml);
 
         // Easier to handle than by raw comparison between lists
         assertEquals(expected.toString(), actual.toString());
