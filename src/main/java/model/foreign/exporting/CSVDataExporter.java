@@ -6,9 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.supercsv.cellprocessor.*;
-import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvListWriter;
 import org.supercsv.prefs.CsvPreference;
 
@@ -33,6 +30,7 @@ public class CSVDataExporter implements DataExporter {
     };
 
     @Override
+    @SuppressWarnings("resource")
     public void exportFile(List<Marking> data, FileWriter file) {
         CsvListWriter writer = new CsvListWriter(file, CsvPreference.STANDARD_PREFERENCE);
         try {
@@ -60,9 +58,7 @@ public class CSVDataExporter implements DataExporter {
     
                 writer.write(Arrays.asList(comicArr));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
   
     }
     
