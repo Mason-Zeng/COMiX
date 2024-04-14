@@ -30,12 +30,12 @@ public abstract class ComicDecorator implements Marking {
 
     @Override
     public String getTitle() {
-        return getTitle(); //none
+        return comic.getTitle(); //none
     }
 
     @Override
     public String getPublisherName() {
-        return getPublisherName(); //none
+        return comic.getPublisherName(); //none
     }
 
     @Override

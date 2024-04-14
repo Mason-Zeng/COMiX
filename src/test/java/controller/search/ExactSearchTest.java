@@ -13,10 +13,13 @@ import org.junit.jupiter.api.Test;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Authenticate;
+import model.marking.Grade;
 import model.marking.Marking;
 import model.Comic;
 import model.Creator;
 import model.marking.Sign;
+import model.marking.Slab;
 
 
 public class ExactSearchTest {
@@ -30,6 +33,7 @@ public class ExactSearchTest {
     private static Marking comic2;
     private static Marking comic3;
     private static Marking comic4;
+    private static Marking comicTest;
 
     @BeforeAll
     public static void loadData(){
@@ -64,6 +68,12 @@ public class ExactSearchTest {
         data.add(comic2);
         data.add(comic3);
         data.add(comic4);
+        comicTest = new Sign(comic4);
+        comicTest = new Authenticate(comicTest);
+        comicTest= new Grade(comicTest, 3);
+        comicTest = new Slab(comicTest);
+        data.add(comicTest);
+
         
         exactSearch = new ExactSearch();
     }
@@ -95,13 +105,11 @@ public class ExactSearchTest {
         List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
-        //I dont know why its picking up the 2 extra comics
-        for(Marking comics: data){
-            System.out.println(comics);
-        }
+        
         //Analyze
         assertEquals(expected.size(), actual.size());
         for (int i = 0; i < expected.size(); i++){
@@ -116,6 +124,7 @@ public class ExactSearchTest {
         query = "spIDER-mAN vs batMAN";
         List<Marking> expected = new ArrayList<>();
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
@@ -188,20 +197,10 @@ public class ExactSearchTest {
     @Test
     public void testSearchSign(){
         //Setup
-        Series batSeries = new Series("Batman");
-        Marking comicTest = new Comic("Spider-Man Vs Batman", 33, "The spider vs the man!", 
-                    BigDecimal.valueOf(5.50), LocalDate.parse("2021-05-12"), new Volume(7, batSeries));
         input = "sign";
-        query = "The Amazing Spider-MAN";
+        query = "Batman";
         List<Marking> expected = new ArrayList<>();
-        Marking comicSign1 = new Sign(comic1);
-        Marking comicSign2 = new Sign(comic2);
-        
-        data.add(comicSign1);
-        data.add(comicTest);
-        data.add(comicSign2);
-        expected.add(comicSign1);
-        expected.add(comicSign2);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
@@ -213,4 +212,57 @@ public class ExactSearchTest {
         }
     }
     
+    @Test
+    public void testSearchAuthenticte(){
+        //Setup
+        input = "authenticate";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchGrade(){
+        //Setup
+        input = "grade";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchSlab(){
+        //Setup
+        input = "slab";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
 }
