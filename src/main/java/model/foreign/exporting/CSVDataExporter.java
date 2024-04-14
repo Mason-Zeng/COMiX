@@ -2,6 +2,7 @@ package model.foreign.exporting;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,19 +18,6 @@ import model.marking.Marking;
 import model.marking.MarkingFactory;
 
 public class CSVDataExporter implements DataExporter {
-
-    private final CellProcessor[] processors = {
-        new NotNull(), // title
-        new Optional(), // description
-        new ParseInt(), // issue
-        new ParseInt(), // volume
-        new NotNull(), // series
-        new NotNull(), // publisher
-        new ParseDate("MMM dd, yyyy", true),
-        new Optional(), // creators
-        new Optional(), // format
-        new ParseBigDecimal() // value
-    };
 
     private String[] HEADERS = {
         "title",
@@ -70,9 +58,8 @@ public class CSVDataExporter implements DataExporter {
                
                 comicArr[8] = MarkingFactory.getFormat(comic);
     
-                writer.write(comicArr, processors);
+                writer.write(Arrays.asList(comicArr));
             }
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
