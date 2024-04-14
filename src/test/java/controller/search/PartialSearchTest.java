@@ -13,7 +13,11 @@ import org.junit.jupiter.api.Test;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Authenticate;
+import model.marking.Grade;
 import model.marking.Marking;
+import model.marking.Sign;
+import model.marking.Slab;
 import model.Comic;
 import model.Creator;
 
@@ -28,6 +32,7 @@ public class PartialSearchTest {
     private static Comic comic2;
     private static Comic comic3;
     private static Comic comic4;
+    private static Marking comicTest;
 
     @BeforeAll
     public static void loadData(){
@@ -63,6 +68,12 @@ public class PartialSearchTest {
         data.add(comic2);
         data.add(comic3);
         data.add(comic4);
+        comicTest = new Sign(comic4);
+        comicTest = new Authenticate(comicTest);
+        comicTest= new Grade(comicTest, 3);
+        comicTest = new Slab(comicTest);
+        data.add(comicTest);
+
         
         partialSearch = new PartialSearch();
     }
@@ -96,6 +107,7 @@ public class PartialSearchTest {
         expected.add(comic2);
         expected.add(comic3);
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = partialSearch.searchData(query, data, input);
@@ -116,6 +128,7 @@ public class PartialSearchTest {
         expected.add(comic1);
         expected.add(comic2);
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = partialSearch.searchData(query, data, input);
@@ -170,11 +183,84 @@ public class PartialSearchTest {
     public void testSearchCreator(){
         //Setup
         input = "creator";
-        query = "Stan Lee";
+        query = "Stan Le";
         List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic3);
         expected.add(comic4);
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = partialSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchSign(){
+        //Setup
+        input = "sign";
+        query = "bat";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = partialSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+    
+    @Test
+    public void testSearchAuthenticte(){
+        //Setup
+        input = "authenticate";
+        query = "Bat";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = partialSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchGrade(){
+        //Setup
+        input = "grade";
+        query = "Bat";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = partialSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchSlab(){
+        //Setup
+        input = "slab";
+        query = "BAt";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = partialSearch.searchData(query, data, input);

@@ -105,7 +105,7 @@ public class PartialSearch implements Searcher{
             for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
-                if (query.contains(series)){
+                if (series.contains(query)){
                     tempList.add(comic);
                 }
             }
@@ -123,7 +123,7 @@ public class PartialSearch implements Searcher{
             for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
-                if (query.contains(series)){
+                if (series.contains(query)){
                     tempList.add(comic);
                 }
             }
@@ -141,7 +141,7 @@ public class PartialSearch implements Searcher{
             for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
-                if (query.contains(series)){
+                if (series.contains(query)){
                     tempList.add(comic);
                 }
             }
@@ -159,7 +159,7 @@ public class PartialSearch implements Searcher{
             for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
-                if (query.contains(series)){
+                if (series.contains(query)){
                     tempList.add(comic);
                 }
             }
