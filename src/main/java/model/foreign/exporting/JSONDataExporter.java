@@ -37,7 +37,7 @@ public class JSONDataExporter implements DataExporter {
             obj.put("creators", creators);
 
             String format = MarkingFactory.getFormat(comic);
-            obj.put("format", String.join(" ", format));
+            obj.put("format", format);
             jArr.add(obj);
         }
         JSONWriter writer = new JSONWriter(file);

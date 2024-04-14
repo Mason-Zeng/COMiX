@@ -25,8 +25,8 @@ public class CSVDataImporter implements DataImporter {
     private final CellProcessor[] processors = {
         new NotNull(), // title
         new Optional(), // description
-        new ParseInt(), // issue
-        new ParseInt(), // volume
+        new NotNull(), // issue
+        new NotNull(), // volume
         new NotNull(), // series
         new NotNull(), // publisher
         new ParseDate("MMM dd, yyyy", true),
@@ -49,17 +49,15 @@ public class CSVDataImporter implements DataImporter {
 
             while ((comicList = listReader.read(processors)) != null) {
                 Marking comic = new Comic((String)comicList.get(0), 
-                                        (Integer)comicList.get(2), 
+                                        (String)comicList.get(2), 
                                         (String)comicList.get(1), 
                                         (BigDecimal)comicList.get(9), 
                                         ((Date)comicList.get(6)).toLocalDate());
 
-                Volume vol = new Volume((Integer)comicList.get(3));
-                Series series = new Series((String)comicList.get(4));
                 Publisher pub = new Publisher((String)comicList.get(5));
+                Series series = new Series((String)comicList.get(4), pub);
+                Volume vol = new Volume((String)comicList.get(3), series);
                 comic.setVolume(vol);
-                vol.setSeries(series);
-                series.setPublisher(pub);
 
                 for (String creator : ((String)comicList.get(7)).split(" | ")) {
                     comic.addCreator(new Creator(creator));

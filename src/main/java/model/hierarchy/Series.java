@@ -11,7 +11,7 @@ import model.marking.Marking;
 public class Series implements ComicHolder{
     private String name;
     private Publisher publisher;
-    private Map<Integer, Volume> volumes;
+    private Map<String, Volume> volumes;
 
     public Series(String name) {
         this.name = name;
@@ -44,11 +44,11 @@ public class Series implements ComicHolder{
         volumes.remove(vol.getVolumeNumber());
     }
     
-    public Volume getVolume(Integer vol_num) {
+    public Volume getVolume(String vol_num) {
         return volumes.get(vol_num);
     }
 
-    public boolean volumeExists(Integer vol_num) {
+    public boolean volumeExists(String vol_num) {
         return volumes.containsKey(vol_num);
     }
 

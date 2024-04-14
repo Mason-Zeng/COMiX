@@ -28,17 +28,15 @@ public class JSONDataImporter implements DataImporter {
 
             JSONObject jObj = (JSONObject)obj;
             Marking comic = new Comic(jObj.getString("title"),
-                                jObj.getInt("issue"),
+                                jObj.getString("issue"),
                                 jObj.getString("description"),
                                 jObj.getBigDecimal("value"),
                                 LocalDate.parse(jObj.getString("date")));
 
-            Volume vol = new Volume(jObj.getInt("volume"));
-            Series series = new Series(jObj.getString("series"));
             Publisher pub = new Publisher(jObj.getString("publisher"));
+            Series series = new Series(jObj.getString("series"), pub);
+            Volume vol = new Volume(jObj.getString("volume"), series);
             comic.setVolume(vol);
-            vol.setSeries(series);
-            series.setPublisher(pub);
 
             JSONArray creators = jObj.getJSONArray("creators");
             for (Object creator : creators) {
