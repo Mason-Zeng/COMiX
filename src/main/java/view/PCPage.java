@@ -154,7 +154,7 @@ public class PCPage extends Application {
         gridPane.add(logoutButton, 7, 0);
 
         int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.4) : (int)((45 + proxyAccount.getUsername().length()*3)/2.18);
-        gridPane.setHgap(1000/spacing);
+        gridPane.setHgap(950/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
 
