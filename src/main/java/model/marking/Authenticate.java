@@ -2,10 +2,6 @@ package model.marking;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import model.Comic;
 
 /**
@@ -35,5 +31,4 @@ public class Authenticate extends ComicDecorator{
         newVal = newVal.setScale(2, RoundingMode.HALF_EVEN);
         return newVal;
     }
-
 }
