@@ -1,6 +1,8 @@
 package model.foreign.importing;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,12 @@ public class JSONDataImporter implements DataImporter {
             }
 
             String format = jObj.getString("format");
-            comic = MarkingFactory.formatComic(comic, format);
+            try {
+                comic = MarkingFactory.formatComic(comic, format);
+            }
+            catch (StringIndexOutOfBoundsException e){
+
+            }
             result.add(comic);
         }
 

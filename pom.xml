@@ -78,7 +78,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>unitXX.HelloFX</mainClass>
+                            <mainClass>view.DatabasePage</mainClass>
                         </configuration>
                     </execution>
                 </executions>

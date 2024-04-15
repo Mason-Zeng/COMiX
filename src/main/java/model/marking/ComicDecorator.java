@@ -102,7 +102,6 @@ public abstract class ComicDecorator implements Marking {
     public Marking getMarking() {
         return comic;
     }
-
     @Override
     public boolean equals(Object obj) {
         return comic.equals(obj);
