@@ -33,7 +33,7 @@ public class PCPage extends Application {
     private ProxyAccount proxyAccount;
     private final String searchers[] = {"Partial Search", "Exact Search"};
     private final String sorters[] = {"Sort By Default", "Sort By Date"};
-    private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date"/*, "Graded", "Slabbed", "Signed", "Authenticated", "Runs", "Gaps" */};
+    private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date", "Grade", "Slab", "Sign", "Authenticate", "Runs", "Gaps"};
     private List<Marking> COMICS;
     private int comicCounter = 1; 
     private Collection<Button> prevButtons;
