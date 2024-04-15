@@ -1,17 +1,19 @@
 package view;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
 import controller.CollectionManager;
 import controller.ComicSearcher;
+import controller.ForeignDataHandler;
 import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.search.Searcher;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
 import model.Comic;
-import model.ComicOutput;
 import model.marking.*;
 import model.hierarchy.Collection;
 
@@ -22,13 +24,9 @@ public class PTUI {
     private static Scanner scan;
     private static Collection collection = new Collection("User");
     private static CollectionManager collectionManager = new CollectionManager(collection);
-    private static final List<Marking> COMICS = ComicOutput.loadFromCSV(csvFile)
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList();
-
-    public static void main(String[] args) {
+    private static List<Marking> COMICS;
+    public static void main(String[] args) throws IOException {
+        COMICS = ForeignDataHandler.getHandler().importData(new File(csvFile));
         scan = new Scanner(System.in);
         System.out.println("Welcome to Team 7 COMiX Application!");
         mainMenu();

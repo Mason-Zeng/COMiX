@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import model.Comic;
-import model.ComicOutput;
 import model.marking.Marking;
 
 public class ForeignDataHandlerTest {
@@ -28,16 +26,10 @@ public class ForeignDataHandlerTest {
      */
     void testDataParityJSON() throws IOException {
         File tmpJson = new File(tempDir, "test.json");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         // Load from initital provided CSV
-        List<Marking> expected = ComicOutput.loadFromCSV("data/comics.csv")
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList()
-        .subList(0, 2000);
-
-        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+        List<Marking> expected = handler.importData(new File("data/comics.json"));
 
         handler.exportData(tmpJson, expected);
 
@@ -51,16 +43,10 @@ public class ForeignDataHandlerTest {
     @Test
     void testDataParityXML() throws IOException {
         File tmpXml = new File(tempDir, "test.xml");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         // Load from initital provided CSV
-        List<Marking> expected = ComicOutput.loadFromCSV("data/comics-old.csv")
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList()
-        .subList(0, 2000);
-
-        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+        List<Marking> expected = handler.importData(new File("data/comics.xml"));
 
         handler.exportData(tmpXml, expected);
 
@@ -74,16 +60,11 @@ public class ForeignDataHandlerTest {
     @Test
     void testDataParityCSV() throws IOException {
         File tmpXml = new File(tempDir, "test.csv");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         // Load from initital provided CSV
-        List<Marking> expected = ComicOutput.loadFromCSV("data/comics-old.csv")
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList()
-        .subList(0, 2000);
+        List<Marking> expected = handler.importData(new File("data/comics.csv"));
 
-        ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         handler.exportData(tmpXml, expected);
 
