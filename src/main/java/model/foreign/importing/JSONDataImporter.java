@@ -44,7 +44,12 @@ public class JSONDataImporter implements DataImporter {
             }
 
             String format = jObj.getString("format");
-            // comic = MarkingFactory.formatComic(comic, format);
+            try {
+                comic = MarkingFactory.formatComic(comic, format);
+            }
+            catch (StringIndexOutOfBoundsException e){
+
+            }
             result.add(comic);
         }
 
