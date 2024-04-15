@@ -17,7 +17,7 @@ import model.Comic;
 import model.marking.*;
 import model.hierarchy.Collection;
 
-
+@SuppressWarnings("unused")
 public class PTUI {
 
     private static final String csvFile = "data/comics.csv"; 
