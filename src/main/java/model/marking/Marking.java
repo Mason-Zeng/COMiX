@@ -28,6 +28,6 @@ public interface Marking{
     public Series getSeries();
     public Publisher getPublisher();
     public String getDescription();
-    public void addCreator(Creator creator);
     public Marking getMarking();
+    public void addCreator(Creator creator);
 }
