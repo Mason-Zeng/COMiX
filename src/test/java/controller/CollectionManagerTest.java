@@ -27,8 +27,8 @@ public class CollectionManagerTest {
         collectionManager = new CollectionManager(collection);
         publisher = new Publisher("TestPublisher");
         series = new Series("TestSeries");
-        volume = new Volume(1);
-        comic = new Comic("TestComic", 1, "TestDescription", new BigDecimal(12), LocalDate.ofEpochDay(0));
+        volume = new Volume("1");
+        comic = new Comic("TestComic", "1", "TestDescription", new BigDecimal(12), LocalDate.ofEpochDay(0));
         volume.addIssue(comic);
         series.addVolume(volume);
         publisher.addSeries(series);
@@ -41,7 +41,7 @@ public class CollectionManagerTest {
         // Attempt grabbing all items in hierarchy
         Publisher publisher2 = assertDoesNotThrow(() -> collection.getPublisher("TestPublisher"));
         Series series2 = assertDoesNotThrow(() -> publisher2.getSeries("TestSeries"));
-        Volume volume2 = assertDoesNotThrow(() -> series2.getVolume(1));
+        Volume volume2 = assertDoesNotThrow(() -> series2.getVolume("1"));
         assertDoesNotThrow(() -> volume2.getIssue("TestComic"));
     }
 
@@ -51,7 +51,7 @@ public class CollectionManagerTest {
 
         Publisher publisher2 = assertDoesNotThrow(() -> collection.getPublisher("TestPublisher"));
         Series series2 = assertDoesNotThrow(() -> publisher2.getSeries("TestSeries"));
-        Volume volume2 = assertDoesNotThrow(() -> series2.getVolume(1));
+        Volume volume2 = assertDoesNotThrow(() -> series2.getVolume("1"));
         Marking comic2 = assertDoesNotThrow(() -> volume2.getIssue("TestComic"));
         
         collectionManager.delIssue(comic2);

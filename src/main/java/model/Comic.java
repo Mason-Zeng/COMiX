@@ -13,18 +13,18 @@ import model.marking.Marking;
 public class Comic implements Marking{
     private String title;
     private Volume volume;
-    private int issueNum;
+    private String issueNum;
     private LocalDate pub_date;
     private List<Creator> creators;
     private List<Character> characters;
     private String description;
     private BigDecimal value;
 
-    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
+    public Comic(String title, String issueNum, String description, BigDecimal value, LocalDate pubDate, Volume volume) {
         this(title, issueNum, description, value, pubDate);
         this.volume = volume;
     }
-    public Comic(String title, int issueNum, String description, BigDecimal value, LocalDate pubDate) {
+    public Comic(String title, String issueNum, String description, BigDecimal value, LocalDate pubDate) {
         this.title = title;
         this.issueNum = issueNum;
         this.description = description;
@@ -35,22 +35,26 @@ public class Comic implements Marking{
     }
 
     public Comic(ComicOutput output) {
-        String full_title = output.getFullTitle();
-        title = full_title.contains(", Vol. ") ? 
-            full_title.substring(0, full_title.length() - 9) :
-            full_title;
+        title = output.getFullTitle();
+        String seriesString = output.getSeries();
+        int index = seriesString.indexOf(", Vol. ");
+        Series series;
+        if (index != -1) {
+            volume = new Volume(seriesString.substring(index+7));
+            series = new Series(seriesString.substring(0, index));
+        } else {
+            volume = new Volume("1");
+            series = new Series(output.getSeries());
+        }
         Publisher publisher = new Publisher(output.getPublisher());
-        Series series = new Series(output.getSeries());
-        volume = full_title.contains(", Vol. ") ? 
-            new Volume(Integer.parseInt(full_title.substring(full_title.length() - 1))) :
-            new Volume(1);
-
+        
+        
         publisher.addSeries(series);
         series.addVolume(volume);
         try {
-            issueNum = Integer.parseInt(output.getIssue());
+            issueNum = output.getIssue();
         } catch (NumberFormatException e) {
-            issueNum = 1;
+            issueNum = "1";
         }
         description = output.getVariantDescription();
         value = new BigDecimal(0);
@@ -96,11 +100,11 @@ public class Comic implements Marking{
         return getSeries().getSeriesTitle();
     }
 
-    public int getVolumeNumber() {
+    public String getVolumeNumber() {
         return volume.getVolumeNumber();
     }
 
-    public int getIssueNumber() {
+    public String getIssueNumber() {
         return issueNum;
     }
 
@@ -121,6 +125,10 @@ public class Comic implements Marking{
     }
 
     public BigDecimal getValue() {
+        return value;
+    }
+
+    public BigDecimal getTrueValue() {
         return value;
     }
 
@@ -147,5 +155,18 @@ public class Comic implements Marking{
     @Override
     public Marking getMarking() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Marking) {
+            Marking other = (Marking)obj;
+            return getSeriesTitle().equals(other.getSeriesTitle()) 
+            && getVolumeNumber() == other.getVolumeNumber() 
+            && getTitle().equals(other.getTitle())
+            && getDate().equals(other.getDate())
+            && getCreators().equals(other.getCreators());
+        }
+        return false;
     }
 }

@@ -37,11 +37,28 @@
             <version>19</version>
         </dependency>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>       
     </dependencies>
     <build>
         <plugins>
@@ -61,7 +78,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>unitXX.HelloFX</mainClass>
+                            <mainClass>view.DatabasePage</mainClass>
                         </configuration>
                     </execution>
                 </executions>

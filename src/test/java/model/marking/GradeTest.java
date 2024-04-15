@@ -16,7 +16,7 @@ public class GradeTest {
     public void testMarkingGrade1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 1);
 
         BigDecimal test = comic.getValue();
@@ -30,7 +30,7 @@ public class GradeTest {
     public void testGradeGreaterThan1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 4);
 
         //Invoke
@@ -45,7 +45,7 @@ public class GradeTest {
     public void testInvalid(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 0);
         
         //Invoke
@@ -59,7 +59,7 @@ public class GradeTest {
     public void testNullValue(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 25);
         
         //Invoke
@@ -73,7 +73,7 @@ public class GradeTest {
     public void testGradeAgain(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         Exception thrownException = null;
         
         //Invoke
@@ -94,7 +94,7 @@ public class GradeTest {
     public void testGradeAfterSlab(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         Exception thrownException = null;
         
         //Invoke

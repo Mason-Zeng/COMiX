@@ -19,7 +19,7 @@ public class SlabTest{
     public void testGrade1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 1);
         comic = new Slab(comic);
 
@@ -35,7 +35,7 @@ public class SlabTest{
     public void testGradeGreaterThan1(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
 
@@ -51,7 +51,7 @@ public class SlabTest{
     public void testInvalid(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 0);
         comic = new Slab(comic);
         
@@ -66,7 +66,7 @@ public class SlabTest{
     public void testMarkingInvalidTypeSlab(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         
         Exception thrownException = null;
         try{      
@@ -87,7 +87,7 @@ public class SlabTest{
     public void testMarkingInvalidTypeComic(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         Exception thrownException = null;
         try{      
             comic = new Slab(comic);
@@ -105,7 +105,7 @@ public class SlabTest{
     public void testNullValue(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 6);
         comic = new Slab(comic);
         

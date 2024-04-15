@@ -20,8 +20,8 @@ public abstract class ComicDecorator implements Marking {
         this.comic = comic;
     }
 
-    public BigDecimal getValue(){
-        return comic.getValue();
+    public BigDecimal getTrueValue() {
+        return comic.getTrueValue();
     }
 
     public Comic getComic() {
@@ -44,12 +44,12 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
-    public int getVolumeNumber() {
+    public String getVolumeNumber() {
         return comic.getVolumeNumber();
     }
 
     @Override
-    public int getIssueNumber() {
+    public String getIssueNumber() {
         return comic.getIssueNumber();
     }
 
@@ -89,13 +89,18 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
-    public Marking getMarking() {
-        return comic;
+    public String getDescription() {
+        return comic.getDescription();
     }
 
     @Override
-    public void addCreator(Creator creator){
+    public void addCreator(Creator creator) {
         comic.addCreator(creator);
+    }
+
+    @Override
+    public Marking getMarking() {
+        return comic;
     }
 
     /*

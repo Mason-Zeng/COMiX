@@ -20,7 +20,7 @@ public class SignTest {
     public void checkSignCounter(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
 
         //Invoke
@@ -38,7 +38,7 @@ public class SignTest {
     public void checkSignCounterMultiple(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Sign(comic);
         comic = new Sign(comic);
@@ -60,7 +60,7 @@ public class SignTest {
     public void checkSignCounterMultipleMarkings(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Grade(comic, 1);
         comic = new Sign(comic);
@@ -82,7 +82,7 @@ public class SignTest {
     public void testOneSign(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
 
         //Invoke
@@ -97,7 +97,7 @@ public class SignTest {
     public void testMultipleSign(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Sign(comic);
         comic = new Sign(comic);
@@ -114,7 +114,7 @@ public class SignTest {
     public void testSingleSignMarkings(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic= new Grade(comic, 1);
         comic= new Slab(comic);
@@ -131,7 +131,7 @@ public class SignTest {
     public void testMultipleSignMarkings(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Sign(comic);
         comic = new Sign(comic);
@@ -152,7 +152,7 @@ public class SignTest {
     public void testNull(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         
 
@@ -167,7 +167,7 @@ public class SignTest {
     public void testSlab(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 2);
         comic = new Slab(comic);
         Exception thrownException = null;
@@ -189,7 +189,7 @@ public class SignTest {
     public void testAuthenticate(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Authenticate(comic);
         Exception thrownException = null;
@@ -211,7 +211,7 @@ public class SignTest {
     public void testValueSigns(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Sign(comic);
         comic = new Sign(comic);

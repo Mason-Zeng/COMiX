@@ -51,7 +51,7 @@ public class PartialSearch implements Searcher{
 
             case "issue_number":
             for (Marking comic: data){
-                int issueNumber = comic.getIssueNumber();
+                String issueNumber = comic.getIssueNumber();
                 if (String.valueOf(issueNumber).contains(query)){
                     comics.add(comic);
                 }

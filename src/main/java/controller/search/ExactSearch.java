@@ -52,7 +52,7 @@ public class ExactSearch implements Searcher{
 
             case "issue_number":
             for (Marking comic: data){
-                int issue_number = comic.getIssueNumber();
+                String issue_number = comic.getIssueNumber();
                 if (query.equals(String.valueOf(issue_number))){
                     comics.add(comic);
                 }

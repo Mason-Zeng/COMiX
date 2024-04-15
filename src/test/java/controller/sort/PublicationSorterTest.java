@@ -17,10 +17,10 @@ public class PublicationSorterTest {
     @Test
     public void testCompareDiffDates1(){
         //Setup
-        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-                                new BigDecimal("5.00"), LocalDate.parse("2002-02-02"), new Volume(1));
-        Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-                                new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume(1));
+        Comic comic1 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2002-02-02"), new Volume("1"));
+        Comic comic2 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume("1"));
 
         Comparator<Marking> comparer = new PublicationDateSorter();
         
@@ -34,10 +34,10 @@ public class PublicationSorterTest {
     @Test
     public void testCompareDiffDates2() {
         //Setup
-        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-                                new BigDecimal("5.00"), LocalDate.parse("2020-03-02"), new Volume(1));
-        Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-        new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume(1));
+        Comic comic1 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("2020-03-02"), new Volume("1"));
+        Comic comic2 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+        new BigDecimal("5.00"), LocalDate.parse("2005-02-03"), new Volume("1"));
 
         Comparator<Marking> comparer = new PublicationDateSorter();
         
@@ -51,10 +51,10 @@ public class PublicationSorterTest {
     @Test
     public void testSameDate() {
         //Setup
-        Comic comic1 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-                                new BigDecimal("5.00"), LocalDate.parse("1994-04-23"), new Volume(1));
-        Comic comic2 = new Comic("Incredible Hulk", 5, "Super strong, and green!", 
-                                new BigDecimal("5.00"), LocalDate.parse("1994-04-23"), new Volume(1));
+        Comic comic1 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("1994-04-23"), new Volume("1"));
+        Comic comic2 = new Comic("Incredible Hulk", "5", "Super strong, and green!", 
+                                new BigDecimal("5.00"), LocalDate.parse("1994-04-23"), new Volume("1"));
 
         Comparator<Marking> comparer = new PublicationDateSorter();
         

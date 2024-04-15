@@ -18,7 +18,7 @@ public class AuthenticateTest {
     public void testCheckSignedTrue(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         Exception thrownException = null;
         try{      
@@ -37,7 +37,7 @@ public class AuthenticateTest {
     public void testCheckSignedFalse(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Grade(comic, 4);
         comic = new Slab(comic);
         Exception thrownException = null;
@@ -58,7 +58,7 @@ public class AuthenticateTest {
     public void testOneSign(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Authenticate(comic);
 
@@ -74,7 +74,7 @@ public class AuthenticateTest {
     public void testMultipleSigns(){
         //Setup
         BigDecimal value = new BigDecimal(6);
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Sign(comic);
         comic = new Sign(comic);
@@ -92,7 +92,7 @@ public class AuthenticateTest {
     public void testNull(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         comic = new Sign(comic);
         comic = new Authenticate(comic);
 
@@ -107,7 +107,7 @@ public class AuthenticateTest {
     public void testComic(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         
         Exception thrownException = null;
         try{      
@@ -126,7 +126,7 @@ public class AuthenticateTest {
     public void testAuthenticate(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         Exception thrownException = null;
 
         //Invoke
@@ -149,7 +149,7 @@ public class AuthenticateTest {
     public void testSlab(){
         //Setup
         BigDecimal value = null;
-        Marking comic = new Comic("title", 3, "description", value, date);
+        Marking comic = new Comic("title", "3", "description", value, date);
         Exception thrownException = null;
         
         //Invoke

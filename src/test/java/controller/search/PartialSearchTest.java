@@ -47,21 +47,21 @@ public class PartialSearchTest {
         Series batSeries = new Series("Batman");
         batSeries.setPublisher(new Publisher(("DC")));
 
-        comic1 = new Comic("Amazing Spider-man", 5, "Amazing and a spider?!", 
-                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume(2, spiderSeries));
+        comic1 = new Comic("Amazing Spider-man", "5", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
         comic1.addCreator(new Creator("Stan Lee"));
         
-        comic2 = new Comic("The Amazing Spider-man", 3, "Amazing and a spider?! Now with a THE!", 
-                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-05-22"), new Volume(2, spiderSeries));
+        comic2 = new Comic("The Amazing Spider-man", "3", "Amazing and a spider?! Now with a THE!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-05-22"), new Volume("2", spiderSeries));
         comic2.addCreator(new Creator("Lee"));
 
-        comic3 = new Comic("Incredible Shulk", 32, "Green, mean, and he's really feeling it!", 
-                    BigDecimal.valueOf(32.59), LocalDate.parse("2024-02-29"), new Volume(5, hulkSeries));
+        comic3 = new Comic("Incredible Shulk", "32", "Green, mean, and he's really feeling it!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2024-02-29"), new Volume("5", hulkSeries));
         comic3.addCreator(new Creator("Stan Lee 2"));
         comic3.addCreator(new Creator("Stan Lee"));
 
-        comic4 = new Comic("Spider-Man Vs Batman", 13, "The spider vs the man!", 
-                    BigDecimal.valueOf(5.50), LocalDate.parse("2021-05-12"), new Volume(7, batSeries));
+        comic4 = new Comic("Spider-Man Vs Batman", "13", "The spider vs the man!", 
+                    BigDecimal.valueOf(5.50), LocalDate.parse("2021-05-12"), new Volume("7", batSeries));
         comic4.addCreator(new Creator("Evil Stan Lee"));
 
         data.add(comic1);

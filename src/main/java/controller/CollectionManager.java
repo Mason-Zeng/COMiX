@@ -7,7 +7,6 @@ import model.marking.MarkingFactory;
 
 public class CollectionManager {
     private Collection collection;
-    private MarkingFactory factory = new MarkingFactory();
 
     public CollectionManager(Collection collection) {
         this.collection = collection;
@@ -28,7 +27,7 @@ public class CollectionManager {
         Publisher pub = comic.getPublisher();
         Series series = comic.getSeries();
         Volume vol = comic.getVolume();
-        Marking comic_copy = factory.copyMarking(comic);
+        Marking comic_copy = MarkingFactory.copyMarking(comic);
 
         // see if meta objects exist within collection. if not, create copies of them
         Publisher pub_copy = collection.publisherExists(pub.getName()) ?

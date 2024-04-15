@@ -14,11 +14,12 @@ import model.Character;
  */
 public interface Marking{
     public BigDecimal getValue();
+    public BigDecimal getTrueValue();
     public String getTitle();
     public String getPublisherName();
     public String getSeriesTitle();
-    public int getVolumeNumber();
-    public int getIssueNumber();
+    public String getVolumeNumber();
+    public String getIssueNumber();
     public List<Creator> getCreators();
     public List<Character> getCharacters();
     public LocalDate getDate();
@@ -26,6 +27,7 @@ public interface Marking{
     public Volume getVolume();
     public Series getSeries();
     public Publisher getPublisher();
+    public String getDescription();
     public Marking getMarking();
     public void addCreator(Creator creator);
 }
