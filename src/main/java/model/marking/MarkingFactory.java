@@ -62,10 +62,10 @@ public class MarkingFactory {
                     comic = new Slab(comic);
                     break;
                 case 's':
-                    // TODO: Add Signed comics
+                    comic = new Sign(comic);
                     break;
                 case 'A': 
-                    // TODO: Add Auth comics
+                    comic = new Authenticate(comic);
                     break;
             }
         }
@@ -82,12 +82,11 @@ public class MarkingFactory {
                     case "Slab":
                          format.add("S");
                         break;
-                    case "Auth": // TODO: Change on integration
-                        // TODO: Add Auth Comics
+                    case "Authenticate":
                         format.add("A");
                         break;
-                    case "Signed": // TODO: Change on Intergration
-                        // TODO: Add Signed comics
+                    case "Sign":
+                        format.add("s");
                         break;
                     default:
                         break;
