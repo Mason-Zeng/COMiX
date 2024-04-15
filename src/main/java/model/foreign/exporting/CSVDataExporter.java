@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.supercsv.io.CsvListWriter;
-import org.supercsv.prefs.CsvPreference;
+import com.opencsv.CSVWriter;
 
 import model.Creator;
 import model.foreign.DataExporter;
@@ -32,34 +31,25 @@ public class CSVDataExporter implements DataExporter {
     @Override
     @SuppressWarnings("resource")
     public void exportFile(List<Marking> data, FileWriter file) {
-        CsvListWriter writer = new CsvListWriter(file, CsvPreference.STANDARD_PREFERENCE);
-        try {
-            writer.write(HEADERS);
-            for (Marking comic : data) {
-                Object[] comicArr = {
-                    comic.getTitle(),
-                    comic.getDescription(),
-                    comic.getIssueNumber(),
-                    comic.getVolumeNumber(),
-                    comic.getSeriesTitle(),
-                    comic.getPublisherName(),
-                    comic.getDate(),
-                    null,
-                    null,
-                    comic.getTrueValue()
-                };
-    
-                comicArr[7] = comic.getCreators()
-                                    .stream()
-                                    .map(Creator::getName)
-                                    .collect(Collectors.joining(" | "));
-               
-                comicArr[8] = MarkingFactory.getFormat(comic);
-    
-                writer.write(Arrays.asList(comicArr));
-            }
-        } catch (IOException e) {}
-  
+        CSVWriter writer = new CSVWriter(file);
+        writer.writeNext(HEADERS, false);
+        for (Marking comic : data) {
+            String[] comicArr = {
+                comic.getTitle(),
+                comic.getDescription(),
+                comic.getIssueNumber(),
+                comic.getVolumeNumber(),
+                comic.getSeriesTitle(),
+                comic.getPublisherName(),
+                comic.getDate().toString(),
+                comic.getCreators()
+                    .stream()
+                    .map(Creator::getName)
+                    .collect(Collectors.joining(" | ")),
+                MarkingFactory.getFormat(comic),
+                comic.getTrueValue().toString()
+            };
+            writer.writeNext(comicArr, false);
+        }
     }
-    
 }
