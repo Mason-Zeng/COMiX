@@ -158,7 +158,7 @@ public class ComicOutput {
 
     public static void main(String[] args) {
         
-        System.out.println(ComicOutput.loadFromCSV("data/comics.csv"));
+        System.out.println(ComicOutput.loadFromCSV("data/comics-old.csv"));
         }
 
 }
