@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import model.Comic;
-import model.ComicOutput;
 import model.marking.Marking;
 
 public class ForeignDataHandlerTest {
@@ -28,15 +26,10 @@ public class ForeignDataHandlerTest {
      */
     void testDataParityJSON() throws IOException {
         File tmpJson = new File(tempDir, "test.json");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
 
         // Load from initital provided CSV
-        List<Marking> expected = ComicOutput.loadFromCSV("data/comics.csv")
-        .stream()
-        .map(Comic::new)
-        .map(Marking.class::cast)
-        .toList();
-
-        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+        List<Marking> expected = handler.importData(new File("data/comics.json"));
 
         handler.exportData(tmpJson, expected);
 
@@ -46,5 +39,38 @@ public class ForeignDataHandlerTest {
         assertEquals(expected.toString(), actual.toString());
 
     }
+
+    @Test
+    void testDataParityXML() throws IOException {
+        File tmpXml = new File(tempDir, "test.xml");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+
+        // Load from initital provided CSV
+        List<Marking> expected = handler.importData(new File("data/comics.xml"));
+
+        handler.exportData(tmpXml, expected);
+
+        List<Marking> actual = handler.importData(tmpXml);
+
+        // Easier to handle than by raw comparison between lists
+        assertEquals(expected.toString(), actual.toString());
+
+    }
     
+    @Test
+    void testDataParityCSV() throws IOException {
+        File tmpXml = new File(tempDir, "test.csv");
+        ForeignDataHandler handler = ForeignDataHandler.getHandler();
+
+        // Load from initital provided CSV
+        List<Marking> expected = handler.importData(new File("data/comics.csv"));
+
+
+        handler.exportData(tmpXml, expected);
+
+        List<Marking> actual = handler.importData(tmpXml);
+
+        // Easier to handle than by raw comparison between lists
+        assertEquals(expected.toString(), actual.toString());
+    }
 }
