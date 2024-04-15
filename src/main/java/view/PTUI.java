@@ -169,7 +169,6 @@ public class PTUI {
     // }
 
     
-    @SuppressWarnings("unused")
     public static BigDecimal markingSystem(){
         //DELETE THIS TEST DATA WHEN FULLY IMPLEMENTED
         BigDecimal value = new BigDecimal(6);
