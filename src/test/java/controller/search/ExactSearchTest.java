@@ -1,5 +1,6 @@
 package controller.search;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,9 +13,14 @@ import org.junit.jupiter.api.Test;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
+import model.marking.Authenticate;
+import model.marking.Grade;
 import model.marking.Marking;
 import model.Comic;
 import model.Creator;
+import model.marking.Sign;
+import model.marking.Slab;
+
 
 public class ExactSearchTest {
     
@@ -23,10 +29,11 @@ public class ExactSearchTest {
     private String input;
     private String query;
 
-    private static Comic comic1;
-    private static Comic comic2;
-    private static Comic comic3;
-    private static Comic comic4;
+    private static Marking comic1;
+    private static Marking comic2;
+    private static Marking comic3;
+    private static Marking comic4;
+    private static Marking comicTest;
 
     @BeforeAll
     public static void loadData(){
@@ -61,6 +68,12 @@ public class ExactSearchTest {
         data.add(comic2);
         data.add(comic3);
         data.add(comic4);
+        comicTest = new Sign(comic4);
+        comicTest = new Authenticate(comicTest);
+        comicTest= new Grade(comicTest, 3);
+        comicTest = new Slab(comicTest);
+        data.add(comicTest);
+
         
         exactSearch = new ExactSearch();
     }
@@ -92,6 +105,7 @@ public class ExactSearchTest {
         List<Marking> expected = new ArrayList<>();
         expected.add(comic2);
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
@@ -110,6 +124,7 @@ public class ExactSearchTest {
         query = "spIDER-mAN vs batMAN";
         List<Marking> expected = new ArrayList<>();
         expected.add(comic4);
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
@@ -167,6 +182,79 @@ public class ExactSearchTest {
         List<Marking> expected = new ArrayList<>();
         expected.add(comic1);
         expected.add(comic3);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    
+    @Test
+    public void testSearchSign(){
+        //Setup
+        input = "sign";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+    
+    @Test
+    public void testSearchAuthenticte(){
+        //Setup
+        input = "authenticate";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchGrade(){
+        //Setup
+        input = "grade";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
+        
+        //Invoke
+        List<Marking> actual = exactSearch.searchData(query, data, input);
+        
+        //Analyze
+        assertEquals(expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testSearchSlab(){
+        //Setup
+        input = "slab";
+        query = "Batman";
+        List<Marking> expected = new ArrayList<>();
+        expected.add(comicTest);
         
         //Invoke
         List<Marking> actual = exactSearch.searchData(query, data, input);
