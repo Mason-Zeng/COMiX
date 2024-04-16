@@ -172,7 +172,7 @@ public class DatabasePage extends Application {
 
         int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.72) : (int)((45 + proxyAccount.getUsername().length()*3)/2.4);
         spacing = (proxyAccount.getUsername().equals("Guest")) ? 22 : spacing;
-        gridPane.setHgap(1000/spacing);
+        gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
 
@@ -222,7 +222,7 @@ public class DatabasePage extends Application {
 
         VBox comicListVBox = new VBox();
         nodes.add(comicListVBox);
-        prevButtons = comicListUpdater(comicCounter);
+        prevButtons = comicListUpdater(comicCounter, root, primaryStage);
         comicListVBox.getChildren().addAll(prevButtons);
 
         comicListVBox.setPadding(new Insets(0, 0, 0, 20));
@@ -237,21 +237,21 @@ public class DatabasePage extends Application {
         leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         pages.getChildren().add(leftButton);
 
-        Label pageNumber = new Label("1/" + (int)Math.ceil(COMICS.size()/12));
+        Label pageNumber = new Label("1/" + (int)Math.ceil((double)COMICS.size()/12));
         pageNumber.setFont(new Font(18));
         pages.getChildren().add(pageNumber);
 
         Button rightButton = new Button("→");
         rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         rightButton.setOnAction(event -> {
-            if (comicCounter < (int)Math.ceil(COMICS.size()/12)){
+            if (comicCounter < (int)Math.ceil((double)COMICS.size()/12)){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil((double)COMICS.size()/12));
                 comicListVBox.getChildren().removeAll(prevButtons);
-                prevButtons = comicListUpdater(comicCounter);
+                prevButtons = comicListUpdater(comicCounter, root, primaryStage);
                 comicListVBox.getChildren().addAll(prevButtons);
-                if (comicCounter+1 > (int)Math.ceil(COMICS.size()/12)){
+                if (comicCounter+1 > (int)Math.ceil((double)COMICS.size()/12)){
                     rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -262,10 +262,10 @@ public class DatabasePage extends Application {
                 rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter--;
                 comicListVBox.getChildren().removeAll(prevButtons);
-                prevButtons = comicListUpdater(comicCounter);
+                prevButtons = comicListUpdater(comicCounter, root, primaryStage);
                 comicListVBox.getChildren().addAll(prevButtons);
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
-                if (comicCounter-1 <= 1){
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil((double)COMICS.size()/12));
+                if (comicCounter <= 1){
                     leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -278,11 +278,11 @@ public class DatabasePage extends Application {
             comicCounter = 1;
 
             COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
-            prevButtons = comicListUpdater(comicCounter);
+            prevButtons = comicListUpdater(comicCounter, root, primaryStage);
             comicListVBox.getChildren().addAll(prevButtons);
 
-            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
-            if ((int)Math.ceil(COMICS.size()/12) > 1){
+            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil((double)COMICS.size()/12)) : "0/0");
+            if ((int)Math.ceil((double)COMICS.size()/12) > 1){
                 rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
             }
             else{
@@ -304,7 +304,7 @@ public class DatabasePage extends Application {
         primaryStage.setResizable(false);
     }
 
-    private Collection<Button> comicListUpdater(int comicCount){
+    private Collection<Button> comicListUpdater(int comicCount, VBox root, Stage primaryStage){
         List<Button> list = new ArrayList<>();
         if (COMICS.size() == 0){
             Label label = new Label("No Comics found.");
@@ -314,24 +314,33 @@ public class DatabasePage extends Application {
             list.add(button);
             return list;
         } 
-        for (int i = (comicCounter-1)*10; i < 12 + ((comicCounter-1)*10); i++) {
+        for (int i = (comicCounter-1)*12; i < 12 + ((comicCounter-1)*12); i++) {
             Label tempLabel;
+            Marking comic;
             try {
-                Marking comic = COMICS.get(i);
+                comic = COMICS.get(i);
                 tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){
                 //Empty Label for spacing purposes
                 tempLabel = new Label();
+                comic = null;
             }
+            Marking tempComic = comic;
             tempLabel.setFont(new Font(15));
             Button tempButton = new Button("", tempLabel);
             tempButton.setBackground(null);
             tempButton.setMaxHeight(10);
             tempButton.setOnAction(event -> {
-                //Redirects to the comic's specific page when implemented
-            });
+                ComicInfoDatabase comicInfoDatabase = new ComicInfoDatabase(proxyAccount, tempComic);
+                try {
+                    comicInfoDatabase.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+                });
             list.add(tempButton);
         }
         return list;

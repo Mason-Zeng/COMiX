@@ -13,7 +13,6 @@ import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
-import model.Comic;
 import model.marking.Marking;
 
 public class UserAccount implements Account{
@@ -64,7 +63,7 @@ public class UserAccount implements Account{
     }
 
     @Override
-    public void addComicToCollection(Comic comic) {
+    public void addComicToCollection(Marking comic) {
         COMICS.add(comic);
         try {
             dataHandler.exportData(file, COMICS);
@@ -74,7 +73,7 @@ public class UserAccount implements Account{
     }
 
     @Override
-    public void removeComicFromCollection(Comic comic) {
+    public void removeComicFromCollection(Marking comic) {
         COMICS.remove(comic);
         try {
             dataHandler.exportData(file, COMICS);

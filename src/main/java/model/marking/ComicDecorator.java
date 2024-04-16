@@ -107,6 +107,11 @@ public abstract class ComicDecorator implements Marking {
         return comic.equals(obj);
     }
 
+    @Override
+    public void setValue(BigDecimal value){
+        comic.setValue(value);
+    }
+
     /*
      * Returns the number of times the object
      * was wrapped in Sign

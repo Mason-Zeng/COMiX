@@ -137,4 +137,8 @@ public class Comic implements Marking{
         }
         return false;
     }
+    @Override
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
 }

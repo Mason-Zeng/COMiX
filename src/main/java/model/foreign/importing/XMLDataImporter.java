@@ -50,6 +50,8 @@ public class XMLDataImporter implements DataImporter {
                     BigDecimal value = new BigDecimal(comicElement.getElementsByTagName("value").item(0).getTextContent());
                     LocalDate date = LocalDate.parse(comicElement.getElementsByTagName("date").item(0).getTextContent());
 
+                    value = (value.equals(BigDecimal.valueOf(0))) ? BigDecimal.valueOf(1.00) : value;
+
                     Marking comic = new Comic(title, issue, description, value, date);
                     comic.setVolume(volume);
 

@@ -10,7 +10,6 @@ import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
-import model.Comic;
 import model.marking.Marking;
 
 public class ProxyAccount implements Account{
@@ -55,7 +54,7 @@ public class ProxyAccount implements Account{
     }
 
     @Override
-    public void addComicToCollection(Comic comic) {
+    public void addComicToCollection(Marking comic) {
         if (this.userAccount == null){
             return;
         }
@@ -63,7 +62,7 @@ public class ProxyAccount implements Account{
     }
 
     @Override
-    public void removeComicFromCollection(Comic comic) {
+    public void removeComicFromCollection(Marking comic) {
         if (this.userAccount == null){
             return;
         }
