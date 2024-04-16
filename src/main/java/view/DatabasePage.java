@@ -1,9 +1,14 @@
 package view;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.JFileChooser;
+
+import controller.ForeignDataHandler;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -96,7 +101,18 @@ public class DatabasePage extends Application {
         exportButton.setBackground(null);
         exportButton.setMinHeight(70);
         exportButton.setOnAction(event -> {
-            //Exports Database File
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Export Personal Collection");
+            fileChooser.setMultiSelectionEnabled(false);
+            int returnVal = fileChooser.showSaveDialog(fileChooser);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    ForeignDataHandler.getHandler().exportData(file, COMICS);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         gridPane.add(exportButton, 4, 0);
