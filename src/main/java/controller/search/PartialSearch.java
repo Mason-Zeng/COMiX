@@ -41,6 +41,7 @@ public class PartialSearch implements Searcher{
         ArrayList<Marking> partialList = new ArrayList<>();
         ArrayList<Marking> oldMarks = new ArrayList<>();
         List<Marking> additions = new ArrayList<>(); 
+        ArrayList<String> titles = new ArrayList<>();
         switch(input){
 
             case "series_title":
@@ -186,7 +187,7 @@ public class PartialSearch implements Searcher{
                     partialList.add(comic);
                 }
             }
-            ArrayList<String> titles = getSeriesTitles(partialList);
+            titles = getSeriesTitles(partialList);
             for(int i=0; i<titles.size();i++){
                 ArrayList<Marking> CWST = getComicsWithSeriesTitle(titles.get(i), partialList);
                 Collections.sort(CWST, new IssueNumberSorter());
@@ -216,6 +217,25 @@ public class PartialSearch implements Searcher{
                 }
                 additions.clear();
                 runs = 1;
+            }
+            break;
+
+            case "gaps":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (series.contains(query)){
+                    partialList.add(comic);
+                }
+            }
+            titles = getSeriesTitles(partialList);
+            for(int i=0; i<titles.size();i++){
+                ArrayList<Marking> CWST = getComicsWithSeriesTitle(titles.get(i), partialList);
+                Collections.sort(CWST, new IssueNumberSorter());
+                if(CWST.size() <12){
+                    continue;
+                }
+                comics.addAll(CWST);
             }
         }
         return comics;
