@@ -2,8 +2,10 @@ package controller.search;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import controller.sort.IssueNumberSorter;
 import model.Comic;
 import model.Creator;
 import model.marking.Authenticate;
@@ -36,7 +38,10 @@ public class PartialSearch implements Searcher{
         query = query.toLowerCase();
         List<Marking> comics = new ArrayList<>();
         List<Marking> tempList = new ArrayList<>();
+        ArrayList<Marking> partialList = new ArrayList<>();
         ArrayList<Marking> oldMarks = new ArrayList<>();
+        List<Marking> additions = new ArrayList<>(); 
+        ArrayList<String> titles = new ArrayList<>();
         switch(input){
 
             case "series_title":
@@ -171,6 +176,67 @@ public class PartialSearch implements Searcher{
                     }
                 }
             }
+            break;
+
+            case "runs":
+            int runs = 1;
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (series.contains(query)){
+                    partialList.add(comic);
+                }
+            }
+            titles = getSeriesTitles(partialList);
+            for(int i=0; i<titles.size();i++){
+                ArrayList<Marking> CWST = getComicsWithSeriesTitle(titles.get(i), partialList);
+                Collections.sort(CWST, new IssueNumberSorter());
+                if(CWST.size() <12){
+                    continue;
+                }
+                for(int j=0; j<CWST.size();j++){
+                    if( j != CWST.size()-1){
+                        if(CWST.get(j+1).extractIssueValue() - CWST.get(j).extractIssueValue() <= 1){
+                            runs++;
+                            additions.add(CWST.get(j));
+                        }
+                        else{
+                            if(runs >= 12){
+                                comics.addAll(additions);
+                            }
+                            additions.clear();
+                            runs = 1;
+                        }
+                    }
+                    if(j == CWST.size()-1){
+                        additions.add(CWST.get(j));
+                    }
+                }
+                if(runs>= 12){
+                    comics.addAll(additions);
+                }
+                additions.clear();
+                runs = 1;
+            }
+            break;
+
+            case "gaps":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (series.contains(query)){
+                    partialList.add(comic);
+                }
+            }
+            titles = getSeriesTitles(partialList);
+            for(int i=0; i<titles.size();i++){
+                ArrayList<Marking> CWST = getComicsWithSeriesTitle(titles.get(i), partialList);
+                Collections.sort(CWST, new IssueNumberSorter());
+                if(CWST.size() <12){
+                    continue;
+                }
+                comics.addAll(CWST);
+            }
         }
         return comics;
     }
@@ -190,6 +256,29 @@ public class PartialSearch implements Searcher{
             point = point.getMarking();
         }
         return oldMarks;
+    }
+
+    //Gets all the different series titles in a list.
+    public ArrayList<String> getSeriesTitles(ArrayList<Marking> partialList){
+        ArrayList<String> containedTitles = new ArrayList<>();
+        for(int i=0; i<partialList.size(); i++){
+            String title = partialList.get(i).getSeriesTitle();
+            if(!(containedTitles.contains(title))){
+                containedTitles.add(title);
+            }
+        }
+        return containedTitles;
+    }
+
+    //Gets all comics with specific series title
+    public ArrayList<Marking> getComicsWithSeriesTitle(String title, List<Marking> list ){
+        ArrayList<Marking> CWST = new ArrayList<>();
+        for (Marking comic : list){
+            if (title.equals(comic.getSeriesTitle())){
+                CWST.add(comic);
+            }
+        }
+        return CWST;
     }
 
 }

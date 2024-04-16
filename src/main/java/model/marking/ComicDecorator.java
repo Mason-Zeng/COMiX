@@ -99,6 +99,11 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
+    public double extractIssueValue(){
+        return comic.extractIssueValue();
+    }
+
+    @Override
     public Marking getMarking() {
         return comic;
     }
