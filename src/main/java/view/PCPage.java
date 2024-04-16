@@ -1,8 +1,11 @@
 package view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -46,6 +49,7 @@ public class PCPage extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         VBox root = new VBox();
+        VBox comicListVBox = new VBox();
         GridPane gridPane = new GridPane();
         Group group = new Group();
 
@@ -92,10 +96,21 @@ public class PCPage extends Application {
         importButton.setBackground(null);
         importButton.setMinHeight(70);
         importButton.setOnAction(event -> {
-            //Import Personal Collection File
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Import Personal Collection");
+            fileChooser.setMultiSelectionEnabled(false);
+            int returnVal = fileChooser.showOpenDialog(fileChooser);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                proxyAccount.importCollection(file, true);
+                COMICS = proxyAccount.searchCollection("Partial Search", "Sort By Default", "", "Series Title");
+                comicListVBox.getChildren().removeAll(prevButtons);
+                prevButtons = comicListUpdater(comicCounter);
+                comicListVBox.getChildren().addAll(prevButtons);
+            }
         });
 
-        gridPane.add(importLabel, 3, 0);
+        gridPane.add(importButton, 3, 0);
 
         Label exportLabel = new Label("Export ↑");
         exportLabel.setFont(Font.font(20));
@@ -104,7 +119,14 @@ public class PCPage extends Application {
         exportButton.setBackground(null);
         exportButton.setMinHeight(70);
         exportButton.setOnAction(event -> {
-            //Exports Personal Collection File
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Export Personal Collection");
+            fileChooser.setMultiSelectionEnabled(false);
+            int returnVal = fileChooser.showSaveDialog(fileChooser);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                proxyAccount.exportCollection(file);
+            }
         });
 
         gridPane.add(exportButton, 4, 0);
@@ -154,7 +176,7 @@ public class PCPage extends Application {
         gridPane.add(logoutButton, 7, 0);
 
         int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.4) : (int)((45 + proxyAccount.getUsername().length()*3)/2.18);
-        gridPane.setHgap(1000/spacing);
+        gridPane.setHgap(950/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
 
@@ -202,7 +224,7 @@ public class PCPage extends Application {
         vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(50))));
         vBox.setPadding(new Insets(50));
 
-        VBox comicListVBox = new VBox();
+        
         nodes.add(comicListVBox);
         prevButtons = comicListUpdater(comicCounter);
         comicListVBox.getChildren().addAll(prevButtons);
