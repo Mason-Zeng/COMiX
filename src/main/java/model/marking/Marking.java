@@ -35,4 +35,5 @@ public interface Marking{
     public void setIssueNumber(String number);
     public void removeAllCreators();
     public void setDate(LocalDate date);
+    public double extractIssueValue();
 }

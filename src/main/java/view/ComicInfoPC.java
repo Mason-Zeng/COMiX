@@ -1,6 +1,8 @@
 package view;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -352,6 +354,7 @@ public class ComicInfoPC extends Application{
                 comic = new Sign(comic);
                 timesSigned.setText("Number Of Signatures: " + MarkingHandler.signCount(comic));
                 value.setText("Value: $" + comic.getValue());
+                proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
             }
             catch (IllegalArgumentException e){}
             
@@ -379,6 +382,7 @@ public class ComicInfoPC extends Application{
                 comic = new Authenticate(comic);
                 authenticated.setText("Authenticated? " + (MarkingHandler.isAuthenticated(comic) == true ? "Yes" : "No"));
                 value.setText("Value: $" + comic.getValue());
+                proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
             }
             catch (IllegalArgumentException e){}
         });
@@ -393,6 +397,7 @@ public class ComicInfoPC extends Application{
                 comic = new Slab(comic);
                 slabbed.setText("Slabbed? " + (MarkingHandler.isSlabbed(comic) == true ? "Yes" : "No"));
                 value.setText("Value: $" + comic.getValue());
+                proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
             }
             catch (Exception e){}
         });
@@ -433,6 +438,7 @@ public class ComicInfoPC extends Application{
                 trueRoot.getChildren().remove(popupRect);
                 grade.setText("Grade: " + MarkingHandler.getGrade(comic));
                 value.setText("Value: $" + comic.getValue());
+                proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
             }
             catch (IllegalArgumentException e){}
         });
@@ -469,13 +475,14 @@ public class ComicInfoPC extends Application{
                 }
                 else {
                     try {
-                        comic.setValue(new BigDecimal(Double.valueOf(field.getText())));
+                        comic.setValue(new BigDecimal(Double.valueOf(field.getText())).setScale(2, RoundingMode.HALF_EVEN));
                         value.setText("Value: $" + comic.getValue());
                     }
                     catch (NumberFormatException e){}
                 }
                 trueRoot.getChildren().remove(popup2);
                 trueRoot.getChildren().remove(popupRect);
+                proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
             }
         });
 

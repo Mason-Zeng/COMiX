@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import model.hierarchy.*;
 import model.marking.Marking;
 
@@ -106,6 +107,12 @@ public class Comic implements Marking{
 
     public void setVolume(Volume vol) {
         this.volume = vol;
+    }
+
+    public double extractIssueValue(){
+        String input = getIssueNumber();
+        String result = input.replaceAll("[^0-9.]", "");
+        return Double.parseDouble(result);
     }
 
     @Override

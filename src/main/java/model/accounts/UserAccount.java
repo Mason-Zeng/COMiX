@@ -18,7 +18,7 @@ import model.marking.Marking;
 public class UserAccount implements Account{
 
     private String username;
-    private static File file;
+    private static File userFile;
     private List<Marking> COMICS = new ArrayList<>();
     private ForeignDataHandler dataHandler;
 
@@ -32,7 +32,11 @@ public class UserAccount implements Account{
             }
         }
         
-        file = new File("data/users/" + this.username + ".json");
+        userFile = new File("data/users/" + this.username + ".json");
+        importCollection(userFile, false);
+    }
+ 
+    public void importCollection(File file, boolean overwrite) {
         if (!file.exists()){
             try {
                 file.createNewFile();
@@ -51,6 +55,18 @@ public class UserAccount implements Account{
             catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (overwrite) {
+            exportCollection(userFile);
+        }
+    }
+
+    public void exportCollection(File file) {
+        try {
+            dataHandler.exportData(file, COMICS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -65,21 +81,13 @@ public class UserAccount implements Account{
     @Override
     public void addComicToCollection(Marking comic) {
         COMICS.add(comic);
-        try {
-            dataHandler.exportData(file, COMICS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        exportCollection(userFile);
     }
 
     @Override
     public void removeComicFromCollection(Marking comic) {
         COMICS.remove(comic);
-        try {
-            dataHandler.exportData(file, COMICS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        exportCollection(userFile);
     }
     
     public String getUsername() {

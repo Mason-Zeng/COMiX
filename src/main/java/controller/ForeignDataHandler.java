@@ -30,7 +30,7 @@ public class ForeignDataHandler {
 
     public void exportData(File file, List<Marking> comics) throws IOException {
         String fileType = getFileType(file);
-        DataExporter exporter = Enum.valueOf(DataExporterEnum.class, fileType).getExporter();
+        DataExporter exporter = DataExporterEnum.getExporter(fileType);
         FileWriter writer = new FileWriter(file);
         exporter.exportFile(comics, writer);
         writer.flush();
@@ -39,7 +39,7 @@ public class ForeignDataHandler {
 
     public List<Marking> importData(File file) throws IOException {
         String fileType = getFileType(file);
-        DataImporter importer = Enum.valueOf(DataImporterEnum.class, fileType).getImporter();
+        DataImporter importer = DataImporterEnum.getImporter(fileType);
         FileReader reader = new FileReader(file);
         List<Marking> result = importer.importFile(reader);
         reader.close();

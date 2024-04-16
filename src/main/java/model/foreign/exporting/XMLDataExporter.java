@@ -23,7 +23,7 @@ import model.marking.MarkingHandler;
 public class XMLDataExporter implements DataExporter {
     
     private static TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    private static   DocumentBuilderFactory docBuilder = DocumentBuilderFactory.newInstance();
+    private static DocumentBuilderFactory docBuilder = DocumentBuilderFactory.newInstance();
 
     private Element convertToElement(Document doc, Marking mark) {
         Element comicElement = doc.createElement("comic");
