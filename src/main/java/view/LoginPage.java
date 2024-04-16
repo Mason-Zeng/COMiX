@@ -46,6 +46,7 @@ public class LoginPage extends Application{
         field.setPadding(new Insets(20));
         field.setAlignment(Pos.CENTER);
         field.setFont(new Font(20));
+        field.setPromptText("Username");
         group.getChildren().add(field);
         root.getChildren().add(group);
 

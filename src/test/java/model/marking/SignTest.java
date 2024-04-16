@@ -25,8 +25,7 @@ public class SignTest {
 
         //Invoke
         comic.getValue();
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        int test = authenticatedComic.signCount(comic);
+        int test = MarkingHandler.signCount(comic);
         int expected = 1;
 
         //Analyze
@@ -47,8 +46,7 @@ public class SignTest {
 
         //Invoke
         comic.getValue();
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        int test = authenticatedComic.signCount(comic);
+        int test = MarkingHandler.signCount(comic);
         int expected = 5;
 
         //Analyze
@@ -70,8 +68,7 @@ public class SignTest {
         
         //Invoke
         comic.getValue();
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        int test = authenticatedComic.signCount(comic);
+        int test = MarkingHandler.signCount(comic);
         int expected = 2;
 
         //Analyze
@@ -224,8 +221,7 @@ public class SignTest {
         //Invoke
         BigDecimal testValue = comic.getValue();
         BigDecimal expectedValue = new BigDecimal("7.68");
-        ComicDecorator authenticatedComic = (ComicDecorator) comic;
-        int testSigns = authenticatedComic.signCount(comic);
+        int testSigns = MarkingHandler.signCount(comic);
         int expectedSigns = 6;
 
         //Analyze

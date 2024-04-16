@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 import model.Creator;
 import model.foreign.DataExporter;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class XMLDataExporter implements DataExporter {
     
@@ -69,7 +69,7 @@ public class XMLDataExporter implements DataExporter {
         comicElement.appendChild(creators);
 
         Element format = doc.createElement("format");
-        format.setTextContent(MarkingFactory.getFormat(mark));
+        format.setTextContent(MarkingHandler.getFormat(mark));
         comicElement.appendChild(format);
 
         return comicElement;

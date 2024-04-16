@@ -16,7 +16,7 @@ import model.Creator;
 import model.foreign.DataImporter;
 import model.hierarchy.*;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class CSVDataImporter implements DataImporter {
 
@@ -37,7 +37,7 @@ public class CSVDataImporter implements DataImporter {
             comic.addCreator(new Creator(creator));
         }
 
-        comic = MarkingFactory.formatComic(comic, array[8]);
+        comic = MarkingHandler.formatComic(comic, array[8]);
         return comic;
     }
 

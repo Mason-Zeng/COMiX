@@ -15,7 +15,7 @@ public class Authenticate extends ComicDecorator{
      */
     public Authenticate(Marking comic) {
         super(comic);
-        if (signCount(comic) == 0 || isAuthenticated(comic) || comic instanceof Slab || comic instanceof Comic) {
+        if (MarkingHandler.signCount(comic) == 0 || MarkingHandler.isAuthenticated(comic) || comic instanceof Slab || comic instanceof Comic) {
             throw new IllegalArgumentException("Invalid marking type passed to Authenticate constructor");
         }
     }

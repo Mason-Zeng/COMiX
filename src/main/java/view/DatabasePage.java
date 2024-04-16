@@ -184,6 +184,7 @@ public class DatabasePage extends Application {
         nodes.add(hbox);
         TextField field = new TextField();
         field.setPrefSize(350, 25);
+        field.setPromptText("Search The Database");
         hbox.getChildren().add(field);
 
         ComboBox<String> searchStrategies = new ComboBox<>(FXCollections.observableArrayList(searchers));

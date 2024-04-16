@@ -166,6 +166,7 @@ public class PCPage extends Application {
         nodes.add(hbox);
         TextField field = new TextField();
         field.setPrefSize(350, 25);
+        field.setPromptText("Search Your Personal Collection");
         hbox.getChildren().add(field);
 
         ComboBox<String> searchStrategies = new ComboBox<>(FXCollections.observableArrayList(searchers));
@@ -307,7 +308,7 @@ public class PCPage extends Application {
             Marking comic;
             try {
                 comic = COMICS.get(i);
-                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #:" + comic.getIssueNumber());
+                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){

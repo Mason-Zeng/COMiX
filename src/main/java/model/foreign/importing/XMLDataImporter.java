@@ -24,7 +24,7 @@ import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class XMLDataImporter implements DataImporter {
 
@@ -61,7 +61,7 @@ public class XMLDataImporter implements DataImporter {
                     }
 
                     String format = comicElement.getElementsByTagName("format").item(0).getTextContent();
-                    comic = MarkingFactory.formatComic(comic, format);
+                    comic = MarkingHandler.formatComic(comic, format);
                     result.add(comic);
                 }
             }

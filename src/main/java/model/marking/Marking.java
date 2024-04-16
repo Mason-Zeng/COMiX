@@ -31,4 +31,8 @@ public interface Marking{
     public Marking getMarking();
     public void addCreator(Creator creator);
     public void setValue(BigDecimal value);
+    public void setTitle(String title);
+    public void setIssueNumber(String number);
+    public void removeAllCreators();
+    public void setDate(LocalDate date);
 }

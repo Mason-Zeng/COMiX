@@ -141,4 +141,24 @@ public class Comic implements Marking{
     public void setValue(BigDecimal value) {
         this.value = value;
     }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public void setIssueNumber(String number) {
+        this.issueNum = number;
+    }
+
+    @Override
+    public void removeAllCreators() {
+        this.creators = new ArrayList<>();
+    }
+
+    @Override
+    public void setDate(LocalDate date) {
+        this.pub_date = date;
+    }
 }
