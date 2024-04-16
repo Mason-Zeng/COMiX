@@ -177,40 +177,54 @@ public class ExactSearch implements Searcher{
             break;
 
             case "runs":
-                for (Marking comic : data){
-                    String series = comic.getSeriesTitle();
-                    series = series.toLowerCase();
-                    if (query.equals(series)){
-                        sameSeriesTitles.add(comic);
-                    }
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    sameSeriesTitles.add(comic);
                 }
-                Collections.sort(sameSeriesTitles, new IssueNumberSorter());
-                int runs = 1;
-                if(sameSeriesTitles.size() < 12){
-                    return comics;
-                }
-                for(int i=0; i<sameSeriesTitles.size(); i++){
-                    if(i != sameSeriesTitles.size()-1){
-                        if(sameSeriesTitles.get(i+1).extractIssueValue() - sameSeriesTitles.get(i).extractIssueValue() <= 1){
-                            runs++;
-                            additions.add(sameSeriesTitles.get(i));
-                        }
-                        else{
-                            if(runs >= 12){
-                                comics.addAll(additions);
-                            }
-                            additions.clear();
-                            runs = 1;
-                        }
-                    }
-                    if(i == sameSeriesTitles.size()-1){
+            }
+            Collections.sort(sameSeriesTitles, new IssueNumberSorter());
+            int runs = 1;
+            if(sameSeriesTitles.size() < 12){
+                return comics;
+            }
+            for(int i=0; i<sameSeriesTitles.size(); i++){
+                if(i != sameSeriesTitles.size()-1){
+                    if(sameSeriesTitles.get(i+1).extractIssueValue() - sameSeriesTitles.get(i).extractIssueValue() <= 1){
+                        runs++;
                         additions.add(sameSeriesTitles.get(i));
                     }
+                    else{
+                        if(runs >= 12){
+                            comics.addAll(additions);
+                        }
+                        additions.clear();
+                        runs = 1;
+                    }
                 }
-                if(runs>= 12){
-                    comics.addAll(additions);
+                if(i == sameSeriesTitles.size()-1){
+                    additions.add(sameSeriesTitles.get(i));
                 }
+            }
+            if(runs>= 12){
+                comics.addAll(additions);
+            }
             break;
+
+            case "gaps":
+            for (Marking comic : data){
+                String series = comic.getSeriesTitle();
+                series = series.toLowerCase();
+                if (query.equals(series)){
+                    sameSeriesTitles.add(comic);
+                }
+            }
+            if(sameSeriesTitles.size() < 12){
+                return comics;
+            }
+            Collections.sort(sameSeriesTitles, new IssueNumberSorter());
+            comics.addAll(sameSeriesTitles);
         }
         return comics;
     }
