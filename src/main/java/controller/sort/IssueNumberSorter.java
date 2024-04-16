@@ -14,7 +14,7 @@ public class IssueNumberSorter implements Comparator<Marking>{
     public int compare(Marking comic1, Marking comic2) {
     
         double value1 = comic1.extractIssueValue();
-        double value2 = comic1.extractIssueValue();
+        double value2 = comic2.extractIssueValue();
 
         return Double.compare(value1, value2);
     }

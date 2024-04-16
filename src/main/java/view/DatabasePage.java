@@ -31,7 +31,7 @@ import model.marking.Marking;
 public class DatabasePage extends Application {
     private ProxyAccount proxyAccount;
     private final String searchers[] = {"Partial Search", "Exact Search"};
-    private final String sorters[] = {"Sort By Default", "Sort By Date"};
+    private final String sorters[] = {"Sort By Default", "Sort By Date", "Sort By Issue Number"};
     private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date", "Runs", "Gaps" };
     private List<Marking> COMICS;
     private int comicCounter = 1; 

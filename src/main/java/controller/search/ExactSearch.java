@@ -2,8 +2,10 @@ package controller.search;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import controller.sort.IssueNumberSorter;
 import model.Comic;
 import model.Creator;
 import model.marking.Authenticate;
@@ -36,6 +38,8 @@ public class ExactSearch implements Searcher{
         query = query.toLowerCase();
         List<Marking> comics = new ArrayList<>();
         List<Marking> tempList = new ArrayList<>();
+        List<Marking> sameSeriesTitles = new ArrayList<>(); 
+        List<Marking> additions = new ArrayList<>(); 
         ArrayList<Marking> oldMarks = new ArrayList<>();
 
         switch (input){
@@ -170,6 +174,42 @@ public class ExactSearch implements Searcher{
                     }
                 }
             }
+            break;
+
+            case "runs":
+                for (Marking comic : data){
+                    String series = comic.getSeriesTitle();
+                    series = series.toLowerCase();
+                    if (query.equals(series)){
+                        sameSeriesTitles.add(comic);
+                    }
+                }
+                Collections.sort(sameSeriesTitles, new IssueNumberSorter());
+                int runs = 1;
+                if(sameSeriesTitles.size() < 12){
+                    return comics;
+                }
+                for(int i=0; i<sameSeriesTitles.size(); i++){
+                    if(i != sameSeriesTitles.size()-1){
+                        if(sameSeriesTitles.get(i+1).extractIssueValue() - sameSeriesTitles.get(i).extractIssueValue() <= 1){
+                            runs++;
+                            additions.add(sameSeriesTitles.get(i));
+                        }
+                        else{
+                            if(runs >= 12){
+                                comics.addAll(additions);
+                            }
+                            additions.clear();
+                            runs = 1;
+                        }
+                    }
+                    if(i == sameSeriesTitles.size()-1){
+                        additions.add(sameSeriesTitles.get(i));
+                    }
+                }
+                if(runs>= 12){
+                    comics.addAll(additions);
+                }
             break;
         }
         return comics;

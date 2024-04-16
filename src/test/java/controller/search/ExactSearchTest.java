@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import controller.sort.IssueNumberSorter;
 import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
@@ -263,6 +265,73 @@ public class ExactSearchTest {
         assertEquals(expected.size(), actual.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i), actual.get(i));
+        }
+    }
+
+    @Test
+    public void testRuns(){
+        List<Marking> list = new ArrayList<>();
+        Series spiderSeries = new Series("The Amazing Spider-Man");
+        Marking comicRun1 = new Comic("Amazing Spider-man", "2", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun16 = new Comic("Amazing Spider-man", "1", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun2 = new Comic("Amazing Spider-man", "3", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun3 = new Comic("Amazing Spider-man", "4", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun4 = new Comic("Amazing Spider-man", "5", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun5 = new Comic("Amazing Spider-man", "6", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun6 = new Comic("Amazing Spider-man", "7", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun7 = new Comic("Amazing Spider-man", "14", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun8 = new Comic("Amazing Spider-man", "9", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun9 = new Comic("Amazing Spider-man", "10", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun10 = new Comic("Amazing Spider-man", "13", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun11 = new Comic("Amazing Spider-man", "12", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun12 = new Comic("Amazing Spider-man", "11", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun13 = new Comic("Amazing Spider-man", "8", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun14 = new Comic("Amazing Spider-man", "15", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        Marking comicRun15 = new Comic("Amazing Spider-man", "16", "Amazing and a spider?!", 
+                    BigDecimal.valueOf(32.59), LocalDate.parse("2022-02-22"), new Volume("2", spiderSeries));
+        list.add(comicRun1);
+        list.add(comicRun2);
+        list.add(comicRun3);
+        list.add(comicRun4);
+        list.add(comicRun5);
+        list.add(comicRun6);
+        list.add(comicRun7);
+        list.add(comicRun8);
+        list.add(comicRun9);
+        list.add(comicRun10);
+        list.add(comicRun11);
+        list.add(comicRun12);
+        list.add(comicRun13);
+        list.add(comicRun14);
+        list.add(comicRun15);
+        list.add(comicRun16);
+
+        /* 
+        Collections.sort(list, new IssueNumberSorter());
+        for(Marking x : list){
+            System.out.println(x);
+        }
+        */
+        input = "runs";
+        query = "Amazing Spider-man";
+        List<Marking> actual = exactSearch.searchData(query, list, input);
+        for(Marking x : actual){
+            System.out.println(x);
         }
     }
 }
