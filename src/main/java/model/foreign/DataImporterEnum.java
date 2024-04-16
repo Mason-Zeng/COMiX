@@ -13,7 +13,7 @@ public enum DataImporterEnum {
         this.importer = importer;
     }
 
-    public DataImporter getImporter() {
-        return importer;
+    public static DataImporter getImporter(String fileType) {
+        return Enum.valueOf(DataImporterEnum.class, fileType).importer;
     }
 }
