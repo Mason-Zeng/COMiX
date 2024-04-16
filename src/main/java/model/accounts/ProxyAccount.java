@@ -76,5 +76,21 @@ public class ProxyAccount implements Account{
         }
         return userAccount.getUsername();
     }
+
+    @Override
+    public void importCollection(File file, boolean overwrite) {
+        if (this.userAccount == null) {
+            return;
+        }
+        userAccount.importCollection(file, overwrite);
+    }
+
+    @Override
+    public void exportCollection(File file) {
+        if (this.userAccount == null) {
+            return;
+        }
+        userAccount.exportCollection(file);
+    }
     
 }
