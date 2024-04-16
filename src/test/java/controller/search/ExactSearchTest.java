@@ -270,6 +270,7 @@ public class ExactSearchTest {
 
     @Test
     public void testRuns(){
+        //Setup
         List<Marking> list = new ArrayList<>();
         Series spiderSeries = new Series("The Amazing Spider-Man");
         Marking comicRun1 = new Comic("Amazing Spider-man", "2", "Amazing and a spider?!", 
@@ -321,12 +322,7 @@ public class ExactSearchTest {
         list.add(comicRun15);
         list.add(comicRun16);
 
-        /* 
-        Collections.sort(list, new IssueNumberSorter());
-        for(Marking x : list){
-            System.out.println(x);
-        }
-        */
+    
         input = "runs";
         query = "Amazing Spider-man";
         List<Marking> actual = exactSearch.searchData(query, list, input);
