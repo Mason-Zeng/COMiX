@@ -13,7 +13,7 @@ public enum DataExporterEnum {
         this.exporter = exporter;
     }
 
-    public DataExporter getExporter() {
-        return exporter;
+    public static DataExporter getExporter(String fileType) {
+        return Enum.valueOf(DataExporterEnum.class, fileType).exporter;
     }
 }
