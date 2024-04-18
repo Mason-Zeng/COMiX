@@ -95,20 +95,6 @@ public class PCPage extends Application {
         Button importButton = new Button("", importLabel);
         importButton.setBackground(null);
         importButton.setMinHeight(70);
-        importButton.setOnAction(event -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Import Personal Collection");
-            fileChooser.setMultiSelectionEnabled(false);
-            int returnVal = fileChooser.showOpenDialog(fileChooser);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                proxyAccount.importCollection(file, true);
-                COMICS = proxyAccount.searchCollection("Partial Search", "Sort By Default", "", "Series Title");
-                comicListVBox.getChildren().removeAll(prevButtons);
-                prevButtons = comicListUpdater(comicCounter, primaryStage, root);
-                comicListVBox.getChildren().addAll(prevButtons);
-            }
-        });
 
         gridPane.add(importButton, 3, 0);
 
@@ -301,6 +287,25 @@ public class PCPage extends Application {
             }
             leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         } );
+
+        importButton.setOnAction(event -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Import Personal Collection");
+            fileChooser.setMultiSelectionEnabled(false);
+            int returnVal = fileChooser.showOpenDialog(fileChooser);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                proxyAccount.importCollection(file, true);
+                COMICS = proxyAccount.searchCollection("Partial Search", "Sort By Default", "", "Series Title");
+                comicListVBox.getChildren().removeAll(prevButtons);
+                prevButtons = comicListUpdater(comicCounter, primaryStage, root);
+                comicListVBox.getChildren().addAll(prevButtons);
+                pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil((double)COMICS.size()/12)) : "0/0");
+                rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+                leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                comicCounter = 1;
+            }
+        });
 
         pages.setSpacing(15);
         pages.setPadding(new Insets(0, 0, 0, 825));

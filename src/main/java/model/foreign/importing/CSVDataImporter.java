@@ -31,7 +31,6 @@ public class CSVDataImporter implements DataImporter {
         Volume vol = new Volume(array[3], series);
         comic.setVolume(vol);
         comic.setValue((comic.getValue().equals(BigDecimal.valueOf(0))) ? new BigDecimal(1.00) : comic.getValue());
-        System.out.println(comic.getValue());
        
         for (String creator : array[7].split(" \\| ")) {
             comic.addCreator(new Creator(creator));
