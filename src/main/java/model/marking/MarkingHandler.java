@@ -75,7 +75,7 @@ public class MarkingHandler {
     public static String getFormat(Marking comic) {
         List<String> format = new ArrayList<>();
             for (Marking mark : getMarkingOrder(comic)) {
-                switch (mark.getClass().getName()) {
+                switch (mark.getClass().getSimpleName()) {
                     case "Grade":
                         format.add("G(" + ((Grade)mark).getGrade() + ")");
                         break;
