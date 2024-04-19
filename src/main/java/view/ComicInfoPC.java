@@ -351,7 +351,9 @@ public class ComicInfoPC extends Application{
         Button signButton = new Button("", signLabel);
         signButton.setOnAction(event -> {
             try {
+                proxyAccount.removeComicFromCollection(comic);
                 comic = new Sign(comic);
+                proxyAccount.addComicToCollection(comic);
                 timesSigned.setText("Number Of Signatures: " + MarkingHandler.signCount(comic));
                 value.setText("Value: $" + comic.getValue());
                 proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
@@ -379,7 +381,9 @@ public class ComicInfoPC extends Application{
         Button authenticateButton = new Button("", authenticateLabel);
         authenticateButton.setOnAction(event -> {
             try {
+                proxyAccount.removeComicFromCollection(comic);
                 comic = new Authenticate(comic);
+                proxyAccount.addComicToCollection(comic);
                 authenticated.setText("Authenticated? " + (MarkingHandler.isAuthenticated(comic) == true ? "Yes" : "No"));
                 value.setText("Value: $" + comic.getValue());
                 proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
@@ -394,7 +398,9 @@ public class ComicInfoPC extends Application{
         Button slabButton = new Button("", slabLabel);
         slabButton.setOnAction(event -> {
             try {
+                proxyAccount.removeComicFromCollection(comic);
                 comic = new Slab(comic);
+                proxyAccount.addComicToCollection(comic);
                 slabbed.setText("Slabbed? " + (MarkingHandler.isSlabbed(comic) == true ? "Yes" : "No"));
                 value.setText("Value: $" + comic.getValue());
                 proxyAccount.exportCollection(new File("data/users/" + proxyAccount.getUsername() + ".json"));
@@ -433,7 +439,9 @@ public class ComicInfoPC extends Application{
 
         confirmButton.setOnAction(event -> {
             try {
+                proxyAccount.removeComicFromCollection(comic);
                 comic = new Grade(comic, grades.getValue());
+                proxyAccount.addComicToCollection(comic);
                 trueRoot.getChildren().remove(popup1);
                 trueRoot.getChildren().remove(popupRect);
                 grade.setText("Grade: " + MarkingHandler.getGrade(comic));
