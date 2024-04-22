@@ -30,5 +30,6 @@ public interface Marking{
     public String getDescription();
     public Marking getMarking();
     public void addCreator(Creator creator);
+    public void addCharacter(Character character);
     public double extractIssueValue();
 }

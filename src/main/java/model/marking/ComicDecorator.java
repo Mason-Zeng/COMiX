@@ -112,6 +112,11 @@ public abstract class ComicDecorator implements Marking {
         return comic.equals(obj);
     }
 
+    @Override
+    public void addCharacter(Character character) {
+        comic.addCharacter(character);
+    }
+
     /*
      * Returns the number of times the object
      * was wrapped in Sign

@@ -105,6 +105,10 @@ public class Comic implements Marking{
         creators.add(creator);
     }
 
+    public void addCharacter(Character character) {
+        characters.add(character);
+    }
+
     public void setVolume(Volume vol) {
         this.volume = vol;
     }
