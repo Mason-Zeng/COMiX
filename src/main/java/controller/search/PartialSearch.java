@@ -11,7 +11,7 @@ import model.Creator;
 import model.marking.Authenticate;
 import model.marking.Grade;
 import model.marking.Marking;
-import model.marking.Sign;
+import model.marking.MarkingHandler;
 import model.marking.Slab;
 
 /**
@@ -115,11 +115,8 @@ public class PartialSearch implements Searcher{
                 }
             }
             for(int i=0; i<tempList.size();i++){
-                oldMarks = getMarkings(tempList.get(i));
-                for(int j=0; j<oldMarks.size(); j++){
-                    if(oldMarks.get(j) instanceof Sign){
-                        comics.add(tempList.get(i));
-                    }
+                if (MarkingHandler.signCount(tempList.get(i)) > 0) {
+                    comics.add(tempList.get(i));
                 }
             }
             break;
