@@ -195,16 +195,22 @@ public class ComicInfoPC extends Application{
 
         Label importLabel = new Label("Import ↓");
         importLabel.setFont(Font.font(20));
-        importLabel.setMinHeight(70);
         importLabel.setTextFill(Color.GRAY);
-        gridPane.add(importLabel, 3, 0);
+
+        Button importButton = new Button("", importLabel);
+        importButton.setBackground(null);
+        importButton.setMinHeight(70);
+
+        gridPane.add(importButton, 3, 0);
 
         Label exportLabel = new Label("Export ↑");
         exportLabel.setFont(Font.font(20));
-        exportLabel.setMinHeight(70);
-        exportLabel.setTextFill(Color.GRAY);
+        importLabel.setTextFill(Color.GRAY);
 
-        gridPane.add(exportLabel, 4, 0);
+        Button exportButton = new Button("", exportLabel);
+        exportButton.setBackground(null);
+        exportButton.setMinHeight(70);
+        gridPane.add(exportButton, 4, 0);
 
         Label databaseLabel = new Label("Database");
         databaseLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
@@ -261,7 +267,7 @@ public class ComicInfoPC extends Application{
 
         gridPane.add(logoutButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.4) : (int)((45 + proxyAccount.getUsername().length()*3)/2.1);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));

@@ -22,6 +22,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -35,7 +39,7 @@ public class PCPage extends Application {
     private final Collection<Node> nodes = new ArrayList<>();
     private ProxyAccount proxyAccount;
     private final String searchers[] = {"Partial Search", "Exact Search"};
-    private final String sorters[] = {"Sort By Default", "Sort By Date"};
+    private final String sorters[] = {"Sort By Default", "Sort By Date", "Sort By Issue #"};
     private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date", "Grade", "Slab", "Sign", "Authenticate", "Runs", "Gaps"};
     private List<Marking> COMICS;
     private int comicCounter = 1; 
@@ -43,7 +47,7 @@ public class PCPage extends Application {
 
     public PCPage(ProxyAccount proxyAccount){
         this.proxyAccount = proxyAccount;
-        COMICS = proxyAccount.searchCollection("Partial Search", "Sort By Default", "", "Series Title");
+        COMICS = proxyAccount.searchCollection("Partial Search", "True Default Sort", "", "Series Title");
     }
 
     @Override
@@ -141,6 +145,11 @@ public class PCPage extends Application {
         pcLabel.setTextFill(Color.GRAY);
         gridPane.add(pcLabel, 6, 0);
 
+        Button pcButton = new Button("", pcLabel);
+        pcButton.setBackground(null);
+
+        gridPane.add(pcButton, 6, 0);
+
         Label logoutLabel = new Label("Logout");
         logoutLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
         logoutLabel.setMinHeight(70);
@@ -161,7 +170,7 @@ public class PCPage extends Application {
 
         gridPane.add(logoutButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.4) : (int)((45 + proxyAccount.getUsername().length()*3)/2.18);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
         gridPane.setHgap(950/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
@@ -308,9 +317,32 @@ public class PCPage extends Application {
         });
 
         pages.setSpacing(15);
-        pages.setPadding(new Insets(0, 0, 0, 825));
+        pages.setPadding(new Insets(0, 0, 0, 655));
 
-        root.getChildren().add(pages);
+        Label addComicLabel = new Label("Create Comic");
+        addComicLabel.setFont(new Font(20));
+        addComicLabel.setTextFill(Color.WHITE);
+        Button addComicButton = new Button("", addComicLabel);
+        addComicButton.setOnAction(event -> {
+            ComicCreationPage creationPage = new ComicCreationPage(proxyAccount);
+            try {
+                creationPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            root.getChildren().removeAll(nodes);
+        });
+        addComicButton.setBackground(new Background(new BackgroundFill(Color.rgb(70, 97, 161), 
+        CornerRadii.EMPTY, Insets.EMPTY)));
+        addComicButton.setBorder(new Border(new BorderStroke(Color.BLACK, 
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        HBox bottomGroup = new HBox();
+        bottomGroup.getChildren().add(addComicButton);
+        bottomGroup.getChildren().add(pages);
+        bottomGroup.setPadding(new Insets(0, 0, 0, 50));
+
+        root.getChildren().add(bottomGroup);
         
         Scene scene = new Scene(root, 1000, 650);
         primaryStage.setScene(scene);

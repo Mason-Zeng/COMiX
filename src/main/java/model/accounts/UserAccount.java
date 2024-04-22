@@ -13,6 +13,8 @@ import controller.search.ExactSearch;
 import controller.search.PartialSearch;
 import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
+import controller.sort.TrueDefaultSorter;
+import controller.sort.IssueNumberSorter;
 import model.marking.Marking;
 
 public class UserAccount implements Account{
@@ -73,7 +75,18 @@ public class UserAccount implements Account{
     public List<Marking> searchCollection(String searchStrategy, String sortStrategy, String query, String input) {
         ComicSearcher searcher = new ComicSearcher(COMICS);
         searcher.setSearcher((searchStrategy == "Partial Search") ? new PartialSearch() : new ExactSearch());
-        searcher.setSorter((sortStrategy == "Sort By Default") ? new DefaultSorter() : new PublicationDateSorter());
+        if (sortStrategy.equals("Sort By Default")){
+            searcher.setSorter(new DefaultSorter());
+        }
+        else if (sortStrategy.equals("Sort By Date")){
+            searcher.setSorter(new PublicationDateSorter());
+        }
+        else if (sortStrategy.equals("True Default Sort")){
+            searcher.setSorter(new TrueDefaultSorter());
+        }
+        else {
+            searcher.setSorter(new IssueNumberSorter());
+        }
         input = input.toLowerCase().replace(" ", "_");
         return searcher.search(query, input);
     }

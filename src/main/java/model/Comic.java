@@ -168,4 +168,9 @@ public class Comic implements Marking{
     public void setDate(LocalDate date) {
         this.pub_date = date;
     }
+
+    @Override
+    public void setSeriesTitle(String title) {
+        this.volume.setSeries(new Series(title));
+    }
 }

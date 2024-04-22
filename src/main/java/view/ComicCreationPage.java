@@ -1,16 +1,16 @@
 package view;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -26,17 +27,22 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Comic;
+import model.Creator;
 import model.accounts.ProxyAccount;
+import model.hierarchy.Volume;
 import model.marking.Marking;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
-public class ComicInfoDatabase extends Application{
+public class ComicCreationPage extends Application{
     private final Collection<Node> nodes = new ArrayList<>();
     private ProxyAccount proxyAccount;
     private Marking comic;
 
-    public ComicInfoDatabase(ProxyAccount proxyAccount, Marking comic){
+    public ComicCreationPage(ProxyAccount proxyAccount){
         this.proxyAccount = proxyAccount;
-        this.comic = comic;
+        this.comic = new Comic(null, null, null, null, null);
     }
 
     @Override
@@ -59,9 +65,6 @@ public class ComicInfoDatabase extends Application{
         Label undoLabel = new Label("↺");
         undoLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
         undoLabel.setMinHeight(70);
-        if (proxyAccount.getUsername() == "Guest"){
-            undoLabel.setTextFill(Color.GRAY);
-        }
 
         Button undoButton = new Button("", undoLabel);
         undoButton.setBackground(null);
@@ -75,9 +78,6 @@ public class ComicInfoDatabase extends Application{
         Label redoLabel = new Label("↻");
         redoLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
         redoLabel.setMinHeight(70);
-        if (proxyAccount.getUsername() == "Guest"){
-            redoLabel.setTextFill(Color.GRAY);
-        }
 
         Button redoButton = new Button("", redoLabel);
         redoButton.setBackground(null);
@@ -135,63 +135,37 @@ public class ComicInfoDatabase extends Application{
         Button pcButton = new Button("", pcLabel);
         pcButton.setBackground(null);
         pcButton.setOnAction((event) -> {
-            if (proxyAccount.getUsername() == "Guest"){
-                LoginPage loginPage = new LoginPage(proxyAccount);
-                try {
-                    loginPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
+            PCPage pcPage = new PCPage(proxyAccount);
+            try {
+                pcPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else{
-                PCPage pcPage = new PCPage(proxyAccount);
-                try {
-                    pcPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
-            }
+            root.getChildren().removeAll(nodes);
         });
         gridPane.add(pcButton, 6, 0);
 
-        Label loginLabel = new Label("Login");
-        if (proxyAccount.getUsername() != "Guest"){
-            loginLabel.setText("Logout");
-        }
-        loginLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
-        loginLabel.setMinHeight(70);
-        loginLabel.setTextFill(Color.BLUE);
+        Label logoutLabel = new Label("Logout");
+        logoutLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
+        logoutLabel.setMinHeight(70);
+        logoutLabel.setTextFill(Color.BLUE);
 
-        Button loginButton = new Button("", loginLabel);
-        loginButton.setBackground(null);
-        loginButton.setOnAction((event) -> {
-            if (proxyAccount.getUsername() != "Guest"){
-                proxyAccount.logout();
-                DatabasePage databasePage = new DatabasePage();
-                try {
-                    databasePage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
+        Button logoutButton = new Button("", logoutLabel);
+        logoutButton.setBackground(null);
+        logoutButton.setOnAction((event) -> {
+            proxyAccount.logout();
+            DatabasePage databasePage = new DatabasePage();
+            try {
+                databasePage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else{
-                LoginPage loginPage = new LoginPage(proxyAccount);
-                try {
-                    loginPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
-            }
+            root.getChildren().removeAll(nodes);
         });
 
-        gridPane.add(loginButton, 7, 0);
+        gridPane.add(logoutButton, 7, 0);
 
         int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
-        spacing = (proxyAccount.getUsername().equals("Guest")) ? 28 : spacing;
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
@@ -202,43 +176,97 @@ public class ComicInfoDatabase extends Application{
 
         VBox vbox = new VBox();
 
-        Label seriesTitle = new Label("Series Title: " + comic.getSeriesTitle());
+        HBox seriesHBox = new HBox();
+        Label seriesTitle = new Label("Series: ");
         seriesTitle.setFont(Font.font(20));
-        vbox.getChildren().add(seriesTitle);
 
-        Label issueTitle = new Label("Issue Title: " + comic.getTitle());
+        TextField seriesTextField = new TextField();
+        seriesTextField.setPrefSize(300, 30);
+        seriesTextField.setOnAction(event -> {
+            this.comic.setSeriesTitle(seriesTextField.getText());
+        });
+
+        seriesHBox.getChildren().add(seriesTitle);
+        seriesHBox.getChildren().add(seriesTextField);
+        vbox.getChildren().add(seriesHBox);
+
+        HBox issueBox = new HBox();
+        Label issueTitle = new Label("Issue Title: ");
         issueTitle.setFont(new Font(20));
-        vbox.getChildren().add(issueTitle);
 
-        Label issueNumber = new Label("Issue #" + comic.getIssueNumber());
+        TextField issueField = new TextField();
+        issueField.setPrefSize(300, 30);
+        issueField.setOnAction(event -> {
+            this.comic.setTitle(issueField.getText());
+        });
+
+        issueBox.getChildren().add(issueTitle);
+        issueBox.getChildren().add(issueField);
+        vbox.getChildren().add(issueBox);
+
+        HBox issueNumBox = new HBox();
+        Label issueNumber = new Label("Issue #");
         issueNumber.setFont(new Font(20));
-        vbox.getChildren().add(issueNumber);
 
-        Label volumeNumber = new Label("Volume #" + comic.getVolumeNumber());
+        TextField issueNumField = new TextField();
+        issueNumField.setPrefSize(300, 30);
+        issueNumField.setOnAction(event -> {
+            this.comic.setIssueNumber(issueNumField.getText());
+        });
+
+        issueNumBox.getChildren().add(issueNumber);
+        issueNumBox.getChildren().add(issueNumField);
+        vbox.getChildren().add(issueNumBox);
+
+        HBox volNumBox = new HBox();
+        Label volumeNumber = new Label("Volume #");
         volumeNumber.setFont(new Font(20));
-        vbox.getChildren().add(volumeNumber);
 
-        String creators = "";
-        for (int i = 0; i < comic.getCreators().size(); i++) {
-            creators += comic.getCreators().get(i).getName();
-            if (i < comic.getCreators().size() - 1){
-                creators += ", ";
-            }
-        }
+        TextField volNumField = new TextField();
+        volNumField.setPrefSize(300, 30);
+        volNumField.setOnAction(event -> {
+            this.comic.setVolume(new Volume(volNumField.getText()));
+        });
 
-        Label creator = new Label("Creator(s): " + creators);
+        volNumBox.getChildren().add(volumeNumber);
+        volNumBox.getChildren().add(volNumField);
+        vbox.getChildren().add(volNumBox);
+
+        HBox creatorBox = new HBox();
+        Label creator = new Label("Creator(s): ");
         creator.setFont(new Font(20));
-        vbox.getChildren().add(creator);
 
-        Label pubName = new Label("Publisher Name: " + comic.getPublisherName());
+        TextField creatorField = new TextField();
+        creatorField.setPrefSize(300, 30);
+        creatorField.setOnAction(event -> {
+            String[] tokens = creatorField.getText().split(",");
+            for (int i = 0; i < tokens.length; i++) {
+                this.comic.addCreator(new Creator(tokens[i]));
+            }
+        });
+
+        creatorBox.getChildren().add(creator);
+        creatorBox.getChildren().add(creatorField);
+        vbox.getChildren().add(creatorBox);
+
+        HBox pubBox = new HBox();
+        Label pubName = new Label("Publisher Name: ");
         pubName.setFont(new Font(20));
-        vbox.getChildren().add(pubName);
 
-        Label pubDate = new Label("Publication Date: " + comic.getDate().toString());
+        TextField pubField = new TextField();
+        pubField.setPrefSize(300, 30);
+        pubField.setOnAction(event -> {
+        });
+
+        pubBox.getChildren().add(pubName);
+        pubBox.getChildren().add(pubField);
+        vbox.getChildren().add(pubBox);
+
+        Label pubDate = new Label("Publication Date: ");
         pubDate.setFont(new Font(20));
         vbox.getChildren().add(pubDate);
 
-        Label value = new Label("Value: $" + comic.getValue());
+        Label value = new Label("Value: $");
         value.setFont(new Font(20));
         vbox.getChildren().add(value);
         
@@ -281,7 +309,7 @@ public class ComicInfoDatabase extends Application{
         Scene scene = new Scene(root, 1000, 650);
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("Comic Info");
+        primaryStage.setTitle("Comic Creator");
         primaryStage.show();
     }
     

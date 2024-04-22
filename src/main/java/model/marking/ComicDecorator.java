@@ -134,4 +134,9 @@ public abstract class ComicDecorator implements Marking {
     public void setDate(LocalDate date) {
         comic.setDate(date);
     }
+
+    @Override
+    public void setSeriesTitle(String title) {
+        comic.setSeriesTitle(title);
+    }
 }

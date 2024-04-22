@@ -36,4 +36,5 @@ public interface Marking{
     public void removeAllCreators();
     public void setDate(LocalDate date);
     public double extractIssueValue();
+    public void setSeriesTitle(String title);
 }
