@@ -36,8 +36,10 @@ public class CSVDataImporter implements DataImporter {
             comic.addCreator(new Creator(creator));
         }
 
-        for (String character : array[10].split(" \\| ")) {
-            comic.addCharacter(new Character(character));
+        if (array[10].length() != 0){
+            for (String character : array[10].split(" \\| ")) {
+                comic.addCharacter(new Character(character));
+            }
         }
 
         comic = MarkingFactory.formatComic(comic, array[8]);
