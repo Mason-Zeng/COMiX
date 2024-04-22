@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.opencsv.CSVWriter;
 
 import model.Creator;
+import model.Character;
 import model.foreign.DataExporter;
 import model.marking.Marking;
 import model.marking.MarkingFactory;
@@ -23,7 +24,8 @@ public class CSVDataExporter implements DataExporter {
         "date",
         "creators",
         "format",
-        "value"
+        "value",
+        "characters"
     };
 
     @Override
@@ -45,7 +47,11 @@ public class CSVDataExporter implements DataExporter {
                     .map(Creator::getName)
                     .collect(Collectors.joining(" | ")),
                 MarkingFactory.getFormat(comic),
-                comic.getTrueValue().toString()
+                comic.getTrueValue().toString(),
+                comic.getCharacters()
+                    .stream()
+                    .map(Character::getName)
+                    .collect(Collectors.joining(" | "))
             };
             writer.writeNext(comicArr, false);
         }
