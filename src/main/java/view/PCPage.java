@@ -324,13 +324,7 @@ public class PCPage extends Application {
         addComicLabel.setTextFill(Color.WHITE);
         Button addComicButton = new Button("", addComicLabel);
         addComicButton.setOnAction(event -> {
-            ComicCreationPage creationPage = new ComicCreationPage(proxyAccount);
-            try {
-                creationPage.start(primaryStage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            root.getChildren().removeAll(nodes);
+            //Functionality for manual add here
         });
         addComicButton.setBackground(new Background(new BackgroundFill(Color.rgb(70, 97, 161), 
         CornerRadii.EMPTY, Insets.EMPTY)));
