@@ -67,7 +67,7 @@ public class ComicInfoDatabase extends Application{
         undoButton.setBackground(null);
         undoButton.setMinHeight(70);
         undoButton.setOnAction(event -> {
-            //Undo Button Functionality
+            proxyAccount.undo();
         });
 
         gridPane.add(undoButton, 1, 0);
@@ -83,7 +83,7 @@ public class ComicInfoDatabase extends Application{
         redoButton.setBackground(null);
         redoButton.setMinHeight(70);
         redoButton.setOnAction(event -> {
-            //Redo Button Functionality
+            proxyAccount.redo();
         });
 
         gridPane.add(redoButton, 2, 0);

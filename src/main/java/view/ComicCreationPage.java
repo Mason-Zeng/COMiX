@@ -1,6 +1,5 @@
 package view;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -70,7 +69,7 @@ public class ComicCreationPage extends Application{
         undoButton.setBackground(null);
         undoButton.setMinHeight(70);
         undoButton.setOnAction(event -> {
-            //Undo Button Functionality
+            proxyAccount.undo();
         });
 
         gridPane.add(undoButton, 1, 0);
@@ -83,7 +82,7 @@ public class ComicCreationPage extends Application{
         redoButton.setBackground(null);
         redoButton.setMinHeight(70);
         redoButton.setOnAction(event -> {
-            //Redo Button Functionality
+            proxyAccount.redo();
         });
 
         gridPane.add(redoButton, 2, 0);
