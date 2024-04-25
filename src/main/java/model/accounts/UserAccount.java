@@ -15,9 +15,11 @@ import controller.sort.DefaultSorter;
 import controller.sort.PublicationDateSorter;
 import controller.sort.TrueDefaultSorter;
 import controller.sort.IssueNumberSorter;
+import model.history.Memento;
+import model.history.Originator;
 import model.marking.Marking;
 
-public class UserAccount implements Account{
+public class UserAccount implements Account, Originator<List<Marking>>{
 
     private String username;
     private static File userFile;
@@ -109,6 +111,16 @@ public class UserAccount implements Account{
 
     public List<Marking> getComics() {
         return COMICS;
+    }
+
+    @Override
+    public Memento<List<Marking>> createMemento() {
+        return new Memento<List<Marking>>(new ArrayList<>(COMICS));
+    }
+
+    @Override
+    public void restore(Memento<List<Marking>> memento) {
+        COMICS = new ArrayList<>(memento.getState());
     }
 
 }
