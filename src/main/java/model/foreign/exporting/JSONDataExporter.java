@@ -11,7 +11,7 @@ import org.json.JSONWriter;
 import model.Creator;
 import model.foreign.DataExporter;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class JSONDataExporter implements DataExporter {
 
@@ -36,7 +36,7 @@ public class JSONDataExporter implements DataExporter {
 
             obj.put("creators", creators);
 
-            String format = MarkingFactory.getFormat(comic);
+            String format = MarkingHandler.getFormat(comic);
             obj.put("format", format);
             jArr.add(obj);
         }

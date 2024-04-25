@@ -16,7 +16,7 @@ public class Slab extends ComicDecorator{
      */
     public Slab(Marking comic) {
         super(comic);
-        if(isGrade(comic) == false || comic instanceof Slab || comic instanceof Comic){
+        if(MarkingHandler.isGrade(comic) == false || comic instanceof Slab || comic instanceof Comic){
             throw new IllegalArgumentException("Invalid comic type passed to Slab constructor");
         }
     }

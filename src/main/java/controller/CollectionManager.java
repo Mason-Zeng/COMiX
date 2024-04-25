@@ -2,7 +2,7 @@ package controller;
 
 import model.hierarchy.*;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 
 public class CollectionManager {
@@ -27,7 +27,7 @@ public class CollectionManager {
         Publisher pub = comic.getPublisher();
         Series series = comic.getSeries();
         Volume vol = comic.getVolume();
-        Marking comic_copy = MarkingFactory.copyMarking(comic);
+        Marking comic_copy = MarkingHandler.copyMarking(comic);
 
         // see if meta objects exist within collection. if not, create copies of them
         Publisher pub_copy = collection.publisherExists(pub.getName()) ?

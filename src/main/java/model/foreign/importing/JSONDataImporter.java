@@ -1,6 +1,7 @@
 package model.foreign.importing;
 
 import java.io.FileReader;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,10 @@ public class JSONDataImporter implements DataImporter {
             Volume vol = new Volume(jObj.getString("volume"), series);
             comic.setVolume(vol);
 
+            if (comic.getValue().equals(BigDecimal.valueOf(0))){
+                comic.setValue(BigDecimal.valueOf(1.00));
+            }
+
             JSONArray creators = jObj.getJSONArray("creators");
             for (Object creator : creators) {
                 comic.addCreator(new Creator((String)creator));
@@ -43,7 +48,7 @@ public class JSONDataImporter implements DataImporter {
 
             String format = jObj.getString("format");
             try {
-                comic = MarkingFactory.formatComic(comic, format);
+                comic = MarkingHandler.formatComic(comic, format);
             }
             catch (StringIndexOutOfBoundsException e){
 
