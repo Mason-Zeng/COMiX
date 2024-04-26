@@ -15,19 +15,14 @@ public class Caretaker <T> {
         point = -1;
     }
 
-    private void rebuildList() {
+    public void capture() {
+        states.add(++point, originator.createMemento());
         if (!(states.size() - 1 == point)) {
             states = states.subList(0, point+1);
         }
     }
-
-    public void capture() {
-        states.add(++point, originator.createMemento());
-        rebuildList();
-    }
     
     public void undo() {
-        System.out.println("undo start " + point);
         if (point < 0) return;
         if (point == states.size() - 1) {
             states.add(++point, originator.createMemento());
@@ -35,13 +30,10 @@ public class Caretaker <T> {
             states.set(point, originator.createMemento());        
         }
         originator.restore(states.get(--point));
-        System.out.println("undo end " + point);
     }
 
     public void redo() {
-        System.out.println("redo start " + point);
         if (point == states.size() - 1) return;
         originator.restore(states.get(++point));
-        System.out.println("redo end " + point);
     }
 }
