@@ -111,6 +111,10 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
+    public void addCharacter(Character character) {
+        comic.addCharacter(character);
+    }
+    
     public void setValue(BigDecimal value){
         comic.setValue(value);
     }
