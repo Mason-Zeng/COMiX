@@ -36,7 +36,7 @@ import model.marking.Marking;
 public class DatabasePage extends Application {
     private ProxyAccount proxyAccount;
     private final String searchers[] = {"Partial Search", "Exact Search"};
-    private final String sorters[] = {"Sort By Default", "Sort By Date", "Sort By Issue Number"};
+    private final String sorters[] = {"Sort By Default", "Sort By Date", "Sort By Issue #"};
     private final String searchOptions[] = {"Series Title", "Issue Number", "Story Title", "Publisher", "Creator", "Date", "Runs", "Gaps" };
     private List<Marking> COMICS;
     private int comicCounter = 1; 
@@ -58,7 +58,7 @@ public class DatabasePage extends Application {
             proxyAccount = new ProxyAccount();
         }
 
-        COMICS = proxyAccount.searchDatabase("Partial Search", "Sort By Default", "", "Series Title");
+        COMICS = proxyAccount.searchDatabase("Partial Search", "True Default Sort", "", "Series Title");
 
         VBox root = new VBox();
         GridPane gridPane = new GridPane();
@@ -74,25 +74,48 @@ public class DatabasePage extends Application {
         username.setMinHeight(70);
         gridPane.add(username, 0, 0);
 
-        Label undo = new Label("↺");
-        undo.setFont(Font.font(null, FontWeight.BOLD, 25));
-        undo.setMinHeight(70);
-        undo.setTextFill(Color.GRAY);
+        Label undoLabel = new Label("↺");
+        undoLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
+        undoLabel.setMinHeight(70);
+        if (proxyAccount.getUsername() == "Guest"){
+            undoLabel.setTextFill(Color.GRAY);
+        }
 
-        gridPane.add(undo, 1, 0);
+        Button undoButton = new Button("", undoLabel);
+        undoButton.setBackground(null);
+        undoButton.setMinHeight(70);
+        undoButton.setOnAction(event -> {
+            //Undo Button Functionality
+        });
 
-        Label redo = new Label("↻");
-        redo.setFont(Font.font(null, FontWeight.BOLD, 25));
-        redo.setMinHeight(70);
-        redo.setTextFill(Color.GRAY);
+        gridPane.add(undoButton, 1, 0);
 
-        gridPane.add(redo, 2, 0);
+        Label redoLabel = new Label("↻");
+        redoLabel.setFont(Font.font(null, FontWeight.BOLD, 25));
+        redoLabel.setMinHeight(70);
+        if (proxyAccount.getUsername() == "Guest"){
+            redoLabel.setTextFill(Color.GRAY);
+        }
+
+        Button redoButton = new Button("", redoLabel);
+        redoButton.setBackground(null);
+        redoButton.setMinHeight(70);
+        redoButton.setOnAction(event -> {
+            //Redo Button Functionality
+        });
+
+        gridPane.add(redoButton, 2, 0);
 
         Label importLabel = new Label("Import ↓");
         importLabel.setFont(Font.font(20));
         importLabel.setMinHeight(70);
         importLabel.setTextFill(Color.GRAY);
-        gridPane.add(importLabel, 3, 0);
+
+        Button importButton = new Button("", importLabel);
+        importButton.setBackground(null);
+        importButton.setMinHeight(70);
+
+        gridPane.add(importButton, 3, 0);
 
         Label exportLabel = new Label("Export ↑");
         exportLabel.setFont(Font.font(20));
@@ -117,11 +140,14 @@ public class DatabasePage extends Application {
 
         gridPane.add(exportButton, 4, 0);
 
-        Label database = new Label("Database");
-        database.setFont(Font.font(20));
-        database.setMinHeight(70);
-        database.setTextFill(Color.GRAY);
-        gridPane.add(database, 5, 0);
+        Label databaseLabel = new Label("Database");
+        databaseLabel.setFont(Font.font(20));
+        databaseLabel.setMinHeight(70);
+        databaseLabel.setTextFill(Color.GRAY);
+
+        Button databaseButton = new Button("", databaseLabel);
+        databaseButton.setBackground(null);
+        gridPane.add(databaseButton, 5, 0);
 
         Label pcLabel = new Label("Personal Collection");
         pcLabel.setFont(Font.font(null, FontWeight.BOLD, 20));
@@ -186,8 +212,8 @@ public class DatabasePage extends Application {
 
         gridPane.add(loginButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.72) : (int)((45 + proxyAccount.getUsername().length()*3)/2.4);
-        spacing = (proxyAccount.getUsername().equals("Guest")) ? 22 : spacing;
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
+        spacing = (proxyAccount.getUsername().equals("Guest")) ? 28 : spacing;
         gridPane.setHgap(950/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
@@ -200,6 +226,7 @@ public class DatabasePage extends Application {
         nodes.add(hbox);
         TextField field = new TextField();
         field.setPrefSize(350, 25);
+        field.setPromptText("Search The Database");
         hbox.getChildren().add(field);
 
         ComboBox<String> searchStrategies = new ComboBox<>(FXCollections.observableArrayList(searchers));
@@ -238,7 +265,7 @@ public class DatabasePage extends Application {
 
         VBox comicListVBox = new VBox();
         nodes.add(comicListVBox);
-        prevButtons = comicListUpdater(comicCounter);
+        prevButtons = comicListUpdater(comicCounter, root, primaryStage);
         comicListVBox.getChildren().addAll(prevButtons);
 
         comicListVBox.setPadding(new Insets(0, 0, 0, 20));
@@ -253,21 +280,21 @@ public class DatabasePage extends Application {
         leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         pages.getChildren().add(leftButton);
 
-        Label pageNumber = new Label("1/" + (int)Math.ceil(COMICS.size()/12));
+        Label pageNumber = new Label("1/" + (int)Math.ceil((double)COMICS.size()/12));
         pageNumber.setFont(new Font(18));
         pages.getChildren().add(pageNumber);
 
         Button rightButton = new Button("→");
         rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         rightButton.setOnAction(event -> {
-            if (comicCounter < (int)Math.ceil(COMICS.size()/12)){
+            if (comicCounter < (int)Math.ceil((double)COMICS.size()/12)){
                 leftButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter++;
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil((double)COMICS.size()/12));
                 comicListVBox.getChildren().removeAll(prevButtons);
-                prevButtons = comicListUpdater(comicCounter);
+                prevButtons = comicListUpdater(comicCounter, root, primaryStage);
                 comicListVBox.getChildren().addAll(prevButtons);
-                if (comicCounter+1 > (int)Math.ceil(COMICS.size()/12)){
+                if (comicCounter+1 > (int)Math.ceil((double)COMICS.size()/12)){
                     rightButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -278,10 +305,10 @@ public class DatabasePage extends Application {
                 rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
                 comicCounter--;
                 comicListVBox.getChildren().removeAll(prevButtons);
-                prevButtons = comicListUpdater(comicCounter);
+                prevButtons = comicListUpdater(comicCounter, root, primaryStage);
                 comicListVBox.getChildren().addAll(prevButtons);
-                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil(COMICS.size()/12));
-                if (comicCounter-1 <= 1){
+                pageNumber.setText((comicCounter) + "/" +  (int)Math.ceil((double)COMICS.size()/12));
+                if (comicCounter <= 1){
                     leftButton.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
@@ -294,11 +321,11 @@ public class DatabasePage extends Application {
             comicCounter = 1;
 
             COMICS = proxyAccount.searchDatabase(searchStrategies.getValue(), sorter.getValue(), field.getText(), searchMethod.getValue());
-            prevButtons = comicListUpdater(comicCounter);
+            prevButtons = comicListUpdater(comicCounter, root, primaryStage);
             comicListVBox.getChildren().addAll(prevButtons);
 
-            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil(COMICS.size()/12)) : "0/0");
-            if ((int)Math.ceil(COMICS.size()/12) > 1){
+            pageNumber.setText(COMICS.size() != 0 ? ("1/" + (int)Math.ceil((double)COMICS.size()/12)) : "0/0");
+            if ((int)Math.ceil((double)COMICS.size()/12) > 1){
                 rightButton.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
             }
             else{
@@ -320,7 +347,7 @@ public class DatabasePage extends Application {
         primaryStage.setResizable(false);
     }
 
-    private Collection<Button> comicListUpdater(int comicCount){
+    private Collection<Button> comicListUpdater(int comicCount, VBox root, Stage primaryStage){
         List<Button> list = new ArrayList<>();
         if (COMICS.size() == 0){
             Label label = new Label("No Comics found.");
@@ -330,24 +357,33 @@ public class DatabasePage extends Application {
             list.add(button);
             return list;
         } 
-        for (int i = (comicCounter-1)*10; i < 12 + ((comicCounter-1)*10); i++) {
+        for (int i = (comicCounter-1)*12; i < 12 + ((comicCounter-1)*12); i++) {
             Label tempLabel;
+            Marking comic;
             try {
-                Marking comic = COMICS.get(i);
+                comic = COMICS.get(i);
                 tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){
                 //Empty Label for spacing purposes
                 tempLabel = new Label();
+                comic = null;
             }
+            Marking tempComic = comic;
             tempLabel.setFont(new Font(15));
             Button tempButton = new Button("", tempLabel);
             tempButton.setBackground(null);
             tempButton.setMaxHeight(10);
             tempButton.setOnAction(event -> {
-                //Redirects to the comic's specific page when implemented
-            });
+                ComicInfoDatabase comicInfoDatabase = new ComicInfoDatabase(proxyAccount, tempComic);
+                try {
+                    comicInfoDatabase.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+                });
             list.add(tempButton);
         }
         return list;

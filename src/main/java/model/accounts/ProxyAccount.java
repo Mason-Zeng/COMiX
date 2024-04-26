@@ -11,7 +11,7 @@ import controller.search.PartialSearch;
 import controller.sort.DefaultSorter;
 import controller.sort.IssueNumberSorter;
 import controller.sort.PublicationDateSorter;
-import model.Comic;
+import controller.sort.TrueDefaultSorter;
 import model.marking.Marking;
 
 public class ProxyAccount implements Account{
@@ -40,6 +40,9 @@ public class ProxyAccount implements Account{
         else if (sortStrategy.equals("Sort By Date")){
             searcher.setSorter(new PublicationDateSorter());
         }
+        else if (sortStrategy.equals("True Default Sort")){
+            searcher.setSorter(new TrueDefaultSorter());
+        }
         else {
             searcher.setSorter(new IssueNumberSorter());
         }
@@ -65,7 +68,7 @@ public class ProxyAccount implements Account{
     }
 
     @Override
-    public void addComicToCollection(Comic comic) {
+    public void addComicToCollection(Marking comic) {
         if (this.userAccount == null){
             return;
         }
@@ -73,7 +76,7 @@ public class ProxyAccount implements Account{
     }
 
     @Override
-    public void removeComicFromCollection(Comic comic) {
+    public void removeComicFromCollection(Marking comic) {
         if (this.userAccount == null){
             return;
         }

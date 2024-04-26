@@ -10,7 +10,7 @@ import model.Creator;
 import model.Character;
 import model.foreign.DataExporter;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class CSVDataExporter implements DataExporter {
 
@@ -46,7 +46,7 @@ public class CSVDataExporter implements DataExporter {
                     .stream()
                     .map(Creator::getName)
                     .collect(Collectors.joining(" | ")),
-                MarkingFactory.getFormat(comic),
+                MarkingHandler.getFormat(comic),
                 comic.getTrueValue().toString(),
                 comic.getCharacters()
                     .stream()

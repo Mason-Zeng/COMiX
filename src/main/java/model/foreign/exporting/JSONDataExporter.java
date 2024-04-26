@@ -12,7 +12,7 @@ import model.Character;
 import model.Creator;
 import model.foreign.DataExporter;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class JSONDataExporter implements DataExporter {
 
@@ -43,8 +43,8 @@ public class JSONDataExporter implements DataExporter {
             }
 
             obj.put("characters", characters);
-
-            String format = MarkingFactory.getFormat(comic);
+            
+            String format = MarkingHandler.getFormat(comic);
             obj.put("format", format);
             jArr.add(obj);
         }

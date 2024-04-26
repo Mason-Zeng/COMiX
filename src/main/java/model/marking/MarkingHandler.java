@@ -6,7 +6,7 @@ import java.util.List;
 
 import model.Comic;
 
-public class MarkingFactory {
+public class MarkingHandler {
     /**
      * Iteratively copies marking 
      * as well as all the markings 
@@ -75,7 +75,7 @@ public class MarkingFactory {
     public static String getFormat(Marking comic) {
         List<String> format = new ArrayList<>();
             for (Marking mark : getMarkingOrder(comic)) {
-                switch (mark.getClass().getName()) {
+                switch (mark.getClass().getSimpleName()) {
                     case "Grade":
                         format.add("G(" + ((Grade)mark).getGrade() + ")");
                         break;
@@ -93,5 +93,78 @@ public class MarkingFactory {
                 }
             }
         return String.join(" ", format);
+    }
+
+    
+    /*
+     * Returns the number of times the object
+     * was wrapped in Sign
+     */
+    public static int signCount(Marking marking){
+        int count = 0;
+        List<Marking> result = getMarkingOrder(marking);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Sign){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Grade
+     */
+    public static boolean isGrade(Marking marking) {
+        List<Marking> result = getMarkingOrder(marking);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Grade){
+                return true;
+            }
+        }
+        return false;
+    }
+
+        /*
+     * Checks the marking to see if the object has 
+     * been marked with Grade
+     */
+    public static int getGrade(Marking marking) {
+        List<Marking> result = getMarkingOrder(marking);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Grade){
+                Grade grade = (Grade) result.get(i);
+                return grade.getGrade();
+            }
+        }
+        return 0;
+    }
+
+    /*
+     * Checks the marking to see if the object has 
+     * been marked with Authenticate
+     */
+    public static boolean isAuthenticated(Marking marking) {
+        List<Marking> result = getMarkingOrder(marking);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Authenticate){
+                return true;
+            }
+        }
+        return false;
+    }
+
+        /*
+     * Checks the marking to see if the object has 
+     * been marked with Slabbed
+     */
+    public static boolean isSlabbed(Marking marking) {
+        List<Marking> result = getMarkingOrder(marking);
+        for(int i=0; i<result.size(); i++){
+            if(result.get(i) instanceof Slab){
+                return true;
+            }
+        }
+        return false;
     }
 }

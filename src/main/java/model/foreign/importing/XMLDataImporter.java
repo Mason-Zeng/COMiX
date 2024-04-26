@@ -25,7 +25,7 @@ import model.hierarchy.Publisher;
 import model.hierarchy.Series;
 import model.hierarchy.Volume;
 import model.marking.Marking;
-import model.marking.MarkingFactory;
+import model.marking.MarkingHandler;
 
 public class XMLDataImporter implements DataImporter {
 
@@ -51,6 +51,8 @@ public class XMLDataImporter implements DataImporter {
                     BigDecimal value = new BigDecimal(comicElement.getElementsByTagName("value").item(0).getTextContent());
                     LocalDate date = LocalDate.parse(comicElement.getElementsByTagName("date").item(0).getTextContent());
 
+                    value = (value.equals(BigDecimal.valueOf(0))) ? BigDecimal.valueOf(1.00) : value;
+
                     Marking comic = new Comic(title, issue, description, value, date);
                     comic.setVolume(volume);
 
@@ -64,7 +66,7 @@ public class XMLDataImporter implements DataImporter {
                     }
 
                     String format = comicElement.getElementsByTagName("format").item(0).getTextContent();
-                    comic = MarkingFactory.formatComic(comic, format);
+                    comic = MarkingHandler.formatComic(comic, format);
                     result.add(comic);
                 }
             }
