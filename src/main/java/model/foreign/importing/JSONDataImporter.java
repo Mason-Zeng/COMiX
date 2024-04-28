@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -46,10 +47,12 @@ public class JSONDataImporter implements DataImporter {
             for (Object creator : creators) {
                 comic.addCreator(new Creator((String)creator));
             }
-            JSONArray characters = jObj.getJSONArray("characters");
-            for (Object character : characters) {
-                comic.addCharacter(new Character((String)character));
-            }
+            try {
+                JSONArray characters = jObj.getJSONArray("characters");
+                for (Object character : characters) {
+                    comic.addCharacter(new Character((String)character));
+                }
+            } catch (JSONException e) {}
 
             String format = jObj.getString("format");
             try {
