@@ -47,12 +47,12 @@ public class JSONDataImporter implements DataImporter {
             for (Object creator : creators) {
                 comic.addCreator(new Creator((String)creator));
             }
-            try {
+            if (jObj.has("characters")) {
                 JSONArray characters = jObj.getJSONArray("characters");
                 for (Object character : characters) {
                     comic.addCharacter(new Character((String)character));
                 }
-            } catch (JSONException e) {}
+            }
 
             String format = jObj.getString("format");
             try {
