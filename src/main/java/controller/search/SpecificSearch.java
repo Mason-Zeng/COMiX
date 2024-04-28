@@ -19,5 +19,21 @@ public interface SpecificSearch {
      * @param query What should be searched for
      * @return List of Comics that were found in the search
      */
-    public List<Marking> searchData(String type, List<Marking> data, String query);
+    List<Marking> searchData(String type, List<Marking> data, String query);
+    
+    /**
+     * Method that does the specific search for an exact query
+     * @param data The List of Comics
+     * @param query What should be searched for exactly
+     * @return List of Comics that were found in the search
+     */
+    List<Marking> exactSearch(List<Marking> data, String query);
+
+    /**
+     * Method that does the specific search for a partial query
+     * @param data The List of Comics
+     * @param query The string that should be contained within the search
+     * @return List of Comics that were found in the search
+     */
+    List<Marking> partialSearch(List<Marking> data, String query);
 }
