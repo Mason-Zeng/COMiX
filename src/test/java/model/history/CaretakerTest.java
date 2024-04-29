@@ -65,22 +65,23 @@ public class CaretakerTest {
 
         mockOriginator.state = obj2;
 
-        caretaker.undo();
+        for (int i = 0; i < 50; i++) {        
+            caretaker.undo();
 
-        assertEquals(obj1, mockOriginator.state);
+            assertEquals(obj1, mockOriginator.state);
 
-        caretaker.undo();
+            caretaker.undo();
 
-        assertEquals(expected, mockOriginator.state);
+            assertEquals(expected, mockOriginator.state);
 
-        caretaker.redo();
+            caretaker.redo();
 
-        assertEquals(obj1, mockOriginator.state);
+            assertEquals(obj1, mockOriginator.state);
 
-        caretaker.redo();
+            caretaker.redo();
 
-        assertEquals(obj2, mockOriginator.state);
-
+            assertEquals(obj2, mockOriginator.state);
+        }
     }
 
 
