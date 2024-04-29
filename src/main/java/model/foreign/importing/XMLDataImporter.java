@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import model.Character;
 import model.Comic;
 import model.Creator;
 import model.foreign.DataImporter;
@@ -58,6 +59,10 @@ public class XMLDataImporter implements DataImporter {
                     NodeList creatorList = comicElement.getElementsByTagName("creator");
                     for (int j = 0; j < creatorList.getLength(); j++) {
                         comic.addCreator(new Creator(creatorList.item(j).getTextContent()));
+                    }
+                    NodeList characterList = comicElement.getElementsByTagName("character");
+                    for (int j = 0; j < characterList.getLength(); j++) {
+                        comic.addCharacter(new Character(characterList.item(j).getTextContent()));
                     }
 
                     String format = comicElement.getElementsByTagName("format").item(0).getTextContent();

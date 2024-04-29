@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import model.Character;
 import model.Comic;
 import model.Creator;
 import model.foreign.DataImporter;
@@ -44,6 +45,12 @@ public class JSONDataImporter implements DataImporter {
             JSONArray creators = jObj.getJSONArray("creators");
             for (Object creator : creators) {
                 comic.addCreator(new Creator((String)creator));
+            }
+            if (jObj.has("characters")) {
+                JSONArray characters = jObj.getJSONArray("characters");
+                for (Object character : characters) {
+                    comic.addCharacter(new Character((String)character));
+                }
             }
 
             String format = jObj.getString("format");

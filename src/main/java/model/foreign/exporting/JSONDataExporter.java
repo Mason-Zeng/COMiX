@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 
+import model.Character;
 import model.Creator;
 import model.foreign.DataExporter;
 import model.marking.Marking;
@@ -36,6 +37,13 @@ public class JSONDataExporter implements DataExporter {
 
             obj.put("creators", creators);
 
+            JSONArray characters = new JSONArray();
+            for (Character character : comic.getCharacters()) {
+                creators.put(character.getName());
+            }
+
+            obj.put("characters", characters);
+            
             String format = MarkingHandler.getFormat(comic);
             obj.put("format", format);
             jArr.add(obj);

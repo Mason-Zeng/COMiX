@@ -11,6 +11,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
 
+import model.Character;
 import model.Comic;
 import model.Creator;
 import model.foreign.DataImporter;
@@ -34,6 +35,12 @@ public class CSVDataImporter implements DataImporter {
        
         for (String creator : array[7].split(" \\| ")) {
             comic.addCreator(new Creator(creator));
+        }
+
+        if (array[10].length() != 0){
+            for (String character : array[10].split(" \\| ")) {
+                comic.addCharacter(new Character(character));
+            }
         }
 
         comic = MarkingHandler.formatComic(comic, array[8]);

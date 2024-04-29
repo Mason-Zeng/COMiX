@@ -30,6 +30,7 @@ public interface Marking{
     public String getDescription();
     public Marking getMarking();
     public void addCreator(Creator creator);
+    public void addCharacter(Character character);
     public void setValue(BigDecimal value);
     public void setTitle(String title);
     public void setIssueNumber(String number);

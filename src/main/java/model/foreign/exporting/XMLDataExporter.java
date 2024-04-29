@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import model.Creator;
+import model.Character;
 import model.foreign.DataExporter;
 import model.marking.Marking;
 import model.marking.MarkingHandler;
@@ -67,6 +68,14 @@ public class XMLDataExporter implements DataExporter {
             creators.appendChild(creatorElement);
         }
         comicElement.appendChild(creators);
+
+        Element characters = doc.createElement("characters");
+        for (Character character : mark.getCharacters()) {
+            Element characterElement = doc.createElement("character");
+            characterElement.setTextContent(character.getName());
+            characters.appendChild(characterElement);
+        }
+        comicElement.appendChild(characters);
 
         Element format = doc.createElement("format");
         format.setTextContent(MarkingHandler.getFormat(mark));
