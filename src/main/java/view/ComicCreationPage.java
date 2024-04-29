@@ -1,6 +1,9 @@
 package view;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -43,6 +46,7 @@ public class ComicCreationPage extends Application{
     public ComicCreationPage(ProxyAccount proxyAccount){
         this.proxyAccount = proxyAccount;
         this.comic = new Comic(null, null, null, null, null);
+        this.comic.setVolume(new Volume("1"));
     }
 
     @Override
@@ -262,13 +266,41 @@ public class ComicCreationPage extends Application{
         pubBox.getChildren().add(pubField);
         vbox.getChildren().add(pubBox);
 
-        Label pubDate = new Label("Publication Date: ");
+        HBox pubDateBox = new HBox();
+        Label pubDate = new Label("Publication Date (YYYY-MM-DD): ");
         pubDate.setFont(new Font(20));
-        vbox.getChildren().add(pubDate);
 
+        TextField pubDateField = new TextField();
+        pubDateField.setPrefSize(300, 30);
+        pubDateField.setOnAction(event -> {
+            if (pubDateField.getText().length() == 10){
+                try {
+                    comic.setDate(LocalDate.parse(pubDateField.getText()));
+                }
+                catch (DateTimeParseException e){}
+            }
+        });
+
+        pubDateBox.getChildren().add(pubDate);
+        pubDateBox.getChildren().add(pubDateField);
+        vbox.getChildren().add(pubDateBox);
+
+        HBox valueBox = new HBox();
         Label value = new Label("Value: $");
         value.setFont(new Font(20));
-        vbox.getChildren().add(value);
+
+        TextField valueField = new TextField();
+        valueField.setPrefSize(300, 30);
+        valueField.setOnAction(event -> {
+            try {
+                comic.setValue(new BigDecimal(Double.valueOf(valueField.getText())).setScale(2, RoundingMode.HALF_EVEN));
+            }
+            catch (NumberFormatException e){}
+        });
+
+        valueBox.getChildren().add(value);
+        valueBox.getChildren().add(valueField);
+        vbox.getChildren().add(valueBox);
         
         VBox vbox2 = new VBox();
 
