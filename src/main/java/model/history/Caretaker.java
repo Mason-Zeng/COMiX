@@ -35,5 +35,6 @@ public class Caretaker <T> {
     public void redo() {
         if (point == states.size() - 1) return;
         originator.restore(states.get(++point));
+        if (point == states.size() - 1) states.remove(point--);
     }
 }
