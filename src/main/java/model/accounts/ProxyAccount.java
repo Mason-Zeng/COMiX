@@ -12,14 +12,16 @@ import controller.sort.DefaultSorter;
 import controller.sort.IssueNumberSorter;
 import controller.sort.PublicationDateSorter;
 import controller.sort.TrueDefaultSorter;
+import model.history.Caretaker;
 import model.marking.Marking;
 
-public class ProxyAccount implements Account{
+public class ProxyAccount implements Account {
 
-    private UserAccount userAccount;
     private static final String FILE = "data/comics.json"; 
     private static List<Marking> COMICS;
     private ForeignDataHandler dataHandler;
+    private UserAccount userAccount;
+    private Caretaker<List<Marking>> collectionCaretaker;
 
     public ProxyAccount(){
         dataHandler = ForeignDataHandler.getHandler();
@@ -53,10 +55,12 @@ public class ProxyAccount implements Account{
 
     public void login(String username){
         this.userAccount = new UserAccount(username);
+        this.collectionCaretaker = new Caretaker<List<Marking>>(userAccount);
     }
 
     public void logout(){
         this.userAccount = null;
+        this.collectionCaretaker = null;
     }
 
     @Override
@@ -72,6 +76,7 @@ public class ProxyAccount implements Account{
         if (this.userAccount == null){
             return;
         }
+        collectionCaretaker.capture();
         userAccount.addComicToCollection(comic);
     }
 
@@ -80,6 +85,7 @@ public class ProxyAccount implements Account{
         if (this.userAccount == null){
             return;
         }
+        collectionCaretaker.capture();
         userAccount.removeComicFromCollection(comic);
     }
 
@@ -106,4 +112,11 @@ public class ProxyAccount implements Account{
         userAccount.exportCollection(file);
     }
     
+    public void undo() {
+        if (collectionCaretaker != null) collectionCaretaker.undo();
+    }
+
+    public void redo() {
+        if (collectionCaretaker != null) collectionCaretaker.redo();
+    }
 }
