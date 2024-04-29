@@ -170,7 +170,12 @@ public class Comic implements Marking{
     }
 
     @Override
-    public void setSeriesTitle(String title) {
-        this.volume.setSeries(new Series(title));
+    public void setSeries(Series series) {
+        this.volume.setSeries(series);
+    }
+
+    @Override
+    public void setPublisher(String name) {
+        this.volume.setPublisher(name);
     }
 }

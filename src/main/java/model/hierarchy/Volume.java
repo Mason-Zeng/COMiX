@@ -84,4 +84,8 @@ public class Volume implements ComicHolder {
   public List<ComicHolder> getChildren() {
     return new ArrayList<>();
   }
+
+  public void setPublisher(String name){
+    this.series.setPublisher(new Publisher(name));
+  }
 }

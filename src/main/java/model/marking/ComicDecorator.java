@@ -136,7 +136,12 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
-    public void setSeriesTitle(String title) {
-        comic.setSeriesTitle(title);
+    public void setSeries(Series series) {
+        comic.setSeries(series);
+    }
+
+    @Override
+    public void setPublisher(String name) {
+        comic.setPublisher(name);
     }
 }

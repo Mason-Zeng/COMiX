@@ -33,6 +33,8 @@ import javafx.stage.Stage;
 import model.Comic;
 import model.Creator;
 import model.accounts.ProxyAccount;
+import model.hierarchy.Publisher;
+import model.hierarchy.Series;
 import model.hierarchy.Volume;
 import model.marking.Marking;
 import javafx.geometry.Insets;
@@ -45,8 +47,7 @@ public class ComicCreationPage extends Application{
 
     public ComicCreationPage(ProxyAccount proxyAccount){
         this.proxyAccount = proxyAccount;
-        this.comic = new Comic(null, null, null, null, null);
-        this.comic.setVolume(new Volume("1"));
+        this.comic = new Comic("N/A", "N/A", "N/A", new BigDecimal(1), LocalDate.of(2000, 1, 1), new Volume("N/A", new Series("N/A", new Publisher("N/A"))));
     }
 
     @Override
@@ -186,9 +187,6 @@ public class ComicCreationPage extends Application{
 
         TextField seriesTextField = new TextField();
         seriesTextField.setPrefSize(300, 30);
-        seriesTextField.setOnAction(event -> {
-            this.comic.setSeriesTitle(seriesTextField.getText());
-        });
 
         seriesHBox.getChildren().add(seriesTitle);
         seriesHBox.getChildren().add(seriesTextField);
@@ -200,9 +198,6 @@ public class ComicCreationPage extends Application{
 
         TextField issueField = new TextField();
         issueField.setPrefSize(300, 30);
-        issueField.setOnAction(event -> {
-            this.comic.setTitle(issueField.getText());
-        });
 
         issueBox.getChildren().add(issueTitle);
         issueBox.getChildren().add(issueField);
@@ -214,9 +209,6 @@ public class ComicCreationPage extends Application{
 
         TextField issueNumField = new TextField();
         issueNumField.setPrefSize(300, 30);
-        issueNumField.setOnAction(event -> {
-            this.comic.setIssueNumber(issueNumField.getText());
-        });
 
         issueNumBox.getChildren().add(issueNumber);
         issueNumBox.getChildren().add(issueNumField);
@@ -228,9 +220,6 @@ public class ComicCreationPage extends Application{
 
         TextField volNumField = new TextField();
         volNumField.setPrefSize(300, 30);
-        volNumField.setOnAction(event -> {
-            this.comic.setVolume(new Volume(volNumField.getText()));
-        });
 
         volNumBox.getChildren().add(volumeNumber);
         volNumBox.getChildren().add(volNumField);
@@ -242,12 +231,6 @@ public class ComicCreationPage extends Application{
 
         TextField creatorField = new TextField();
         creatorField.setPrefSize(300, 30);
-        creatorField.setOnAction(event -> {
-            String[] tokens = creatorField.getText().split(",");
-            for (int i = 0; i < tokens.length; i++) {
-                this.comic.addCreator(new Creator(tokens[i]));
-            }
-        });
 
         creatorBox.getChildren().add(creator);
         creatorBox.getChildren().add(creatorField);
@@ -259,8 +242,6 @@ public class ComicCreationPage extends Application{
 
         TextField pubField = new TextField();
         pubField.setPrefSize(300, 30);
-        pubField.setOnAction(event -> {
-        });
 
         pubBox.getChildren().add(pubName);
         pubBox.getChildren().add(pubField);
@@ -272,14 +253,6 @@ public class ComicCreationPage extends Application{
 
         TextField pubDateField = new TextField();
         pubDateField.setPrefSize(300, 30);
-        pubDateField.setOnAction(event -> {
-            if (pubDateField.getText().length() == 10){
-                try {
-                    comic.setDate(LocalDate.parse(pubDateField.getText()));
-                }
-                catch (DateTimeParseException e){}
-            }
-        });
 
         pubDateBox.getChildren().add(pubDate);
         pubDateBox.getChildren().add(pubDateField);
@@ -291,12 +264,6 @@ public class ComicCreationPage extends Application{
 
         TextField valueField = new TextField();
         valueField.setPrefSize(300, 30);
-        valueField.setOnAction(event -> {
-            try {
-                comic.setValue(new BigDecimal(Double.valueOf(valueField.getText())).setScale(2, RoundingMode.HALF_EVEN));
-            }
-            catch (NumberFormatException e){}
-        });
 
         valueBox.getChildren().add(value);
         valueBox.getChildren().add(valueField);
@@ -310,22 +277,54 @@ public class ComicCreationPage extends Application{
         buttonLabel.setTextAlignment(TextAlignment.CENTER);
 
         Button button = new Button("", buttonLabel);
-        button.setBackground(new Background(new BackgroundFill(
-            (proxyAccount.getUsername() == "Guest") ? Color.rgb(159, 184, 234) : Color.rgb(70, 97, 161), 
+        button.setBackground(new Background(new BackgroundFill(Color.rgb(70, 97, 161), 
             CornerRadii.EMPTY, Insets.EMPTY)));
         button.setBorder(new Border(new BorderStroke(Color.BLACK, 
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         button.setOnAction(event -> {
-            if (proxyAccount.getUsername() != "Guest"){
+            if (!(issueField.getText().isEmpty() || issueNumField.getText().isEmpty() ||volNumField.getText().isEmpty() ||
+            seriesTextField.getText().isEmpty() || pubField.getText().isEmpty() || creatorField.getText().isEmpty() ||
+            pubDateField.getText().isEmpty() || valueField.getText().isEmpty())){
+                this.comic.setTitle(issueField.getText());
+                this.comic.setIssueNumber(issueNumField.getText());
+                this.comic.setVolume(new Volume(volNumField.getText(), new Series(seriesTextField.getText(), new Publisher(pubField.getText()))));
+
+                String[] tokens = creatorField.getText().split(",");
+                for (int i = 0; i < tokens.length; i++) {
+                    this.comic.addCreator(new Creator(tokens[i]));
+                }
+
+                if (pubDateField.getText().length() == 10){
+                    try {
+                        this.comic.setDate(LocalDate.parse(pubDateField.getText()));
+                    }
+                    catch (DateTimeParseException e){}
+                }
+
+                try {
+                    this.comic.setValue(new BigDecimal(Double.valueOf(valueField.getText())).setScale(2, RoundingMode.HALF_EVEN));
+                }
+                catch (NumberFormatException e){}
+
                 proxyAccount.addComicToCollection(this.comic);
-                DatabasePage databasePage = new DatabasePage(proxyAccount);
+            }
+
+            else {
+                Label invalidLabel = new Label("All blanks need to be filled out!");
+                invalidLabel.setTextFill(Color.RED);
+                invalidLabel.setFont(new Font(20));
+                if (vbox2.getChildren().size() < 2){
+                    vbox2.getChildren().add(invalidLabel);
+                }
+                return;
+            }
+            DatabasePage databasePage = new DatabasePage(proxyAccount);
             try {
                 databasePage.start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             root.getChildren().removeAll(nodes);
-            }
         });
 
         vbox2.getChildren().add(button);
