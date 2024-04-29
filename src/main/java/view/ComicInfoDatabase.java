@@ -68,6 +68,24 @@ public class ComicInfoDatabase extends Application{
         undoButton.setMinHeight(70);
         undoButton.setOnAction(event -> {
             proxyAccount.undo();
+            if (proxyAccount.getUsername() == "Guest"){
+                LoginPage loginPage = new LoginPage(proxyAccount);
+                try {
+                    loginPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
+            else{
+                PCPage pcPage = new PCPage(proxyAccount);
+                try {
+                    pcPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
         });
 
         gridPane.add(undoButton, 1, 0);
@@ -84,6 +102,24 @@ public class ComicInfoDatabase extends Application{
         redoButton.setMinHeight(70);
         redoButton.setOnAction(event -> {
             proxyAccount.redo();
+            if (proxyAccount.getUsername() == "Guest"){
+                LoginPage loginPage = new LoginPage(proxyAccount);
+                try {
+                    loginPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
+            else{
+                PCPage pcPage = new PCPage(proxyAccount);
+                try {
+                    pcPage.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                root.getChildren().removeAll(nodes);
+            }
         });
 
         gridPane.add(redoButton, 2, 0);
