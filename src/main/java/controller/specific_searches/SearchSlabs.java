@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.search.SpecificSearch;
-import model.marking.Authenticate;
-import model.marking.Grade;
 import model.marking.Marking;
 import model.marking.MarkingHandler;
 import model.marking.Slab;
@@ -67,5 +65,4 @@ public class SearchSlabs implements SpecificSearch {
         }
         return comics;
     }
-
 }

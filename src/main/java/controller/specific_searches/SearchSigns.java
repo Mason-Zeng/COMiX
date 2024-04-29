@@ -6,7 +6,6 @@ import java.util.List;
 import controller.search.SpecificSearch;
 import model.marking.Marking;
 import model.marking.MarkingHandler;
-import model.marking.Sign;
 
 public class SearchSigns implements SpecificSearch {
     MarkingHandler markingHandler = new MarkingHandler();
@@ -24,7 +23,6 @@ public class SearchSigns implements SpecificSearch {
     public List<Marking> exactSearch(List<Marking> data, String query) {
         List<Marking> comics = new ArrayList<>();
         List<Marking> sameSeriesTittles = new ArrayList<>();
-        List<Marking> oldMarks = new ArrayList<>();
         for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
@@ -33,11 +31,10 @@ public class SearchSigns implements SpecificSearch {
                 }
             }
         for(int i=0; i<sameSeriesTittles.size();i++){
-            oldMarks = MarkingHandler.getMarkingOrder(sameSeriesTittles.get(i));
-            for(int j=0; j<oldMarks.size(); j++){
-                if(oldMarks.get(j) instanceof Sign){
-                    comics.add(sameSeriesTittles.get(i));
-                }
+            Marking mark = sameSeriesTittles.get(i);
+            int signCount = MarkingHandler.signCount(mark);
+            if (signCount > 0) {
+                comics.add(mark);
             }
         }
         return comics;
@@ -47,7 +44,6 @@ public class SearchSigns implements SpecificSearch {
     public List<Marking> partialSearch(List<Marking> data, String query) {
         List<Marking> comics = new ArrayList<>();
         List<Marking> sameSeriesTittles = new ArrayList<>();
-        List<Marking> oldMarks = new ArrayList<>();
         for (Marking comic : data){
                 String series = comic.getSeriesTitle();
                 series = series.toLowerCase();
@@ -56,14 +52,12 @@ public class SearchSigns implements SpecificSearch {
                 }
             }
         for(int i=0; i<sameSeriesTittles.size();i++){
-            oldMarks = MarkingHandler.getMarkingOrder(sameSeriesTittles.get(i));
-            for(int j=0; j<oldMarks.size(); j++){
-                if(oldMarks.get(j) instanceof Sign){
-                    comics.add(sameSeriesTittles.get(i));
-                }
+            Marking mark = sameSeriesTittles.get(i);
+            int signCount = MarkingHandler.signCount(mark);
+            if (signCount > 0) {
+                comics.add(mark);
             }
         }
         return comics;
     }
-
 }

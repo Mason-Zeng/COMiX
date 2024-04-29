@@ -1,12 +1,9 @@
 package controller.search;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import controller.SetSpecificSearch;
-import controller.sort.IssueNumberSorter;
 import controller.specific_searches.SearchAuthenticates;
 import controller.specific_searches.SearchCreator;
 import controller.specific_searches.SearchGaps;
@@ -19,13 +16,7 @@ import controller.specific_searches.SearchSeriesTitle;
 import controller.specific_searches.SearchSigns;
 import controller.specific_searches.SearchSlabs;
 import controller.specific_searches.SearchStoryTitle;
-import model.Comic;
-import model.Creator;
-import model.marking.Authenticate;
-import model.marking.Grade;
 import model.marking.Marking;
-import model.marking.MarkingHandler;
-import model.marking.Slab;
 
 /**
  * PartialSearch implements the Searcher class.

@@ -7,10 +7,9 @@ import controller.search.SpecificSearch;
 import model.marking.Authenticate;
 import model.marking.Marking;
 import model.marking.MarkingHandler;
-import model.marking.Sign;
+
 
 public class SearchAuthenticates implements SpecificSearch {
-
     @Override
     public List<Marking> searchData(String type, List<Marking> data, String query) {
         List<Marking> comics = new ArrayList<>();
@@ -20,7 +19,6 @@ public class SearchAuthenticates implements SpecificSearch {
         }
         return comics = partialSearch(data, query);
     }
-
     @Override
     public List<Marking> exactSearch(List<Marking> data, String query) {
         List<Marking> comics = new ArrayList<>();
@@ -66,5 +64,4 @@ public class SearchAuthenticates implements SpecificSearch {
         }
         return comics;
     }
-
 }
