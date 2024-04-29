@@ -354,6 +354,27 @@ public class ComicInfoPC extends Application{
         value.setFont(new Font(20));
         vbox.getChildren().add(value);
 
+        Label desc = new Label("Description: " + comic.getDescription());
+        desc.setFont(new Font(20));
+        vbox.getChildren().add(desc);
+
+        String chars = "";
+        if (comic.getCharacters().size() == 0){
+            chars = "N/A";
+        }
+        else{
+            for (int i = 0; i < comic.getCharacters().size(); i++) {
+                creators += comic.getCharacters().get(i).getName();
+                if (i < comic.getCharacters().size() - 1){
+                    creators += ", ";
+                }
+            }
+        }
+
+        Label charsLabel = new Label("Principle Character(s): " + chars);
+        charsLabel.setFont(new Font(20));
+        vbox.getChildren().add(charsLabel);
+
         Label timesSigned = new Label("Number Of Signatures: " + MarkingHandler.signCount(comic));
         timesSigned.setFont(new Font(20));
         timesSigned.setTextFill(Color.rgb(39, 97, 166));
@@ -472,11 +493,12 @@ public class ComicInfoPC extends Application{
         grid.add(removeButton, 5, 0);
 
         grid.setHgap(75);
+        grid.setPadding(Insets.EMPTY);
         vbox.getChildren().add(grid);
 
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(25, 25, -25, 25))));
         vbox.setPadding(new Insets(30, 50, 0, 50));
-        vbox.setSpacing(5);
+        vbox.setSpacing(3);
         root.getChildren().add(vbox);
 
         confirmButton.setOnAction(event -> {

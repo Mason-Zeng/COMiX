@@ -182,4 +182,9 @@ public class Comic implements Marking{
     public void setPublisher(String name) {
         this.volume.setPublisher(name);
     }
+
+    @Override
+    public void setDescription(String desc) {
+        this.description = desc;
+    }
 }

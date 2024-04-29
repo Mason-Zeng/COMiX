@@ -76,24 +76,13 @@ public class PCPage extends Application {
         undoButton.setMinHeight(70);
         undoButton.setOnAction(event -> {
             proxyAccount.undo();
-            if (proxyAccount.getUsername() == "Guest"){
-                LoginPage loginPage = new LoginPage(proxyAccount);
-                try {
-                    loginPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
+            PCPage pcPage = new PCPage(proxyAccount);
+            try {
+                pcPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else{
-                PCPage pcPage = new PCPage(proxyAccount);
-                try {
-                    pcPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
-            }
+            root.getChildren().removeAll(nodes);
         });
 
         gridPane.add(undoButton, 1, 0);
@@ -107,24 +96,13 @@ public class PCPage extends Application {
         redoButton.setMinHeight(70);
         redoButton.setOnAction(event -> {
             proxyAccount.redo();
-            if (proxyAccount.getUsername() == "Guest"){
-                LoginPage loginPage = new LoginPage(proxyAccount);
-                try {
-                    loginPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
+            PCPage pcPage = new PCPage(proxyAccount);
+            try {
+                pcPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            else{
-                PCPage pcPage = new PCPage(proxyAccount);
-                try {
-                    pcPage.start(primaryStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                root.getChildren().removeAll(nodes);
-            }
+            root.getChildren().removeAll(nodes);
         });
 
         gridPane.add(redoButton, 2, 0);
@@ -360,7 +338,13 @@ public class PCPage extends Application {
         addComicLabel.setTextFill(Color.WHITE);
         Button addComicButton = new Button("", addComicLabel);
         addComicButton.setOnAction(event -> {
-            //Functionality for manual add here
+            ComicCreationPage comicCreationPage = new ComicCreationPage(proxyAccount);
+            try {
+                comicCreationPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            root.getChildren().removeAll(nodes);
         });
         addComicButton.setBackground(new Background(new BackgroundFill(Color.rgb(70, 97, 161), 
         CornerRadii.EMPTY, Insets.EMPTY)));
@@ -397,7 +381,7 @@ public class PCPage extends Application {
             Marking comic;
             try {
                 comic = COMICS.get(i);
-                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
+                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume #" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){

@@ -39,4 +39,5 @@ public interface Marking{
     public double extractIssueValue();
     public void setSeries(Series series);
     public void setPublisher(String name);
+    public void setDescription(String desc);
 }

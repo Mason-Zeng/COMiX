@@ -30,6 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Character;
 import model.Comic;
 import model.Creator;
 import model.accounts.ProxyAccount;
@@ -75,7 +76,14 @@ public class ComicCreationPage extends Application{
         undoButton.setBackground(null);
         undoButton.setMinHeight(70);
         undoButton.setOnAction(event -> {
-            //Undo Button Functionality
+            proxyAccount.undo();
+            PCPage pcPage = new PCPage(proxyAccount);
+            try {
+                pcPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            root.getChildren().removeAll(nodes);
         });
 
         gridPane.add(undoButton, 1, 0);
@@ -88,7 +96,14 @@ public class ComicCreationPage extends Application{
         redoButton.setBackground(null);
         redoButton.setMinHeight(70);
         redoButton.setOnAction(event -> {
-            //Redo Button Functionality
+            proxyAccount.redo();
+            PCPage pcPage = new PCPage(proxyAccount);
+            try {
+                pcPage.start(primaryStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            root.getChildren().removeAll(nodes);
         });
 
         gridPane.add(redoButton, 2, 0);
@@ -268,6 +283,28 @@ public class ComicCreationPage extends Application{
         valueBox.getChildren().add(value);
         valueBox.getChildren().add(valueField);
         vbox.getChildren().add(valueBox);
+
+        HBox descBox = new HBox();
+        Label desc = new Label("Description: ");
+        desc.setFont(new Font(20));
+
+        TextField descField = new TextField();
+        descField.setPrefSize(300, 30);
+
+        descBox.getChildren().add(desc);
+        descBox.getChildren().add(descField);
+        vbox.getChildren().add(descBox);
+
+        HBox charBox = new HBox();
+        Label chars = new Label("Principle Characters: ");
+        chars.setFont(new Font(20));
+
+        TextField charField = new TextField();
+        charField.setPrefSize(300, 30);
+
+        charBox.getChildren().add(chars);
+        charBox.getChildren().add(charField);
+        vbox.getChildren().add(charBox);
         
         VBox vbox2 = new VBox();
 
@@ -284,14 +321,20 @@ public class ComicCreationPage extends Application{
         button.setOnAction(event -> {
             if (!(issueField.getText().isEmpty() || issueNumField.getText().isEmpty() ||volNumField.getText().isEmpty() ||
             seriesTextField.getText().isEmpty() || pubField.getText().isEmpty() || creatorField.getText().isEmpty() ||
-            pubDateField.getText().isEmpty() || valueField.getText().isEmpty())){
+            pubDateField.getText().isEmpty() || valueField.getText().isEmpty() || descField.getText().isEmpty() || charField.getText().isEmpty())){
                 this.comic.setTitle(issueField.getText());
                 this.comic.setIssueNumber(issueNumField.getText());
                 this.comic.setVolume(new Volume(volNumField.getText(), new Series(seriesTextField.getText(), new Publisher(pubField.getText()))));
+                this.comic.setDescription(descField.getText());
 
                 String[] tokens = creatorField.getText().split(",");
                 for (int i = 0; i < tokens.length; i++) {
                     this.comic.addCreator(new Creator(tokens[i]));
+                }
+
+                String[] tokensChars = charField.getText().split(",");
+                for (int i = 0; i < tokensChars.length; i++) {
+                    this.comic.addCharacter(new Character(tokensChars[i]));
                 }
 
                 if (pubDateField.getText().length() == 10){
@@ -334,7 +377,7 @@ public class ComicCreationPage extends Application{
 
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(25, 25, -25, 25))));
         vbox.setPadding(new Insets(50, 50, 0, 50));
-        vbox.setSpacing(10);
+        vbox.setSpacing(9);
         root.getChildren().add(vbox);
 
         Scene scene = new Scene(root, 1000, 650);
