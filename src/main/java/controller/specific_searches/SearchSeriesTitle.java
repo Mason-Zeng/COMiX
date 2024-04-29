@@ -1,5 +1,6 @@
 package controller.specific_searches;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.search.SpecificSearch;
@@ -9,20 +10,38 @@ public class SearchSeriesTitle implements SpecificSearch {
 
     @Override
     public List<Marking> searchData(String type, List<Marking> data, String query) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchData'");
+        List<Marking> comics = new ArrayList<>();
+        if(type.equals("exact")){
+            comics = exactSearch(data, query);
+            return comics;
+        }
+        return comics = partialSearch(data, query);
     }
 
     @Override
     public List<Marking> exactSearch(List<Marking> data, String query) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exactSearch'");
+        List<Marking> comics = new ArrayList<>();
+        for (Marking comic : data){
+            String series = comic.getSeriesTitle();
+            series = series.toLowerCase();
+            if (query.equals(series)){
+                comics.add(comic);
+            }
+        }
+        return comics;
     }
 
     @Override
     public List<Marking> partialSearch(List<Marking> data, String query) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'partialSearch'");
+        List<Marking> comics = new ArrayList<>();
+        for (Marking comic : data){
+            String series = comic.getSeriesTitle();
+            series = series.toLowerCase();
+            if (series.contains(query)){
+                comics.add(comic);
+            }
+        }
+        return comics;
     }
     
 }
