@@ -226,7 +226,7 @@ public class ComicInfoDatabase extends Application{
 
         gridPane.add(loginButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/1.7) : (int)((45 + proxyAccount.getUsername().length()*3)/1.83);
         spacing = (proxyAccount.getUsername().equals("Guest")) ? 28 : spacing;
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
@@ -278,6 +278,14 @@ public class ComicInfoDatabase extends Application{
         value.setFont(new Font(20));
         vbox.getChildren().add(value);
         
+        Label desc = new Label("Description: N/A");
+        desc.setFont(new Font(20));
+        vbox.getChildren().add(desc);
+
+        Label chars = new Label("Principle Character(s): N/A");
+        chars.setFont(new Font(20));
+        vbox.getChildren().add(chars);
+
         VBox vbox2 = new VBox();
 
         Label buttonLabel = new Label("Add to\nPersonal Collection");
@@ -311,7 +319,7 @@ public class ComicInfoDatabase extends Application{
 
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(25, 25, -25, 25))));
         vbox.setPadding(new Insets(50, 50, 0, 50));
-        vbox.setSpacing(10);
+        vbox.setSpacing(9);
         root.getChildren().add(vbox);
 
         Scene scene = new Scene(root, 1000, 650);

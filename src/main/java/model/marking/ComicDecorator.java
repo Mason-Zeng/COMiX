@@ -135,12 +135,32 @@ public abstract class ComicDecorator implements Marking {
     }
 
     @Override
+    public void removeAllCharacters() {
+        comic.removeAllCharacters();
+    }
+
+    @Override
     public void setDate(LocalDate date) {
         comic.setDate(date);
     }
 
     @Override
-    public void setSeriesTitle(String title) {
-        comic.setSeriesTitle(title);
+    public void setSeries(Series series) {
+        comic.setSeries(series);
+    }
+
+    @Override
+    public void setPublisher(String name) {
+        comic.setPublisher(name);
+    }
+
+    @Override
+    public void setDescription(String desc) {
+        comic.setDescription(desc);
+    }
+
+    @Override
+    public void setVolNum(String num) {
+        comic.setVolNum(num);
     }
 }

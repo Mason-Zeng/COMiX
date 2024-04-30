@@ -398,7 +398,7 @@ public class DatabasePage extends Application {
             Marking comic;
             try {
                 comic = COMICS.get(i);
-                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume:" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
+                tempLabel = new Label("• " + comic.getSeriesTitle() + ", Volume #" + comic.getVolumeNumber() + ", Issue #" + comic.getIssueNumber());
 
             }
             catch (IndexOutOfBoundsException iobe){

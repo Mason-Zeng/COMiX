@@ -57,6 +57,10 @@ public class Volume implements ComicHolder {
     return issues.containsKey(name);
 }
 
+  public void setVolNum(String num){
+    this.volString = num;
+  }
+
   @Override
   public BigDecimal getValue() {
     return issues.values().stream()
@@ -83,5 +87,9 @@ public class Volume implements ComicHolder {
   @Override
   public List<ComicHolder> getChildren() {
     return new ArrayList<>();
+  }
+
+  public void setPublisher(String name){
+    this.series.setPublisher(new Publisher(name));
   }
 }

@@ -34,8 +34,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.Character;
 import model.Creator;
 import model.accounts.ProxyAccount;
+import model.hierarchy.Series;
 import model.marking.Authenticate;
 import model.marking.Grade;
 import model.marking.Marking;
@@ -106,9 +108,10 @@ public class ComicInfoPC extends Application{
         popupLabel2.setFont(Font.font(null, FontWeight.BOLD, 30));
         popupLabel2.setTextAlignment(TextAlignment.CENTER);
 
-        String[] editOptionsArray = {"Issue Title", "Issue Number", "Creator", "Date Published", "Value"};
+        String[] editOptionsArray = {"Series Title", "Issue Title", "Issue Number", "Volume Number", 
+        "Creator", "Publisher", "Date Published", "Value", "Description", "Principle Characters"};
         ComboBox<String> editOptions = new ComboBox<>(FXCollections.observableArrayList(editOptionsArray));
-        editOptions.setValue("Issue Title");
+        editOptions.setValue("Series Title");
 
         TextField field = new TextField();
         field.setPrefSize(350, 25);
@@ -120,6 +123,9 @@ public class ComicInfoPC extends Application{
             }
             else if (editOptions.getValue().equals("Date Published")){
                 popupLabel2.setText("Please Select An Attribute to Edit.\nFormat Should be YYYY-MM-DD");
+            }
+            else if (editOptions.getValue().equals("Principle Characters")){
+                popupLabel2.setText("Please Select An Attribute to Edit.\nFor Multiple Characters, Seperate by Commas.");
             }
             else {
                 popupLabel2.setText("Please Select An Attribute to Edit.");
@@ -303,7 +309,7 @@ public class ComicInfoPC extends Application{
 
         gridPane.add(logoutButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/1.7) : (int)((45 + proxyAccount.getUsername().length()*3)/1.83);
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
@@ -353,6 +359,27 @@ public class ComicInfoPC extends Application{
         Label value = new Label("Value: $" + comic.getValue());
         value.setFont(new Font(20));
         vbox.getChildren().add(value);
+
+        Label desc = new Label("Description: " + comic.getDescription());
+        desc.setFont(new Font(20));
+        vbox.getChildren().add(desc);
+
+        String chars = "";
+        if (comic.getCharacters().size() == 0){
+            chars = "N/A";
+        }
+        else{
+            for (int i = 0; i < comic.getCharacters().size(); i++) {
+                chars += comic.getCharacters().get(i).getName();
+                if (i < comic.getCharacters().size() - 1){
+                    chars += ", ";
+                }
+            }
+        }
+
+        Label charsLabel = new Label("Principle Character(s): " + chars);
+        charsLabel.setFont(new Font(20));
+        vbox.getChildren().add(charsLabel);
 
         Label timesSigned = new Label("Number Of Signatures: " + MarkingHandler.signCount(comic));
         timesSigned.setFont(new Font(20));
@@ -472,11 +499,12 @@ public class ComicInfoPC extends Application{
         grid.add(removeButton, 5, 0);
 
         grid.setHgap(75);
+        grid.setPadding(Insets.EMPTY);
         vbox.getChildren().add(grid);
 
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(25, 25, -25, 25))));
         vbox.setPadding(new Insets(30, 50, 0, 50));
-        vbox.setSpacing(5);
+        vbox.setSpacing(3);
         root.getChildren().add(vbox);
 
         confirmButton.setOnAction(event -> {
@@ -495,7 +523,11 @@ public class ComicInfoPC extends Application{
 
         confirmButton2.setOnAction(event -> {
             if (!field.getText().equals("")){
-                if (editOptions.getValue().equals("Issue Title")){
+                if (editOptions.getValue().equals("Series Title")){
+                    comic.setSeries(new Series(field.getText().strip(), comic.getPublisher()));
+                    seriesTitle.setText("Series Title: " + comic.getSeriesTitle());
+                }
+                else if (editOptions.getValue().equals("Issue Title")){
                     comic.setTitle(field.getText().strip());
                     issueTitle.setText("Issue Title: " + comic.getTitle());
                 }
@@ -507,12 +539,25 @@ public class ComicInfoPC extends Application{
                     }
                     catch (NumberFormatException e){}
                 }
+                else if (editOptions.getValue().equals("Volume Number")){
+                    try {
+                        Integer.parseInt(field.getText());
+                        comic.setVolNum(field.getText().strip());
+                        volumeNumber.setText("Volume #" + comic.getVolumeNumber());
+                    }
+                    catch (NumberFormatException e){}
+                }
                 else if (editOptions.getValue().equals("Creator")){
+                    comic.removeAllCreators();
                     String[] creatorTokens = field.getText().split(",");
                     for (String creatorString : creatorTokens) {
                         comic.addCreator(new Creator(creatorString.strip()));
                     }
                     creator.setText("Creator(s): " + field.getText());
+                }
+                else if (editOptions.getValue().equals("Publisher")){
+                    comic.setPublisher(field.getText().strip());
+                    pubName.setText("Publisher: " + comic.getPublisherName());
                 }
                 else if (editOptions.getValue().equals("Date Published")){
                     if (field.getText().length() == 10){
@@ -523,12 +568,24 @@ public class ComicInfoPC extends Application{
                         catch (DateTimeParseException e){}
                     }
                 }
-                else {
+                else if (editOptions.getValue().equals("Value")){
                     try {
                         comic.setValue(new BigDecimal(Double.valueOf(field.getText())).setScale(2, RoundingMode.HALF_EVEN));
                         value.setText("Value: $" + comic.getValue());
                     }
                     catch (NumberFormatException e){}
+                }
+                else if (editOptions.getValue().equals("Description")){
+                    comic.setDescription(field.getText().strip());
+                    desc.setText("Description: " + comic.getDescription());
+                }
+                else if (editOptions.getValue().equals("Principle Characters")){
+                    comic.removeAllCharacters();
+                    String[] characterTokens = field.getText().split(",");
+                    for (String characterString : characterTokens) {
+                        comic.addCharacter(new Character(characterString.strip()));
+                    }
+                    charsLabel.setText("Principle Character(s): " + field.getText());
                 }
                 trueRoot.getChildren().remove(popup2);
                 trueRoot.getChildren().remove(popupRect);

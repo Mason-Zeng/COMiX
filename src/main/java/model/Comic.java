@@ -169,12 +169,32 @@ public class Comic implements Marking{
     }
 
     @Override
+    public void removeAllCharacters() {
+        this.characters = new ArrayList<>();
+    }
+
+    @Override
     public void setDate(LocalDate date) {
         this.pub_date = date;
     }
 
     @Override
-    public void setSeriesTitle(String title) {
-        this.volume.setSeries(new Series(title));
+    public void setSeries(Series series) {
+        this.volume.setSeries(series);
+    }
+
+    @Override
+    public void setPublisher(String name) {
+        this.volume.setPublisher(name);
+    }
+
+    @Override
+    public void setDescription(String desc) {
+        this.description = desc;
+    }
+
+    @Override
+    public void setVolNum(String num) {
+        this.volume.setVolNum(num);
     }
 }
