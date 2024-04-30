@@ -524,7 +524,7 @@ public class ComicInfoPC extends Application{
         confirmButton2.setOnAction(event -> {
             if (!field.getText().equals("")){
                 if (editOptions.getValue().equals("Series Title")){
-                    comic.setSeries(new Series(field.getText().strip()));
+                    comic.setSeries(new Series(field.getText().strip(), comic.getPublisher()));
                     seriesTitle.setText("Series Title: " + comic.getSeriesTitle());
                 }
                 else if (editOptions.getValue().equals("Issue Title")){
