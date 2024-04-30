@@ -35,9 +35,11 @@ public interface Marking{
     public void setTitle(String title);
     public void setIssueNumber(String number);
     public void removeAllCreators();
+    public void removeAllCharacters();
     public void setDate(LocalDate date);
     public double extractIssueValue();
     public void setSeries(Series series);
     public void setPublisher(String name);
     public void setDescription(String desc);
+    public void setVolNum(String num);
 }

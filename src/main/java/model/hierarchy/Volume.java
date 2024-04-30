@@ -57,6 +57,10 @@ public class Volume implements ComicHolder {
     return issues.containsKey(name);
 }
 
+  public void setVolNum(String num){
+    this.volString = num;
+  }
+
   @Override
   public BigDecimal getValue() {
     return issues.values().stream()

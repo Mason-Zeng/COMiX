@@ -185,7 +185,7 @@ public class ComicCreationPage extends Application{
 
         gridPane.add(logoutButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/1.7) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
         gridPane.setPadding(new Insets(0, 0, 0, 5));
@@ -361,9 +361,9 @@ public class ComicCreationPage extends Application{
                 }
                 return;
             }
-            DatabasePage databasePage = new DatabasePage(proxyAccount);
+            PCPage pcPage = new PCPage(proxyAccount);
             try {
-                databasePage.start(primaryStage);
+                pcPage.start(primaryStage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -377,7 +377,7 @@ public class ComicCreationPage extends Application{
 
         vbox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, new Insets(25, 25, -25, 25))));
         vbox.setPadding(new Insets(50, 50, 0, 50));
-        vbox.setSpacing(9);
+        vbox.setSpacing(8);
         root.getChildren().add(vbox);
 
         Scene scene = new Scene(root, 1000, 650);

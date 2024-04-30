@@ -39,7 +39,7 @@ public class JSONDataExporter implements DataExporter {
 
             JSONArray characters = new JSONArray();
             for (Character character : comic.getCharacters()) {
-                creators.put(character.getName());
+                characters.put(character.getName());
             }
 
             obj.put("characters", characters);

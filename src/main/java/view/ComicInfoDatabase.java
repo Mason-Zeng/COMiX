@@ -226,7 +226,7 @@ public class ComicInfoDatabase extends Application{
 
         gridPane.add(loginButton, 7, 0);
 
-        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/2.05) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
+        int spacing = proxyAccount.getUsername().length() > 6 ? (int)((35 + proxyAccount.getUsername().length()*5)/1.7) : (int)((45 + proxyAccount.getUsername().length()*3)/1.93);
         spacing = (proxyAccount.getUsername().equals("Guest")) ? 28 : spacing;
         gridPane.setHgap(999/spacing);
         gridPane.setMaxWidth(1000);
